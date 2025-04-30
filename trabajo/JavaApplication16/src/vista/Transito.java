@@ -17,7 +17,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         ct = new CTransito();
         TDPA.addFocusListener(this);
         FDS.addFocusListener(this);
-        vida.addFocusListener(this);
+        años.addFocusListener(this);
         tasa.addFocusListener(this);
         A.addFocusListener(this);
         B2.addFocusListener(this);
@@ -27,7 +27,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         T3S2.addFocusListener(this);
         T3S3.addFocusListener(this);
         T3S2R4.addFocusListener(this);
-        otros.addFocusListener(this);
+        Otros.addFocusListener(this);
     }
 
     /**
@@ -60,7 +60,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         T3S2 = new javax.swing.JTextField();
         T3S3 = new javax.swing.JTextField();
         T3S2R4 = new javax.swing.JTextField();
-        otros = new javax.swing.JTextField();
+        Otros = new javax.swing.JTextField();
         suma = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -75,14 +75,14 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
+        senpor = new javax.swing.JLabel();
+        dualpor = new javax.swing.JLabel();
+        tandempor = new javax.swing.JLabel();
+        tridempor = new javax.swing.JLabel();
+        dualrep = new javax.swing.JLabel();
+        tandemrep = new javax.swing.JLabel();
+        tridemrep = new javax.swing.JLabel();
+        senrep = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
@@ -91,7 +91,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         jLabel16 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        vida = new javax.swing.JTextField();
+        años = new javax.swing.JTextField();
         tasa = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
@@ -99,7 +99,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("TDPA(VEH/DIA):");
 
-        TDPA.setText("0");
+        TDPA.setText("5000");
         TDPA.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 TDPAFocusLost(evt);
@@ -137,9 +137,9 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
 
         jLabel4.setText("CARRIL (FDC):");
 
-        FDS.setText("0");
+        FDS.setText("0.5");
 
-        FDC.setText("0");
+        FDC.setText("0.5");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -187,23 +187,28 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("A:");
 
-        A.setText("0");
+        A.setText("63");
 
-        B2.setText("0");
+        B2.setText("5");
 
-        B3.setText("0");
+        B3.setText("1");
 
-        C2.setText("0");
+        C2.setText("9");
 
-        C3.setText("0");
+        C3.setText("10");
 
-        T3S2.setText("0");
+        T3S2.setText("6");
+        T3S2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T3S2ActionPerformed(evt);
+            }
+        });
 
-        T3S3.setText("0");
+        T3S3.setText("3");
 
-        T3S2R4.setText("0");
+        T3S2R4.setText("1");
 
-        otros.setText("0");
+        Otros.setText("2");
 
         suma.setBackground(new java.awt.Color(153, 255, 153));
         suma.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -225,34 +230,33 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                     .addComponent(T3S2, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                     .addComponent(T3S3, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                     .addComponent(T3S2R4, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                    .addComponent(otros, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(Otros, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                     .addComponent(suma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(A, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(B2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addComponent(B3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(C2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(8, 8, 8)
                 .addComponent(C3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(T3S2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(T3S3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(T3S2R4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(otros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(suma, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Otros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(suma, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -334,9 +338,9 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel15)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jLabel17.setBackground(new java.awt.Color(204, 204, 255));
@@ -355,61 +359,61 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         jLabel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel19.setOpaque(true);
 
-        jLabel20.setBackground(new java.awt.Color(255, 255, 204));
-        jLabel20.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText(".");
-        jLabel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel20.setOpaque(true);
+        senpor.setBackground(new java.awt.Color(255, 255, 204));
+        senpor.setForeground(new java.awt.Color(153, 153, 0));
+        senpor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        senpor.setText(".");
+        senpor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        senpor.setOpaque(true);
 
-        jLabel21.setBackground(new java.awt.Color(255, 255, 204));
-        jLabel21.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText(".");
-        jLabel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel21.setOpaque(true);
+        dualpor.setBackground(new java.awt.Color(255, 255, 204));
+        dualpor.setForeground(new java.awt.Color(153, 153, 0));
+        dualpor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dualpor.setText(".");
+        dualpor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dualpor.setOpaque(true);
 
-        jLabel22.setBackground(new java.awt.Color(255, 255, 204));
-        jLabel22.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText(".");
-        jLabel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel22.setOpaque(true);
+        tandempor.setBackground(new java.awt.Color(255, 255, 204));
+        tandempor.setForeground(new java.awt.Color(153, 153, 0));
+        tandempor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tandempor.setText(".");
+        tandempor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tandempor.setOpaque(true);
 
-        jLabel23.setBackground(new java.awt.Color(255, 255, 204));
-        jLabel23.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText(".");
-        jLabel23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel23.setOpaque(true);
+        tridempor.setBackground(new java.awt.Color(255, 255, 204));
+        tridempor.setForeground(new java.awt.Color(153, 153, 0));
+        tridempor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tridempor.setText(".");
+        tridempor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tridempor.setOpaque(true);
 
-        jLabel24.setBackground(new java.awt.Color(255, 255, 204));
-        jLabel24.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText(".");
-        jLabel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel24.setOpaque(true);
+        dualrep.setBackground(new java.awt.Color(255, 255, 204));
+        dualrep.setForeground(new java.awt.Color(153, 153, 0));
+        dualrep.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dualrep.setText(".");
+        dualrep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        dualrep.setOpaque(true);
 
-        jLabel25.setBackground(new java.awt.Color(255, 255, 204));
-        jLabel25.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText(".");
-        jLabel25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel25.setOpaque(true);
+        tandemrep.setBackground(new java.awt.Color(255, 255, 204));
+        tandemrep.setForeground(new java.awt.Color(153, 153, 0));
+        tandemrep.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tandemrep.setText(".");
+        tandemrep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tandemrep.setOpaque(true);
 
-        jLabel26.setBackground(new java.awt.Color(255, 255, 204));
-        jLabel26.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText(".");
-        jLabel26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel26.setOpaque(true);
+        tridemrep.setBackground(new java.awt.Color(255, 255, 204));
+        tridemrep.setForeground(new java.awt.Color(153, 153, 0));
+        tridemrep.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tridemrep.setText(".");
+        tridemrep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tridemrep.setOpaque(true);
 
-        jLabel27.setBackground(new java.awt.Color(255, 255, 204));
-        jLabel27.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText(".");
-        jLabel27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel27.setOpaque(true);
+        senrep.setBackground(new java.awt.Color(255, 255, 204));
+        senrep.setForeground(new java.awt.Color(153, 153, 0));
+        senrep.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        senrep.setText(".");
+        senrep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        senrep.setOpaque(true);
 
         jLabel28.setText("SENCILLO");
         jLabel28.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -440,15 +444,15 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(senpor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dualpor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tandempor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tridempor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(senrep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dualrep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tandemrep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tridemrep, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -463,29 +467,28 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel20)
+                            .addComponent(senpor)
                             .addComponent(jLabel28))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel21)
+                            .addComponent(dualpor)
                             .addComponent(jLabel29))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel22)
+                            .addComponent(tandempor)
                             .addComponent(jLabel30))
                         .addGap(0, 0, 0)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel23)
+                            .addComponent(tridempor)
                             .addComponent(jLabel31)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(senrep)
                         .addGap(0, 0, 0)
-                        .addComponent(jLabel27)
+                        .addComponent(dualrep)
                         .addGap(0, 0, 0)
-                        .addComponent(jLabel24)
+                        .addComponent(tandemrep)
                         .addGap(0, 0, 0)
-                        .addComponent(jLabel25)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel26)))
+                        .addComponent(tridemrep)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -499,9 +502,9 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
 
         jLabel33.setText("Tasa crecimiento (%):");
 
-        vida.setText("0");
+        años.setText("20");
 
-        tasa.setText("0");
+        tasa.setText("10");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -520,7 +523,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(vida, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(años, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -532,7 +535,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
-                    .addComponent(vida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(años, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel33)
@@ -559,7 +562,6 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -568,8 +570,9 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 24, Short.MAX_VALUE))
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 28, Short.MAX_VALUE))
         );
 
         pack();
@@ -578,6 +581,10 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
     private void TDPAFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TDPAFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_TDPAFocusLost
+
+    private void T3S2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T3S2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_T3S2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -588,10 +595,14 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
     private javax.swing.JTextField C3;
     private javax.swing.JTextField FDC;
     private javax.swing.JTextField FDS;
+    private javax.swing.JTextField Otros;
     private javax.swing.JTextField T3S2;
     private javax.swing.JTextField T3S2R4;
     private javax.swing.JTextField T3S3;
     private javax.swing.JTextField TDPA;
+    private javax.swing.JTextField años;
+    private javax.swing.JLabel dualpor;
+    private javax.swing.JLabel dualrep;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -604,14 +615,6 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -631,10 +634,14 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JTextField otros;
+    private javax.swing.JLabel senpor;
+    private javax.swing.JLabel senrep;
     private javax.swing.JLabel suma;
+    private javax.swing.JLabel tandempor;
+    private javax.swing.JLabel tandemrep;
     private javax.swing.JTextField tasa;
-    private javax.swing.JTextField vida;
+    private javax.swing.JLabel tridempor;
+    private javax.swing.JLabel tridemrep;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -645,15 +652,35 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
     @Override
     public void focusLost(FocusEvent e) {
         try{
-        /*suma.setText(ct.sumaPorcentaje(Integer.parseInt(A.getText())
-                , Integer.parseInt(B2.getText()),
-                Integer.parseInt(B3.getText()),
-                Integer.parseInt(C2.getText()), 
-                Integer.parseInt(C3.getText()),
-                Integer.parseInt(T3S2.getText()),
-                Integer.parseInt(T3S3.getText()),
-                Integer.parseInt(T3S2R4.getText()),
-                Integer.parseInt(otros.getText())));*/
+            ct.setA(Double.parseDouble(A.getText()));
+            ct.setB2(Double.parseDouble(B2.getText()));
+            ct.setB3(Double.parseDouble(B3.getText()));
+            ct.setC2(Double.parseDouble(C2.getText()));
+            ct.setC3(Double.parseDouble(C3.getText()));
+            ct.setT3S2(Double.parseDouble(T3S2.getText()));
+            ct.setT3S3(Double.parseDouble(T3S3.getText()));
+            ct.setT3S2R4(Double.parseDouble(T3S2R4.getText()));
+            ct.setOtros(Double.parseDouble(Otros.getText()));
+            
+            ct.setAños(Double.parseDouble(años.getText()));
+            ct.setFDC(Double.parseDouble(FDC.getText()));
+            ct.setFDS(Double.parseDouble(FDS.getText()));
+            ct.setTDPA(Double.parseDouble(TDPA.getText()));
+            ct.setTasa(Double.parseDouble(tasa.getText()));
+            
+            ct.operar();
+            
+            senpor.setText(String.format("%.2f",ct.numsen()));
+            dualpor.setText(String.format("%.2f",ct.numdua()));
+            tandempor.setText(String.format("%.2f",ct.numtran()));
+            tridempor.setText(String.format("%.2f",ct.numtri()));
+            
+            senrep.setText(String.format("%.0f",ct.getNumEjes_Sencillos_año()));
+            dualrep.setText(String.format("%.0f",ct.getNumEjes_dual_año()));
+            tandemrep.setText(String.format("%.0f",ct.getNumEjes_tandem_año()));
+            tridemrep.setText(String.format("%.0f",ct.getNumEjes_tridem_año()));
+            
+            suma.setText(ct.sumaPorcentaje()+"%");
         }catch(NumberFormatException ex){
             suma.setText("0");
         }
