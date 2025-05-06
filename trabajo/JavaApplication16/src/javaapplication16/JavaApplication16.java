@@ -4,6 +4,7 @@
  */
 package javaapplication16;
 
+import modelo.Archivos;
 import vista.VentanaPrincipal;
 
 /**
@@ -14,6 +15,7 @@ public class JavaApplication16 {
 
     public static void main(String[] args) {
         VentanaPrincipal.main(args);
+        Archivos.IniciarArchivo();
     }
     
 }

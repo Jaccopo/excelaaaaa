@@ -43,19 +43,19 @@ public class CTransito {
     }
     //Getters and setters
     public double getNumEjes_Sencillos_año() {
-        return NumEjes_Sencillos_año/10;
+        return NumEjes_Sencillos_año;
     }
 
     public double getNumEjes_dual_año() {
-        return NumEjes_dual_año/10;
+        return NumEjes_dual_año;
     }
 
     public double getNumEjes_tandem_año() {
-        return NumEjes_tandem_año/10;
+        return NumEjes_tandem_año;
     }
 
     public double getNumEjes_tridem_año() {
-        return NumEjes_tridem_año/10;
+        return NumEjes_tridem_año;
     }
     
     public double getA() {
@@ -182,7 +182,7 @@ public class CTransito {
         double v1= 1+(Tasa);
         
         CoefAcumTrans = 365 * ((Math.pow(v1,a1) -1)/ Tasa);
-        
+     
         TTotalAcum = TDPA * CoefAcumTrans * FDS * FDC;
         Trans_Prom_anual = TTotalAcum / años;
 

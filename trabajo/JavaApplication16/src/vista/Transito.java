@@ -99,7 +99,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("TDPA(VEH/DIA):");
 
-        TDPA.setText("5000");
+        TDPA.setText("500");
         TDPA.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 TDPAFocusLost(evt);
@@ -137,7 +137,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
 
         jLabel4.setText("CARRIL (FDC):");
 
-        FDS.setText("0.5");
+        FDS.setText("1");
 
         FDC.setText("0.5");
 
@@ -239,24 +239,25 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(A, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(5, 5, 5)
                 .addComponent(B2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(B3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(C2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(C3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(C3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(T3S2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(T3S3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(T3S2R4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Otros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(suma, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(suma, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -339,7 +340,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel15)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 16, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -670,15 +671,15 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
             
             ct.operar();
             
-            senpor.setText(String.format("%.2f",ct.numsen()));
-            dualpor.setText(String.format("%.2f",ct.numdua()));
-            tandempor.setText(String.format("%.2f",ct.numtran()));
-            tridempor.setText(String.format("%.2f",ct.numtri()));
+            senpor.setText(String.format("%.0f",ct.numsen()));
+            dualpor.setText(String.format("%.0f",ct.numdua()));
+            tandempor.setText(String.format("%.0f",ct.numtran()));
+            tridempor.setText(String.format("%.0f",ct.numtri()));
             
-            senrep.setText(String.format("%.0f",ct.getNumEjes_Sencillos_año()));
-            dualrep.setText(String.format("%.0f",ct.getNumEjes_dual_año()));
-            tandemrep.setText(String.format("%.0f",ct.getNumEjes_tandem_año()));
-            tridemrep.setText(String.format("%.0f",ct.getNumEjes_tridem_año()));
+            senrep.setText(String.format("%.0f",ct.getNumEjes_Sencillos_año()*10));
+            dualrep.setText(String.format("%.0f",ct.getNumEjes_dual_año()*10));
+            tandemrep.setText(String.format("%.0f",ct.getNumEjes_tandem_año()*10));
+            tridemrep.setText(String.format("%.0f",ct.getNumEjes_tridem_año()*10));
             
             suma.setText(ct.sumaPorcentaje()+"%");
         }catch(NumberFormatException ex){
