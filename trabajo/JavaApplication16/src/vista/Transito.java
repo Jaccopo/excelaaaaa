@@ -94,6 +94,10 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
         años = new javax.swing.JTextField();
         tasa = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("transito");
+
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -340,7 +344,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel15)
-                        .addGap(0, 16, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
