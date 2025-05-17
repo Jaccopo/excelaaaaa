@@ -1,21 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package javaapplication16;
 
+import Clases.LarguilloNormal;
 import modelo.Archivos;
 import vista.VentanaPrincipal;
 
-/**
- *
- * @author aldoj
- */
 public class JavaApplication16 {
 
+    public static LarguilloNormal data[] = new LarguilloNormal[100];
+
     public static void main(String[] args) {
-        VentanaPrincipal.main(args);
-        Archivos.IniciarArchivo();
+        //VentanaPrincipal.main(args);
+        //Archivos.IniciarArchivo();
+
+        for (int j = 0; j < 100; j++) {
+            data[j] = new LarguilloNormal((Archivos.getArchivo("archivos/larguillo.uwu"))[j].split("\t"));
+            System.out.println(data[j].toString());
+        }
     }
-    
+
 }
