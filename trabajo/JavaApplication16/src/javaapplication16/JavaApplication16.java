@@ -1,21 +1,32 @@
 package javaapplication16;
 
-import Clases.LarguilloNormal;
+import Clases.*;
+import javax.swing.JOptionPane;
 import modelo.Archivos;
 import vista.VentanaPrincipal;
 
-public class JavaApplication16 {
+public class JavaApplication16 implements Runnable{
 
-    public static LarguilloNormal data[] = new LarguilloNormal[100];
 
+    
     public static void main(String[] args) {
-        //VentanaPrincipal.main(args);
-        //Archivos.IniciarArchivo();
+       
+        JavaApplication16 jc = new JavaApplication16();
+        
+       // Thread tr = new Thread(jc);
+        //tr.start();
+        //CargarClases cc = new CargarClases();
+        //VentanaPrincipal.main();
+        TablaDistribucionDeCarga tddc = new TablaDistribucionDeCarga();
+        tddc.asignarValores(1);
 
-        for (int j = 0; j < 100; j++) {
-            data[j] = new LarguilloNormal((Archivos.getArchivo("archivos/larguillo.uwu"))[j].split("\t"));
-            System.out.println(data[j].toString());
-        }
+    }
+
+    @Override
+    public void run() {
+        
+        
+
     }
 
 }

@@ -15,7 +15,6 @@ public class Archivos {
             while (myReader.hasNextLine()) {
                 char buscarComa[] =myReader.nextLine().toCharArray();
                 for (int i = 0; i < buscarComa.length; i++) {
-                    
                     if (buscarComa[i]==',') {
                         construir += '.';
                     }else{
