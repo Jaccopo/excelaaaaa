@@ -23,7 +23,7 @@ public class LarguilloNormal {
         return "LarguilloNormal{" + "dato=" + dato + ", cargaPromedio=" + cargaPromedio + ", simple=" + simple + ", dual=" + dual + ", tandem=" + tandem + ", tridem=" + tridem + '}';
     }
 
-    public int getDato() {
+    public  int getDato() {
         return dato;
     }
 

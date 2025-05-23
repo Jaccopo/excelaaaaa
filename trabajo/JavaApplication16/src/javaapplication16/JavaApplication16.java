@@ -5,28 +5,19 @@ import javax.swing.JOptionPane;
 import modelo.Archivos;
 import vista.VentanaPrincipal;
 
-public class JavaApplication16 implements Runnable{
+public class JavaApplication16 {
 
 
     
     public static void main(String[] args) {
        
-        JavaApplication16 jc = new JavaApplication16();
-        
-       // Thread tr = new Thread(jc);
-        //tr.start();
-        //CargarClases cc = new CargarClases();
-        //VentanaPrincipal.main();
-        TablaDistribucionDeCarga tddc = new TablaDistribucionDeCarga();
-        tddc.asignarValores(1);
+        var vp = new VentanaPrincipal();
+        vp.setCc(new CargarClases());
+        vp.setVisible(true);
+
 
     }
 
-    @Override
-    public void run() {
-        
-        
-
-    }
+   
 
 }

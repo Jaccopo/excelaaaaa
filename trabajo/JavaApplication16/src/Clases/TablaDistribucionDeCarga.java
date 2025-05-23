@@ -8,7 +8,7 @@ package Clases;
  *
  * @author aldoj
  */
-public class TablaDistribucionDeCarga {
+public final class TablaDistribucionDeCarga {
 
     private final String dataBaja = "1.000	0.000	0.000	1.200	0.000	0.000	0.350	0.000	0.000" + " "
             + "1.000	0.000	0.000	1.504	0.000	0.000	0.500	0.000	0.000" + " "
@@ -55,6 +55,19 @@ public class TablaDistribucionDeCarga {
         s1 = new float[4];
         s2 = new float[4];
         s3 = new float[4];
+    }
+    
+     public TablaDistribucionDeCarga(int tipo) {
+        w1 = new float[4];
+        w2 = new float[4];
+        w3 = new float[4];
+        m1 = new float[4];
+        m2 = new float[4];
+        m3 = new float[4];
+        s1 = new float[4];
+        s2 = new float[4];
+        s3 = new float[4];
+        asignarValores(tipo);
     }
 
     public void asignarValores(int tipo) {

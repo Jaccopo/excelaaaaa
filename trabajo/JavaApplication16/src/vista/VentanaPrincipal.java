@@ -4,7 +4,7 @@
  */
 package vista;
 
-
+import Clases.CargarClases;
 
 /**
  *
@@ -14,14 +14,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     Transito tra;
     AnalisisEspectral ae;
-    
+    CargarClases cc;
+
+    public void setCc(CargarClases cc) {
+        this.cc = cc;
+    }
+
     public VentanaPrincipal() {
         initComponents();
-        
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         
         tra = null;
         ae = null;
-        
+
     }
 
     /**
@@ -38,10 +58,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         espec = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        anPro = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        anInd = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,7 +73,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGap(0, 694, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Trnasito");
+        jMenu1.setText("Transito");
 
         jMenuItem3.setText("iniciar");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -69,25 +86,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         espec.setText("Espectros de carga");
-        jMenuBar1.add(espec);
 
-        jMenu3.setText("Analisis");
-
-        anPro.setText("Espectral");
-        anPro.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem1.setText("Iniciar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anProActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu3.add(anPro);
+        espec.add(jMenuItem1);
 
-        jMenuItem2.setText("Probabilista");
-        jMenu3.add(jMenuItem2);
-
-        anInd.setText("Individual");
-        jMenu3.add(anInd);
-
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(espec);
 
         setJMenuBar(jMenuBar1);
 
@@ -105,72 +113,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void anProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anProActionPerformed
-
-            ae = new AnalisisEspectral();
-            escritorio.add(ae);
-            ae.setVisible(true);
-        
-    }//GEN-LAST:event_anProActionPerformed
-
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
-            tra = new Transito();
-            escritorio.add(tra);
-            tra.setVisible(true);
-        
+
+        tra = new Transito();
+        escritorio.add(tra);
+        tra.setVisible(true);
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaPrincipal().setVisible(true);
-            }
-        });
-    }
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        ae = new AnalisisEspectral(cc);
+        escritorio.add(ae);
+        ae.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem anInd;
-    private javax.swing.JMenuItem anPro;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu espec;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 
-
-
-
-
-    
 }
