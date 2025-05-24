@@ -10,6 +10,8 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
     private CargarClases cc;
     private CAnalisis ca;
     
+    private String capas="";
+    
     public AnalisisEspectral(CargarClases cc) {
         this.cc = cc;
         ca = new CAnalisis(this.cc);
@@ -17,6 +19,7 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
         initComponents();
         dtm = (DefaultTableModel) tabla.getModel();
         tabla.setModel(dtm);
+       
         
         
         
@@ -31,7 +34,7 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        nCapas1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla1 = new javax.swing.JTable();
@@ -49,7 +52,7 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nCapas2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
@@ -65,11 +68,11 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         tipoCarga = new javax.swing.JComboBox<>();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
+        s1 = new javax.swing.JCheckBox();
+        s3 = new javax.swing.JCheckBox();
+        s4 = new javax.swing.JCheckBox();
+        s2 = new javax.swing.JCheckBox();
+        s5 = new javax.swing.JCheckBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -87,8 +90,13 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
         jLabel9.setText("Numero de capas:");
         jLabel9.setOpaque(true);
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField4.setText("3");
+        nCapas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        nCapas1.setText("3");
+        nCapas1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nCapas1FocusLost(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -200,7 +208,7 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField4)
+                                .addComponent(nCapas1)
                                 .addComponent(jComboBox3, 0, 147, Short.MAX_VALUE))
                             .addComponent(jComboBox4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,7 +221,7 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nCapas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11)
                 .addGap(3, 3, 3)
@@ -272,8 +280,13 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
         jLabel1.setText("Numero de capas:");
         jLabel1.setOpaque(true);
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setText("3");
+        nCapas2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        nCapas2.setText("3");
+        nCapas2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nCapas2FocusLost(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -362,7 +375,7 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField2)
                                     .addComponent(jComboBox1, 0, 199, Short.MAX_VALUE)
-                                    .addComponent(jTextField1))))
+                                    .addComponent(nCapas2))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -372,7 +385,7 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nCapas2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addGap(3, 3, 3)
@@ -412,20 +425,21 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
 
         tipoCarga.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Legal", "Ligera Sobre Carga", "Alta Sobre Carga", "Muy Alta Sobre Carga", "Avanzado" }));
 
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Sencillo");
+        s1.setForeground(new java.awt.Color(255, 255, 255));
+        s1.setText("Sencillo");
+        s1.setName(""); // NOI18N
 
-        jCheckBox2.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox2.setText("Tandem");
+        s3.setForeground(new java.awt.Color(255, 255, 255));
+        s3.setText("Tandem");
 
-        jCheckBox3.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox3.setText("Tridem");
+        s4.setForeground(new java.awt.Color(255, 255, 255));
+        s4.setText("Tridem");
 
-        jCheckBox4.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox4.setText("Sencillo Dual");
+        s2.setForeground(new java.awt.Color(255, 255, 255));
+        s2.setText("Sencillo Dual");
 
-        jCheckBox5.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox5.setText("Limite legal de carga");
+        s5.setForeground(new java.awt.Color(255, 255, 255));
+        s5.setText("Limite legal de carga");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -436,11 +450,11 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tipoCarga, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(s1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(s3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(s4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(s2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(s5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -451,15 +465,15 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tipoCarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(s1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox4)
+                .addComponent(s2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
+                .addComponent(s3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
+                .addComponent(s4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox5)
+                .addComponent(s5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -541,19 +555,33 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jComboBox4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ca.IniciarAnalisisEspectral(tipoCarga.getSelectedItem()+"");
+        boolean activos[] =new boolean[5];
+        activos[0] = s1.isSelected();
+        activos[1] = s2.isSelected();
+        activos[2] = s3.isSelected();
+        activos[3] = s4.isSelected();
+        activos[4] = s5.isSelected();
+        
+        
+        
+        ca.IniciarAnalisisEspectral(tipoCarga.getSelectedItem()+"",activos,Integer.parseInt(capas));
         cc = ca.getClases();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void nCapas1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nCapas1FocusLost
+        capas = nCapas1.getText();
+        nCapas2.setText(capas+"");
+    }//GEN-LAST:event_nCapas1FocusLost
+
+    private void nCapas2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nCapas2FocusLost
+        capas = nCapas2.getText();
+        nCapas1.setText(capas+"");
+    }//GEN-LAST:event_nCapas2FocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
@@ -582,12 +610,17 @@ public class AnalisisEspectral extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField nCapas1;
+    private javax.swing.JTextField nCapas2;
+    private javax.swing.JCheckBox s1;
+    private javax.swing.JCheckBox s2;
+    private javax.swing.JCheckBox s3;
+    private javax.swing.JCheckBox s4;
+    private javax.swing.JCheckBox s5;
     private javax.swing.JTable tabla;
     private javax.swing.JTable tabla1;
     private javax.swing.JComboBox<String> tipoCarga;

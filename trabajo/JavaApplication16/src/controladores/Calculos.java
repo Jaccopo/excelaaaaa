@@ -9,6 +9,8 @@ package controladores;
  * @author aldoj
  */
 public class Calculos {
+    float poisson = (float) 0.35;
+    final double PI = 3.14159265358979;
     int numCapa;
     float espesor;//cm
     float modElastico;

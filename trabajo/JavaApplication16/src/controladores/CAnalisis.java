@@ -11,6 +11,9 @@ public class CAnalisis {
 
     private TablaDistribucionDeCarga tdc;
     private CargarClases cc;
+    private final double PI = 3.14159265358979;
+    private boolean seleccion[];
+    private int numCapas;
 
     public CAnalisis(CargarClases cc) {
         this.cc = cc;
@@ -20,8 +23,11 @@ public class CAnalisis {
         return this.cc;
     }
 
-    public void IniciarAnalisisEspectral(String tipoCarga) {
-
+    public void IniciarAnalisisEspectral(String tipoCarga,boolean[] seleccion,int numCapas) {
+        
+        this.seleccion = seleccion;
+        this.numCapas = numCapas;
+        
         switch (tipoCarga) {
             case "Legal" -> {
 
@@ -45,6 +51,7 @@ public class CAnalisis {
         }
         llenarValoresTablaxd();
     }
+  
 
     private void llenarValoresTablaxd() {
         var valor = 0.0;
@@ -72,24 +79,26 @@ public class CAnalisis {
                 ayuda1 = (Math.log(valor) - m1) / s1;
                 ayuda2 = (Math.log(valor) - m2) / s2;
                 ayuda3 = (Math.log(valor) - m3) / s3;
+                
 
                 altura = w1 / (2.506628274631 * valor * s1) * Math.exp(-0.5 * Math.pow(ayuda1, 2))
                         + w2 / (2.506628274631 * valor * s2) * Math.exp(-0.5 * Math.pow(ayuda2, 2))
                         + w3 / (2.506628274631 * valor * s3) * Math.exp(-0.5 * Math.pow(ayuda3, 2));
                 cc.data[i].setDato(i + 1);
                 cc.data[i].setCargaPromedio((float) valor);
-                switch (j) {
+                
+                switch (j+1) {
                     case 1 -> {
-                        cc.data[i].setSimple((float) altura);
+                        cc.data[i].setSimple((float) altura*100>0.01?0:(float) altura*100);
                     }
                     case 2 -> {
-                        cc.data[i].setDual((float) altura);
+                        cc.data[i].setDual((float) altura*100>0.01?0:(float) altura*100);
                     }
                     case 3 -> {
-                        cc.data[i].setTridem((float) altura);
+                        cc.data[i].setTridem((float) altura*100>0.01?0:(float) altura*100);
                     }
                     case 4 -> {
-                        cc.data[i].setTandem((float) altura);
+                        cc.data[i].setTandem((float) altura*100>0.01?0:(float) altura*100);
                     }
                 }
             }
@@ -99,5 +108,10 @@ public class CAnalisis {
             System.out.println(cc.data[i].toString());
         }
 
+    }
+    
+      private void calculoDiferencial(){
+    
+    
     }
 }

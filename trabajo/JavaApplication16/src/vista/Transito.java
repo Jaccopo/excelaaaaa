@@ -680,10 +680,10 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
             tandempor.setText(String.format("%.0f",ct.numtran()));
             tridempor.setText(String.format("%.0f",ct.numtri()));
             
-            senrep.setText(String.format("%.0f",ct.getNumEjes_Sencillos_año()*10));
-            dualrep.setText(String.format("%.0f",ct.getNumEjes_dual_año()*10));
-            tandemrep.setText(String.format("%.0f",ct.getNumEjes_tandem_año()*10));
-            tridemrep.setText(String.format("%.0f",ct.getNumEjes_tridem_año()*10));
+            senrep.setText(String.format("%.0f",ct.getNumEjes_Sencillos_año()));
+            dualrep.setText(String.format("%.0f",ct.getNumEjes_dual_año()));
+            tandemrep.setText(String.format("%.0f",ct.getNumEjes_tandem_año()));
+            tridemrep.setText(String.format("%.0f",ct.getNumEjes_tridem_año()));
             
             suma.setText(ct.sumaPorcentaje()+"%");
         }catch(NumberFormatException ex){
