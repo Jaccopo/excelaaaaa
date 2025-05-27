@@ -13,7 +13,7 @@ import Clases.CargarClases;
 public class VentanaPrincipal extends javax.swing.JFrame {
 
     Transito tra;
-    AnalisisEspectral ae;
+    Analisis ae;
     CargarClases cc;
 
     public void setCc(CargarClases cc) {
@@ -122,7 +122,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        ae = new AnalisisEspectral(cc);
+        ae = new Analisis(cc);
         escritorio.add(ae);
         ae.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed

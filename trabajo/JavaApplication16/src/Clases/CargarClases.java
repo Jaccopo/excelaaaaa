@@ -34,8 +34,8 @@ public class CargarClases {
             ed[j] = new EspectroDano((Archivos.getArchivo("archivos/larguillo-espectro-daño.uwu"))[j].split("\t"));        
             et[j] = new EspectroTotal((Archivos.getArchivo("archivos/larguillo-espectro-daño-total.uwu"))[j].split("\t"));
             eda[j] =new EspectroDanoAcomulado((Archivos.getArchivo("archivos/larguillo-espectro-daño-acomulado.uwu"))[j].split("\t"));
-            System.out.println(data[j].toString());
-            System.out.println(j);
+            //System.out.println(data[j].toString());
+            //System.out.println(j);
         }
         for (int i = 0; i < 3; i++) {
             vi[i] = new VidaUtil((Archivos.getArchivo("archivos/larguillo-vida-util.uwu"))[i].split("\t"));
