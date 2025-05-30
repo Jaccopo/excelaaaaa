@@ -2,6 +2,9 @@ package controladores;
 
 import Clases.CargarClases;
 import Datos.TablaDistribucionDeCarga;
+import Objetos.CapaCalculo;
+import Objetos.Llanta;
+import Objetos.Llantas;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,7 +16,9 @@ public class CAnalisis {
     private double poisson, presion;
     private boolean seleccion[];
     private int numCapas;
-    private DefaultTableModel dtm;
+    private Objetos.EstructuraPavimiento ep[];//private DefaultTableModel dtm;
+    private Llantas llantas;
+    private CapaCalculo capaCalculo1[];
 
     //datoss en cm
     private final double X = 0;
@@ -30,20 +35,10 @@ public class CAnalisis {
         this.presion = 90; // presion por defecto
     }
 
-    /**
-     * GetPresion Retorna el valor por presion guardado en la clase.
-     *
-     * @return
-     */
     public double getPresion() {
         return presion;
     }
 
-    /**
-     * set Presion Asigna el valor de presion.
-     *
-     * @param presion double
-     */
     public void setPresion(double presion) {
         this.presion = presion;
     }
@@ -60,17 +55,18 @@ public class CAnalisis {
         return this.cc;
     }
 
-    public void IniciarAnalisisEspectral(String tipoCarga, boolean[] seleccion, DefaultTableModel dtm) {
+    
+    public void IniciarAnalisisEspectral(String tipoCarga, boolean[] seleccion, Objetos.EstructuraPavimiento ep[]) {
 
+        
         this.seleccion = seleccion;
-        this.numCapas = dtm.getRowCount();
-        this.dtm = dtm;
+        this.numCapas = ep.length;
+        this.ep = ep;
         if (numCapas > 3) {
             JOptionPane.showMessageDialog(null, "Solo se puede calcular tres capas", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             switch (tipoCarga) {
                 case "Legal" -> {
-
                     tdc = new TablaDistribucionDeCarga(1);
                 }
                 case "Ligera Sobrecarga" -> {
@@ -150,7 +146,7 @@ public class CAnalisis {
             }
 
         }
-       /* for (int i = 0; i < 100; i++) {
+        /* for (int i = 0; i < 100; i++) {
             System.out.println(cc.data[i].toString());
         }*/
 
@@ -158,10 +154,11 @@ public class CAnalisis {
 
     private void calculoDiferencial(int tipoeje, float pesoEje) {
 
-        //se inicia el objeto capaCalculo
-        var capaCalculo1 = new Objetos.CapaCalculo[dtm.getRowCount()];//donde se iran guardando los calculos creo jaja ta raro porque es de gmmmmm
+        //se inicia el objeto capaCalculo y llantas
+        capaCalculo1 = new Objetos.CapaCalculo[ep.length];//donde se iran guardando los calculos creo jaja ta raro porque es de gmmmmm
+        llantas = new Llantas();
 
-        for (int i = 0; i < dtm.getRowCount(); i++) {
+        for (int i = 0; i <ep.length ; i++) {
             capaCalculo1[i] = new Objetos.CapaCalculo();
         }
 
@@ -184,14 +181,14 @@ public class CAnalisis {
         capaCalculo1[0].setPesoNeumatico(pesoNeum);
 
         for (int j = 0; j < numCapas; j++) {
-            espesor[j] = Double.parseDouble(dtm.getValueAt(j, 2) + "");
-            modElastico[j] = Double.parseDouble(dtm.getValueAt(j, 3) + "") * 1000;
+            espesor[j] = Double.parseDouble(ep[j].getEspesor()+ "");
+            modElastico[j] = Double.parseDouble(ep[j].getModulo()+ "") * 1000;
             fCorrecion[j] = numLlantas == 1 ? 0.9 : (j == 0 ? 1 : 0.8);// ni idea el porque pero bueno esto es asi
         }
 
         for (int j = 0; j < numCapas - 1; j++) {
-            he[j] = fCorrecion[j] * (espesor[j] + he[(j - 1==0?j-1:0)]) * Math.pow((modElastico[j] / modElastico[j + 1]), (1 / 3));
-                System.out.println(he[j]);
+            he[j] = fCorrecion[j] * (espesor[j] + he[(j - 1 == 0 ? j - 1 : 0)]) * Math.pow((modElastico[j] / modElastico[j + 1]), (1 / 3));
+            System.out.println(he[j]);
             if (j == 0 || j == numCapas - 1) {
                 capaCalculo1[j].setEspesorParcialEquivalente(he[j]);
             }
@@ -206,18 +203,329 @@ public class CAnalisis {
 
     }
 
-    public void coordenadas(Objetos.CapaCalculo cac) {
-        double r11, r21, r31, r41;
-        double rLlanta1, rLlanta2, rLlanta3, rLlanta4, rLlanta5, rLlanta6;
-        double rLlantaCapa1, rLlantaCapa2, rLlantaCapa3, rLlantaCapa4, rLlantaCapa5, rLlantaCapa6;
-        double rLlantaCapa1Natur, rLlantaCapa2Natur, rLlantaCapa3Natur, rLlantaCapa4Natur, rLlantaCapa5Natur, rLlantaCapa6Natur;
-        double anguloLlanta1, anguloLlanta2, anguloLlanta3, anguloLlanta4, anguloLlanta5, anguloLlanta6;
-        double fEVerticalra11, fEVerticalra12, fEVerticalra13, fEVerticalra14;
+    public void coordenadas() {
+        double r1[] = new double[4];
+        double rllanta[] = new double[6];//rLlanta1, rLlanta2, rLlanta3, rLlanta4, rLlanta5, rLlanta6;
+        double rLlantaCapa[] = new double[6];/*rLlantaCapa1, rLlantaCapa2, rLlantaCapa3, rLlantaCapa4, rLlantaCapa5, rLlantaCapa6,*/
+        double rLlantaCapaNatur[] = new double[6];//rLlantaCapa1Natur, rLlantaCapa2Natur, rLlantaCapa3Natur, rLlantaCapa4Natur, rLlantaCapa5Natur, rLlantaCapa6Natur;
+        double anguloLlanta[] = new double[6];//anguloLlanta1, anguloLlanta2, anguloLlanta3, anguloLlanta4, anguloLlanta5, anguloLlanta6;
+        double fEVerticalra1[] = new double[6];//fEVerticalra11, fEVerticalra12, fEVerticalra13, fEVerticalra14;
         double interfaz[];
-
+        double rContactoCircular = capaCalculo1[0].getRCC();
         interfaz = new double[numCapas];
 
+        interfaz[0] = capaCalculo1[0].getEspesorParcialEquivalente();
+        interfaz[1] = capaCalculo1[1].getEspesorParcialEquivalente();
+
+        rllanta[0] = Math.pow((Math.pow(X, 2) + Math.pow(Y, 2)), 0.5);
+        rllanta[1] = Math.pow((Math.pow(X, 2) + Math.pow((Y - S), 2)), 0.5);
+        rllanta[2] = Math.pow((Math.pow((X - D), 2) + Math.pow(Y, 2)), 0.5);
+        rllanta[3] = Math.pow((Math.pow((X - D), 2) + Math.pow((Y - S), 2)), 0.5);
+        rllanta[4] = Math.pow((Math.pow((X - 2 * D), 2) + Math.pow(Y, 2)), 0.5);
+        rllanta[5] = Math.pow((Math.pow((X - 2 * D), 2) + Math.pow((Y - S), 2)), 0.5);
+
+        for (int j = 0; j < 2; j++) {
+            for (int i = 0; i < rllanta.length; i++) {
+
+                if (j == 0) {
+                    rLlantaCapa[i] = Math.pow(Math.pow(rllanta[i], 2) + Math.pow(interfaz[0], 2), 0.5);
+                }
+                if (j == 1) {
+                    rLlantaCapaNatur[i] = Math.pow(Math.pow(rllanta[i], 2) + Math.pow(interfaz[1], 2), 0.5);
+                }
+            }
+        }
+
+        anguloLlanta[0] = X == 0 ? 90 : Math.atan(Math.abs(Y) / X) / 1.74532925199433E-02;
+        anguloLlanta[1] = X == 0 ? 90 : Math.atan(Math.abs((Y - S) / X)) / 1.74532925199433E-02;
+
+        anguloLlanta[2] = X == D ? 90 : Math.atan(Math.abs(Y / (X - D))) / 1.74532925199433E-02;
+        anguloLlanta[3] = X == D ? 90 : Math.atan(Math.abs((Y - S) / (X - D))) / 1.74532925199433E-02;
+
+        anguloLlanta[4] = X == 2 * D ? 90 : Math.atan(Math.abs(Y / (X - 2 * D))) / 1.74532925199433E-02;
+        anguloLlanta[5] = X == 2 * D ? 90 : Math.atan(Math.abs((Y - S) / (X - 2 * D))) / 1.74532925199433E-02;
+
+        for (int i = 0; i < 4; i++) {
+            r1[i] = rllanta[i] / rContactoCircular;
+            fEVerticalra1[i] = r1[i] < 14 ? r1[i] : 13.99;
+        }
+
+        for (int i = 0; i < 6; i++) {
+            llantas.getLlanta(i).setAnguloHorizontal(anguloLlanta[i]);
+            llantas.getLlanta(i).setDistanciaHorizontal(rllanta[i]);
+            llantas.getLlanta(i).setDistanciaRadialSubrasante(rLlantaCapa[i]);
+            llantas.getLlanta(i).setDistanciaRadialCarpeta(rLlantaCapaNatur[i]);
+        }
+
+        capaCalculo1[0].setEsfuerzoCortanteRZ(fEVerticalra1[0]);
+        capaCalculo1[0].setEsfuerzoCortanteYZ(fEVerticalra1[1]);
+        capaCalculo1[0].setEsfuerzoCortanteXZ(fEVerticalra1[2]);
+        capaCalculo1[0].setDeformacionVerticalE2(fEVerticalra1[3]);
+
+    }
+
+    public void Factores_Aglvin() {
+        int n;
+        double x_inter[], y_inter[];
+        x_inter = new double[18];
+        y_inter = new double[23];
+        double r_sobre_a;
+        double z_sobre_a;
+        double X;
+        double Y;
+        int buscax;
+        int buscay;
+
+        int posx1=0, posx2=0, posy1=0, posy2=0;
+
+        double valorA;
+        double valref;
+        double valorC;
+        double valorI;
+        double valorK;
+        double llantas;
+
+        double res_interpolacion1;
+        double res_interpolacion2;
+        double res_interpolacion3;
+
+        double radioContacto;
+        double z;
+
+        x_inter[0] = 0;
+        x_inter[1] = 0.2;
+        x_inter[2] = 0.4;
+        x_inter[3] = 0.6;
+        x_inter[4] = 0.8;
+        x_inter[5] = 1;
+        x_inter[6] = 1.2;
+        x_inter[7] = 1.5;
+        x_inter[8] = 2;
+        x_inter[9] = 3;
+        x_inter[10] = 4;
+        x_inter[11] = 5;
+        x_inter[12] = 6;
+        x_inter[13] = 7;
+        x_inter[14] = 8;
+        x_inter[15] = 10;
+        x_inter[16] = 12;
+        x_inter[17] = 14;
+
+        y_inter[0] = 0;
+        y_inter[1] = 0.1;
+        y_inter[2] = 0.2;
+        y_inter[3] = 0.3;
+        y_inter[4] = 0.4;
+        y_inter[5] = 0.5;
+        y_inter[6] = 0.6;
+        y_inter[7] = 0.7;
+        y_inter[8] = 0.8;
+        y_inter[9] = 0.9;
+        y_inter[10] = 1;
+        y_inter[11] = 1.2;
+        y_inter[12] = 1.5;
+        y_inter[13] = 2;
+        y_inter[14] = 2.5;
+        y_inter[15] = 3;
+        y_inter[16] = 4;
+        y_inter[17] = 5;
+        y_inter[18] = 6;
+        y_inter[19] = 7;
+        y_inter[20] = 8;
+        y_inter[21] = 9;
+        y_inter[22] = 10;
+
+        for (int i = 0; i < 4; i++) {
+            radioContacto = capaCalculo1[0].getRCC();
+            z = capaCalculo1[0].getEspesorParcialEquivalente();
+            r_sobre_a = this.llantas.getLlanta(i).getRa();
+            z_sobre_a = z / radioContacto;
+
+            r_sobre_a = r_sobre_a > 14 ? 13.99 : r_sobre_a;
+            z_sobre_a = z_sobre_a > 10 ? 9.99 : z_sobre_a;
+
+            X = r_sobre_a;
+            Y = z_sobre_a;
+
+            for (buscax = 0; buscax < 18; buscax++) {
+                if (X >= x_inter[buscax] && X < x_inter[buscax + 1]) {
+                    posx1 = buscax;
+                    posx2 = buscax + 1;
+                    break;
+                }
+            }
+            for (buscay = 0; buscay < 23; buscay++) {
+                if (Y >= y_inter[buscay] && Y < y_inter[buscay + 1]) {
+                    posy1 = buscay;
+                    posy2 = buscay + 1;
+                    break;
+                }
+            }
+
+            valorA = y_inter[buscay];
+            valorC = y_inter[buscay + 1];
+            valorI = Datos.FactorEVertical.getValor(posy1, posx1);//Sheets("factor_e_vert").Cells(posy1 + 2, posx1 + 2)
+            valorK = Datos.FactorEVertical.getValor(posy2, posx1);
+
+            valref = Y;
+
+            res_interpolacion1 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorI = Datos.FactorEVertical.getValor(posy1, posx2);// Sheets("factor_e_vert").Cells(posy1 + 2, posx1 + 2)  Peguntar
+            valorK = Datos.FactorEVertical.getValor(posy2, posx2);
+
+            res_interpolacion2 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorA = x_inter[buscax];
+            valref = X;
+            valorC = x_inter[buscax + 1];
+
+            res_interpolacion3 = interpola(valorA, valref, valorC, res_interpolacion1, res_interpolacion2);
+
+            this.llantas.getLlanta(i).setDistanciaHorizontal(res_interpolacion3);
+
+            //intepolación para la segunda tabla
+            valorA = y_inter[buscay];
+            valorC = y_inter[buscay + 1];
+            valorI = Datos.FactorERadial.getValor(posy1, posx1);
+            valorK = Datos.FactorERadial.getValor(posy2, posx1);
+
+            valref = Y;
+
+            res_interpolacion1 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorI = Datos.FactorERadial.getValor(posy1, posx2);
+            valorK = Datos.FactorERadial.getValor(posy2, posx2);
+
+            res_interpolacion2 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorA = x_inter[buscax];
+            valref = X;
+            valorC = x_inter[buscax + 1];
+
+            res_interpolacion3 = interpola(valorA, valref, valorC, res_interpolacion1, res_interpolacion2);
+
+            this.llantas.getLlanta(i).setDistanciaRadialCarpeta(res_interpolacion3);
+
+            //interpolación para la tercera tabla
+            valorA = y_inter[buscay];
+            valorC = y_inter[buscay + 1];
+            valorI = Datos.FactorETangencial.getValor(posy1, posx1);
+            valorK = Datos.FactorETangencial.getValor(posy2, posx1);
+
+            valref = Y;
+
+            res_interpolacion1 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorI = Datos.FactorETangencial.getValor(posy1, posx2);
+            valorK = Datos.FactorETangencial.getValor(posy2, posx2);
+
+            res_interpolacion2 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorA = x_inter[buscax];
+            valref = X;
+            valorC = x_inter[buscax + 1];
+
+            res_interpolacion3 = interpola(valorA, valref, valorC, res_interpolacion1, res_interpolacion2);
+
+            this.llantas.getLlanta(i).setDistanciaRadialSubrasante(res_interpolacion3);
+
+        }
+    }
+
+    private double interpola(double a, double b, double c, double i, double k) {
+        return (((k - i) * (b - a)) / (c - a)) + i;
+    }
+
+    private void deflexionCircular(double pesoEje, String tipoEje) {
+
+        double numLlantas=0;
+        double pesoNeum;
+        double radioContacto;
+        // ya definida double PresionInflado;
+        // ya definida int NumCapas As Integer '
+        double espesor[];
+        double modElastico[];
+        //ua definida double Poisson As Double '
+        double fCorreccion[];
+        int i;
+        double he[], z[], dz[];
+        double A;
+        double psiAMpa;
+        double deflexionTotal;
+
+        espesor = new double[numCapas];
+        modElastico = new double[numCapas];
+        fCorreccion = new double[numCapas];
+        he = new double[numCapas - 1];
+        z = new double[numCapas];
+        dz = new double[numCapas];
+
+        switch (tipoEje) {
+            case ("Sencillo") -> {numLlantas = 1;}
+            case ("Sencillo Dual") -> {numLlantas = 2;}
+            case ("Tandem") -> {numLlantas = 4;}
+            case ("Tridem") -> {numLlantas = 6;}
+            case ("Medio Tridem") -> {numLlantas = 3;}
+        }
         
+        pesoNeum = pesoEje / (2 * numLlantas);
+        radioContacto = Math.pow(((pesoNeum * 2204.623) / (PI * presion)) , 0.5) * 2.54;
+       
+        for (int j = 0; j < numCapas; j++) {
+            
+        }
+
+        /*
+     Sub DeflexionCircular()
+
+                                                                   'anotar una condicion donde aplique que solamente
+                                                                   'funciona odemark para 2 o mas capas
+        For i = 1 To NumCapas
+            Espesor(i) = Sheets("NuevoFormatoPav").Cells(13 + i, 5)
+            ModElastico(i) = Sheets("NuevoFormatoPav").Cells(13 + i, 6)
+               If NumCapas = 2 Then
+                    Fcorreccion(i) = 0.9
+                Else
+                   If i = 1 Then
+                    Fcorreccion(i) = 1
+                   Else
+                    Fcorreccion(i) = 0.8
+                   End If
+                End If
+        Next i
+
+            For i = 1 To NumCapas - 1
+                he(i) = Fcorreccion(i) * (Espesor(i) + he(i - 1)) * (ModElastico(i) / ModElastico(i + 1)) ^ (1 / 3)
+                Sheets("calculos").Cells(48 + i, 3) = he(i) ' sirve para anotar los espesores equivalentes de las interfaces
+            Next i
+            PsiAMpa = 0.00689475719
+        DeflexionTotal = 0
+        A = RadioContacto
+        For i = 1 To NumCapas
+
+        If i <> NumCapas Then
+
+        dz(i) = (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
+            (1 / (1 + (he(i - 1) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * ((1 + (he(i - 1) / A) ^ 2) ^ 0.5 - he(i - 1) / A)) - _
+            (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
+            (1 / (1 + ((Espesor(i) + he(i - 1)) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * _
+            ((1 + ((Espesor(i) + he(i - 1)) / A) ^ 2) ^ 0.5 - (Espesor(i) + he(i - 1)) / A)) ' ojo con el Mod elastico
+        Else
+
+        dz(i) = (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
+            (1 / (1 + (he(i - 1) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * ((1 + (he(i - 1) / A) ^ 2) ^ 0.5 - he(i - 1) / A))
+
+        End If
+
+           DeflexionTotal = DeflexionTotal + dz(i)
+
+        Next i
+        Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
+
+        End Sub
+   
+         */
     }
 
 }

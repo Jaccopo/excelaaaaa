@@ -62,12 +62,11 @@ For i = 1 To NumCapas
         End If
 Next i
 
-For i = 1 To NumCapas - 1
-    he(i) = Fcorreccion(i) * (Espesor(i) + he(i - 1)) * (ModElastico(i) / ModElastico(i + 1)) ^ (1 / 3)
-            Sheets("calculos").Cells(48 + i, 3) = he(i) ' sirve para anotar los espesores equivalentes de las interfaces
-Next i
-
-PsiAMpa = 0.00689475719
+    For i = 1 To NumCapas - 1
+        he(i) = Fcorreccion(i) * (Espesor(i) + he(i - 1)) * (ModElastico(i) / ModElastico(i + 1)) ^ (1 / 3)
+        Sheets("calculos").Cells(48 + i, 3) = he(i) ' sirve para anotar los espesores equivalentes de las interfaces
+    Next i
+    PsiAMpa = 0.00689475719
 DeflexionTotal = 0
 A = RadioContacto
 For i = 1 To NumCapas

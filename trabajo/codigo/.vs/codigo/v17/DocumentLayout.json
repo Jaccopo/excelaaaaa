@@ -1,0 +1,241 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeflexionCircular.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DeflexionCircular.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\calculosdif.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:calculosdif.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\coordenadas.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:coordenadas.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\avance2.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:avance2.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\AsignacionTransito.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AsignacionTransito.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\AnalisisEspectral.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AnalisisEspectral.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\Factores_Ahlvin.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Factores_Ahlvin.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\interpola.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:interpola.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeformacionesUnitarias.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DeformacionesUnitarias.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeformacionesTension.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DeformacionesTension.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeflexionPuntual.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:DeflexionPuntual.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\VidaRematente.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:VidaRematente.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\EsfuerzosEjeSencillo.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:EsfuerzosEjeSencillo.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "interpola.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\interpola.vb",
+              "RelativeDocumentMoniker": "interpola.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\interpola.vb",
+              "RelativeToolTip": "interpola.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T21:29:58.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Factores_Ahlvin.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\Factores_Ahlvin.vb",
+              "RelativeDocumentMoniker": "Factores_Ahlvin.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\Factores_Ahlvin.vb",
+              "RelativeToolTip": "Factores_Ahlvin.vb",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAHEAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T19:43:22.398Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "calculosdif.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\calculosdif.vb",
+              "RelativeDocumentMoniker": "calculosdif.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\calculosdif.vb",
+              "RelativeToolTip": "calculosdif.vb",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAFsAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T15:26:43.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AnalisisEspectral.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\AnalisisEspectral.vb",
+              "RelativeDocumentMoniker": "AnalisisEspectral.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\AnalisisEspectral.vb",
+              "RelativeToolTip": "AnalisisEspectral.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T15:18:25.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AsignacionTransito.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\AsignacionTransito.vb",
+              "RelativeDocumentMoniker": "AsignacionTransito.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\AsignacionTransito.vb",
+              "RelativeToolTip": "AsignacionTransito.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T15:26:34.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "avance2.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\avance2.vb",
+              "RelativeDocumentMoniker": "avance2.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\avance2.vb",
+              "RelativeToolTip": "avance2.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T15:26:38.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "coordenadas.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\coordenadas.vb",
+              "RelativeDocumentMoniker": "coordenadas.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\coordenadas.vb",
+              "RelativeToolTip": "coordenadas.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T15:25:09.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DeflexionCircular.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeflexionCircular.vb",
+              "RelativeDocumentMoniker": "DeflexionCircular.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeflexionCircular.vb",
+              "RelativeToolTip": "DeflexionCircular.vb",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T21:29:40.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DeformacionesUnitarias.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeformacionesUnitarias.vb",
+              "RelativeDocumentMoniker": "DeformacionesUnitarias.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeformacionesUnitarias.vb",
+              "RelativeToolTip": "DeformacionesUnitarias.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T21:29:53.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DeformacionesTension.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeformacionesTension.vb",
+              "RelativeDocumentMoniker": "DeformacionesTension.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeformacionesTension.vb",
+              "RelativeToolTip": "DeformacionesTension.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T21:29:49.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DeflexionPuntual.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeflexionPuntual.vb",
+              "RelativeDocumentMoniker": "DeflexionPuntual.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\DeflexionPuntual.vb",
+              "RelativeToolTip": "DeflexionPuntual.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T15:26:49.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "VidaRematente.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\VidaRematente.vb",
+              "RelativeDocumentMoniker": "VidaRematente.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\VidaRematente.vb",
+              "RelativeToolTip": "VidaRematente.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T15:26:29.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "EsfuerzosEjeSencillo.vb",
+              "DocumentMoniker": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\EsfuerzosEjeSencillo.vb",
+              "RelativeDocumentMoniker": "EsfuerzosEjeSencillo.vb",
+              "ToolTip": "C:\\Users\\aldoj\\Documents\\GitHub\\excelaaaaa\\trabajo\\codigo\\EsfuerzosEjeSencillo.vb",
+              "RelativeToolTip": "EsfuerzosEjeSencillo.vb",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAIwCcAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-05-29T15:25:38.794Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

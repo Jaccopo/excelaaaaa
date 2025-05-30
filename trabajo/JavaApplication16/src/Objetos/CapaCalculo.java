@@ -16,6 +16,8 @@ public class CapaCalculo {
     double deflexionTotal;
     double esfuerzoNormalX, esfuerzoNormalY, esfuerzoCortanteXY;
     double deformacionVerticalE2, deformacionPorTension;
+    double a, b, c, d, e, lesimaDeflexion;
+    double esfuerzoCortanteRZ, esfuerzoCortanteYZ, esfuerzoCortanteXZ;
 
     public CapaCalculo() {
         this.numCapas = 0;
@@ -39,9 +41,30 @@ public class CapaCalculo {
         this.esfuerzoCortanteXY = 0;
         this.deformacionVerticalE2 = 0;
         this.deformacionPorTension = 0;
+        this.a = 0;
+        this.b = 0;
+        this.c = 0;
+        this.d = 0;
+        this.e = 0;
+        this.lesimaDeflexion = 0;
+        this.esfuerzoCortanteRZ = 0;
+        this.esfuerzoCortanteYZ = 0;
+        this.esfuerzoCortanteXZ = 0;
     }
 
-    public CapaCalculo(int numCapas, double espesor, double moduloElastico, double pesoNeumatico, double v, double RCC, double espesorParcialEquivalente, double convencion, double espesorEquivalenteCapa, double esfuerzoVerticalO, double esfuerzoRadialO, double esfuerzoTangencialO, double deformacionVerticalE, double deformacionRadialE, double deformacionTangencialE, double deflexionTotal, double esfuerzoNormalX, double esfuerzoNormalY, double esfuerzoCortanteXY, double deformacionVerticalE2, double deformacionPorTension) {
+    public CapaCalculo(double  esfuerzoCortanteRZ,double esfuerzoCortanteYZ,
+            double esfuerzoCortanteXZ,double e, double a, double b, double c,
+            double d, double lesimaDeflexion, int numCapas, double espesor,
+            double moduloElastico, double pesoNeumatico, double v, double RCC,
+            double espesorParcialEquivalente, double convencion,
+            double espesorEquivalenteCapa, double esfuerzoVerticalO,
+            double esfuerzoRadialO, double esfuerzoTangencialO,
+            double deformacionVerticalE, double deformacionRadialE,
+            double deformacionTangencialE, double deflexionTotal,
+            double esfuerzoNormalX, double esfuerzoNormalY,
+            double esfuerzoCortanteXY, double deformacionVerticalE2,
+            double deformacionPorTension) {
+        
         this.numCapas = numCapas;
         this.espesor = espesor;
         this.moduloElastico = moduloElastico;
@@ -63,6 +86,84 @@ public class CapaCalculo {
         this.esfuerzoCortanteXY = esfuerzoCortanteXY;
         this.deformacionVerticalE2 = deformacionVerticalE2;
         this.deformacionPorTension = deformacionPorTension;
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.e = e;
+        this.lesimaDeflexion = lesimaDeflexion;
+    }
+
+    public double getEsfuerzoCortanteRZ() {
+        return esfuerzoCortanteRZ;
+    }
+
+    public void setEsfuerzoCortanteRZ(double esfuerzoCortanteRZ) {
+        this.esfuerzoCortanteRZ = esfuerzoCortanteRZ;
+    }
+
+    public double getEsfuerzoCortanteYZ() {
+        return esfuerzoCortanteYZ;
+    }
+
+    public void setEsfuerzoCortanteYZ(double esfuerzoCortanteYZ) {
+        this.esfuerzoCortanteYZ = esfuerzoCortanteYZ;
+    }
+
+    public double getEsfuerzoCortanteXZ() {
+        return esfuerzoCortanteXZ;
+    }
+
+    public void setEsfuerzoCortanteXZ(double esfuerzoCortanteXZ) {
+        this.esfuerzoCortanteXZ = esfuerzoCortanteXZ;
+    }
+
+    public double getA() {
+        return a;
+    }
+
+    public void setA(double a) {
+        this.a = a;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public void setB(double b) {
+        this.b = b;
+    }
+
+    public double getC() {
+        return c;
+    }
+
+    public void setC(double c) {
+        this.c = c;
+    }
+
+    public double getD() {
+        return d;
+    }
+
+    public void setD(double d) {
+        this.d = d;
+    }
+
+    public double getE() {
+        return e;
+    }
+
+    public void setE(double e) {
+        this.e = e;
+    }
+
+    public double getLesimaDeflexion() {
+        return lesimaDeflexion;
+    }
+
+    public void setLesimaDeflexion(double lesimaDeflexion) {
+        this.lesimaDeflexion = lesimaDeflexion;
     }
 
     public int getNumCapas() {
@@ -235,7 +336,9 @@ public class CapaCalculo {
 
     @Override
     public String toString() {
-        return "Capa{" + "numCapas=" + numCapas + ", espesor=" + espesor + ", moduloElastico=" + moduloElastico + ", pesoNeumatico=" + pesoNeumatico + ", v=" + v + ", RCC=" + RCC + ", espesorParcialEquivalente=" + espesorParcialEquivalente + ", convencion=" + convencion + ", espesorEquivalenteCapa=" + espesorEquivalenteCapa + ", esfuerzoVerticalO=" + esfuerzoVerticalO + ", esfuerzoRadialO=" + esfuerzoRadialO + ", esfuerzoTangencialO=" + esfuerzoTangencialO + ", deformacionVerticalE=" + deformacionVerticalE + ", deformacionRadialE=" + deformacionRadialE + ", deformacionTangencialE=" + deformacionTangencialE + ", deflexionTotal=" + deflexionTotal + ", esfuerzoNormalX=" + esfuerzoNormalX + ", esfuerzoNormalY=" + esfuerzoNormalY + ", esfuerzoCortanteXY=" + esfuerzoCortanteXY + ", deformacionVerticalE2=" + deformacionVerticalE2 + ", deformacionPorTension=" + deformacionPorTension + '}';
+        String r = "numCapas=" + numCapas + ", espesor=" + espesor + ", moduloElastico=" + moduloElastico + ", pesoNeumatico=" + pesoNeumatico + ", v=" + v + ", RCC=" + RCC + ", espesorParcialEquivalente=" + espesorParcialEquivalente + ", convencion=" + convencion + ", espesorEquivalenteCapa=" + espesorEquivalenteCapa + ", esfuerzoVerticalO=" + esfuerzoVerticalO + ", esfuerzoRadialO=" + esfuerzoRadialO + ", esfuerzoTangencialO=" + esfuerzoTangencialO + ", deformacionVerticalE=" + deformacionVerticalE + ", deformacionRadialE=" + deformacionRadialE + ", deformacionTangencialE=" + deformacionTangencialE + ", deflexionTotal=" + deflexionTotal + ", esfuerzoNormalX=" + esfuerzoNormalX + ", esfuerzoNormalY=" + esfuerzoNormalY + ", esfuerzoCortanteXY=" + esfuerzoCortanteXY + ", deformacionVerticalE2=" + deformacionVerticalE2 + ", deformacionPorTension=" + deformacionPorTension + ", a=" + a + ", b=" + b + ", c=" + c + ", d=" + d + ", e=" + e + ", lesimaDeflexion=" + lesimaDeflexion + ", esfuerzoCortanteRZ=" + esfuerzoCortanteRZ + ", esfuerzoCortanteYZ=" + esfuerzoCortanteYZ + ", esfuerzoCortanteXZ=" + esfuerzoCortanteXZ;     
+        return r.replaceAll(",", "\n");
     }
+
 
 }
