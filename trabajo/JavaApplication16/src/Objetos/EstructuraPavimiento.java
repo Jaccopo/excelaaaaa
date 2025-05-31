@@ -14,14 +14,16 @@ public class EstructuraPavimiento {
     private String nombre;
     private double espesor;
     private double modulo; //kPascales
+    private double coeficienteVariacion;
 
     
     
-    public EstructuraPavimiento(int numeroCapa, String nombre, double espesor, double modulo) {
+    public EstructuraPavimiento(int numeroCapa, String nombre, double espesor, double modulo,double coeficienteVariacion) {
         this.numeroCapa = numeroCapa;
         this.nombre = nombre;
         this.espesor = espesor;
         this.modulo = modulo;
+        this.coeficienteVariacion = coeficienteVariacion;
     }
     
     
@@ -55,7 +57,7 @@ public class EstructuraPavimiento {
     }
 
     public void setModulo(double modulo) {
-        this.modulo = modulo;
+        this.modulo = modulo*1000;
     }
 
 }

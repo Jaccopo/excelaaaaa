@@ -6,7 +6,6 @@ import Objetos.CapaCalculo;
 import Objetos.Llanta;
 import Objetos.Llantas;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 public class CAnalisis {
 
@@ -18,7 +17,7 @@ public class CAnalisis {
     private int numCapas;
     private Objetos.EstructuraPavimiento ep[];//private DefaultTableModel dtm;
     private Llantas llantas;
-    private CapaCalculo capaCalculo1[];
+    private CapaCalculo capaCalculo[];
 
     //datoss en cm
     private final double X = 0;
@@ -55,10 +54,8 @@ public class CAnalisis {
         return this.cc;
     }
 
-    
     public void IniciarAnalisisEspectral(String tipoCarga, boolean[] seleccion, Objetos.EstructuraPavimiento ep[]) {
 
-        
         this.seleccion = seleccion;
         this.numCapas = ep.length;
         this.ep = ep;
@@ -158,7 +155,7 @@ public class CAnalisis {
         capaCalculo1 = new Objetos.CapaCalculo[ep.length];//donde se iran guardando los calculos creo jaja ta raro porque es de gmmmmm
         llantas = new Llantas();
 
-        for (int i = 0; i <ep.length ; i++) {
+        for (int i = 0; i < ep.length; i++) {
             capaCalculo1[i] = new Objetos.CapaCalculo();
         }
 
@@ -181,8 +178,8 @@ public class CAnalisis {
         capaCalculo1[0].setPesoNeumatico(pesoNeum);
 
         for (int j = 0; j < numCapas; j++) {
-            espesor[j] = Double.parseDouble(ep[j].getEspesor()+ "");
-            modElastico[j] = Double.parseDouble(ep[j].getModulo()+ "") * 1000;
+            espesor[j] = Double.parseDouble(ep[j].getEspesor() + "");
+            modElastico[j] = Double.parseDouble(ep[j].getModulo() + "") * 1000;
             fCorrecion[j] = numLlantas == 1 ? 0.9 : (j == 0 ? 1 : 0.8);// ni idea el porque pero bueno esto es asi
         }
 
@@ -276,7 +273,7 @@ public class CAnalisis {
         int buscax;
         int buscay;
 
-        int posx1=0, posx2=0, posy1=0, posy2=0;
+        int posx1 = 0, posx2 = 0, posy1 = 0, posy2 = 0;
 
         double valorA;
         double valref;
@@ -439,7 +436,7 @@ public class CAnalisis {
 
     private void deflexionCircular(double pesoEje, String tipoEje) {
 
-        double numLlantas=0;
+        double numLlantas = 0;
         double pesoNeum;
         double radioContacto;
         // ya definida double PresionInflado;
@@ -462,70 +459,110 @@ public class CAnalisis {
         dz = new double[numCapas];
 
         switch (tipoEje) {
-            case ("Sencillo") -> {numLlantas = 1;}
-            case ("Sencillo Dual") -> {numLlantas = 2;}
-            case ("Tandem") -> {numLlantas = 4;}
-            case ("Tridem") -> {numLlantas = 6;}
-            case ("Medio Tridem") -> {numLlantas = 3;}
+            case ("Sencillo") -> {
+                numLlantas = 1;
+            }
+            case ("Sencillo Dual") -> {
+                numLlantas = 2;
+            }
+            case ("Tandem") -> {
+                numLlantas = 4;
+            }
+            case ("Tridem") -> {
+                numLlantas = 6;
+            }
+            case ("Medio Tridem") -> {
+                numLlantas = 3;
+            }
         }
-        
+
         pesoNeum = pesoEje / (2 * numLlantas);
-        radioContacto = Math.pow(((pesoNeum * 2204.623) / (PI * presion)) , 0.5) * 2.54;
-       
+        radioContacto = Math.pow(((pesoNeum * 2204.623) / (PI * presion)), 0.5) * 2.54;
+
         for (int j = 0; j < numCapas; j++) {
-            
+            espesor[j] = ep[j].getEspesor();
+            modElastico[j] = ep[j].getModulo();//Sheets("NuevoFormatoPav").Cells(13 + i, 6)
+            fCorreccion[j] = numCapas == 2 ? 0.9 : numCapas == 1 ? 1 : 0.8;
+
         }
 
+        for (i = 0; i < numCapas - 1; i++) {
+            he[i] = fCorreccion[i] * (espesor[i] + he[i - 1]) * Math.pow((modElastico[i] / modElastico[i + 1]), (1 / 3));
+            this.llantas.getLlanta(i).setValorCapa(he[i]);
+        }
+
+        psiAMpa = 0.00689475719;
+        deflexionTotal = 0;
+        A = radioContacto;
+
+        for (i = 0; i < 10; i++) {
+            if (i != numCapas) {
+                double ayu1 = (1 / Math.pow(Math.pow(1 + ((espesor[i] + he[i - 1]) / A), 2), 0.5)) + (1 - 2 * poisson);
+                double ayu = ((1 + Math.pow(Math.pow(((espesor[i] + he[i - 1]) / A), 2), 0.5) - (espesor[i] + he[i - 1]) / A));
+
+                dz[i] = (((1 + poisson) * presion * psiAMpa * A) / (modElastico[i] * 0.001))
+                        * (1 / Math.pow(Math.pow(1 + (he[i - 1] / A), 2), 0.5) + (1 - 2 * poisson)
+                        * (Math.pow((1 + Math.pow((he[i - 1] / A), 2)), 0.5) - he[i - 1] / A))
+                        - (((1 + poisson) * presion * psiAMpa * A) / (modElastico[i] * 0.001)) * ayu1 * ayu;
+            } else {
+                dz[i] = (((1 + poisson) * presion * psiAMpa * A) / (modElastico[i] * 0.001))
+                        * (1 / Math.pow((1 + Math.pow((he[i - 1] / A), 2)), 0.5)
+                        + (1 - 2 * poisson) * (Math.pow(Math.pow(1 + (he[i - 1] / A), 2), 0.5) - he[i - 1] / A));
+            }
+            deflexionTotal = deflexionTotal + dz[i];
+        }
+
+        this.capaCalculo1[0].setDeflexionTotal(deflexionTotal * 10);
+    }
+
+    private void esfuerzosEjeSencillo() {
+        double evx, er1, et1, radioContacto;
+        double he[] = new double[numCapas];
+        String tipoEje;
+        radioContacto=this.capaCalculo1[0].getRCC();
+        
+        
+        for (int i = 0; i < numCapas-1; i++) {
+            //Call Esfuerzos_Damy(tipoeje, NumCapa);
+        }
         /*
-     Sub DeflexionCircular()
+    Dim i As Integer
+    Dim NumCapas As Integer
+    Dim EvZ, Er1, Et1 As Double
+    Dim he() As Double
+    Dim PresionInflado, RadioContacto, Poisson As Double
+    Dim tipoeje As String
+    Dim NumCapa As Integer
 
-                                                                   'anotar una condicion donde aplique que solamente
-                                                                   'funciona odemark para 2 o mas capas
-        For i = 1 To NumCapas
-            Espesor(i) = Sheets("NuevoFormatoPav").Cells(13 + i, 5)
-            ModElastico(i) = Sheets("NuevoFormatoPav").Cells(13 + i, 6)
-               If NumCapas = 2 Then
-                    Fcorreccion(i) = 0.9
-                Else
-                   If i = 1 Then
-                    Fcorreccion(i) = 1
-                   Else
-                    Fcorreccion(i) = 0.8
-                   End If
-                End If
-        Next i
 
-            For i = 1 To NumCapas - 1
-                he(i) = Fcorreccion(i) * (Espesor(i) + he(i - 1)) * (ModElastico(i) / ModElastico(i + 1)) ^ (1 / 3)
-                Sheets("calculos").Cells(48 + i, 3) = he(i) ' sirve para anotar los espesores equivalentes de las interfaces
-            Next i
-            PsiAMpa = 0.00689475719
-        DeflexionTotal = 0
-        A = RadioContacto
-        For i = 1 To NumCapas
+    NumCapas = Sheets("NuevoFormatoPav").Cells(10, 6)
+    PresionInflado = Sheets("NuevoFormatoPav").Cells(9, 6)
+    RadioContacto = Sheets("calculos").Cells(3, 6)
+    Poisson = Sheets("calculos").Cells(3, 5)
+    tipoeje = Sheets("NuevoFormatoPav").Cells(8, 6)
 
-        If i <> NumCapas Then
 
-        dz(i) = (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
-            (1 / (1 + (he(i - 1) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * ((1 + (he(i - 1) / A) ^ 2) ^ 0.5 - he(i - 1) / A)) - _
-            (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
-            (1 / (1 + ((Espesor(i) + he(i - 1)) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * _
-            ((1 + ((Espesor(i) + he(i - 1)) / A) ^ 2) ^ 0.5 - (Espesor(i) + he(i - 1)) / A)) ' ojo con el Mod elastico
-        Else
+    ReDim he(NumCapas)
 
-        dz(i) = (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
-            (1 / (1 + (he(i - 1) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * ((1 + (he(i - 1) / A) ^ 2) ^ 0.5 - he(i - 1) / A))
+    'Esfuerzo Vertical, Radial y Tangencial
+    For i = 1 To 2 'NumCapas - 1
 
-        End If
+        he(i) = Sheets("calculos").Cells(2 + i, 7)
 
-           DeflexionTotal = DeflexionTotal + dz(i)
+        NumCapa = i
+        Call Esfuerzos_Damy(tipoeje, NumCapa)
 
-        Next i
-        Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
+        EvZ = 6.894757 * (PresionInflado * (1 - ((he(i) ^ 3) / ((RadioContacto ^ 2 + he(i) ^ 2) ^ 1.5))))
+        Er1 = 6.894757 * (PresionInflado / 2) * (1 + (2 * Poisson) - (((2 * he(i) * (1 + Poisson)) / ((RadioContacto ^ 2 + he(i) ^ 2) ^ 0.5))) + (((he(i) ^ 3) / ((RadioContacto ^ 2 + he(i) ^ 2) ^ 1.5))))
+        Et1 = Er1
 
-        End Sub
-   
-         */
+        Sheets("calculos").Cells(2 + i, 10) = EvZ
+        Sheets("calculos").Cells(2 + i, 11) = Er1
+        Sheets("calculos").Cells(2 + i, 12) = Et1
+        Sheets("calculos").Cells(41, 2 + i) = Er1
+        Sheets("calculos").Cells(41, 4 + i) = Et1
+
+    Next i*/
     }
 
 }

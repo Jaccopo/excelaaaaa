@@ -2,22 +2,22 @@ package Objetos;
 
 public class CapaCalculo {
 
-    int numCapas;
-    double espesor;
-    double moduloElastico;
-    double pesoNeumatico;
-    double v;
-    double RCC;
-    double espesorParcialEquivalente;
-    double convencion;
-    double espesorEquivalenteCapa;
-    double esfuerzoVerticalO, esfuerzoRadialO, esfuerzoTangencialO;
-    double deformacionVerticalE, deformacionRadialE, deformacionTangencialE;
-    double deflexionTotal;
-    double esfuerzoNormalX, esfuerzoNormalY, esfuerzoCortanteXY;
-    double deformacionVerticalE2, deformacionPorTension;
-    double a, b, c, d, e, lesimaDeflexion;
-    double esfuerzoCortanteRZ, esfuerzoCortanteYZ, esfuerzoCortanteXZ;
+    private int numCapas;
+    private double espesor;
+    private double moduloElastico;
+    private double pesoNeumatico;
+    private double v;
+    private double RCC;
+    private double espesorParcialEquivalente;
+    private double convencion;
+    private double espesorEquivalenteCapa;
+    private double esfuerzoVerticalO, esfuerzoRadialO, esfuerzoTangencialO;
+    private double deformacionVerticalE, deformacionRadialE, deformacionTangencialE;
+    private double deflexionTotal;
+    private double esfuerzoNormalX, esfuerzoNormalY, esfuerzoCortanteXY;
+    private double deformacionVerticalE2, deformacionPorTension;
+    private double a, b, c, d, e, lesimaDeflexion;
+    private double esfuerzoCortanteRZ, esfuerzoCortanteYZ, esfuerzoCortanteXZ;
 
     public CapaCalculo() {
         this.numCapas = 0;

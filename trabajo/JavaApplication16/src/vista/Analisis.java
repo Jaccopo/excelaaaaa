@@ -536,11 +536,12 @@ public class Analisis extends javax.swing.JInternalFrame {
                             Integer.parseInt(dtm.getValueAt(i, 0)+""),
                             dtm.getValueAt(i, 1)+"",
                             Double.parseDouble(dtm.getValueAt(i, 2)+""),
-                            Double.parseDouble(dtm.getValueAt(i, 3)+""));
-                }
+                            Double.parseDouble(dtm.getValueAt(i, 3)+""),
+                            Double.parseDouble(dtm.getValueAt(i, 4)+""));
+                }           
                 
                 
-                ca.IniciarAnalisisEspectral(tipoCarga.getSelectedItem() + "", activos,   et);
+                ca.IniciarAnalisisEspectral(tipoCarga.getSelectedItem() + "", activos, et);
                 cc = ca.getClases();
             } else {
 
