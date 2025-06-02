@@ -15,16 +15,26 @@ public class EstructuraPavimiento {
     private double espesor;
     private double modulo; //kPascales
     private double coeficienteVariacion;
+    public EstructuraPavimiento ep[];
+    
+    
+    
+    public EstructuraPavimiento() {
+        ep = new EstructuraPavimiento[4];
+    }
 
-    
-    
-    public EstructuraPavimiento(int numeroCapa, String nombre, double espesor, double modulo,double coeficienteVariacion) {
-        this.numeroCapa = numeroCapa;
-        this.nombre = nombre;
-        this.espesor = espesor;
-        this.modulo = modulo;
+    public double getCoeficienteVariacion() {
+        return coeficienteVariacion;
+    }
+
+    public void setCoeficienteVariacion(double coeficienteVariacion) {
         this.coeficienteVariacion = coeficienteVariacion;
     }
+
+    public EstructuraPavimiento getEp(int index) {
+        return ep[index];
+    }
+
     
     
 

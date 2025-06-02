@@ -1,4 +1,5 @@
 package Objetos;
+
 public class Llantas {
     private Llanta llanta[] = new Llanta[6];
     public Llantas(){

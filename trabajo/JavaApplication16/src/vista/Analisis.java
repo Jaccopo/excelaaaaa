@@ -22,7 +22,9 @@ public class Analisis extends javax.swing.JInternalFrame {
     public Analisis(CargarClases cc) {
         bg = new ButtonGroup();
         this.cc = cc;
+        
         ca = new CAnalisis(this.cc);
+        
         dtm = new DefaultTableModel();
         initComponents();
         dtm = (DefaultTableModel) tabla.getModel();
@@ -530,18 +532,9 @@ public class Analisis extends javax.swing.JInternalFrame {
                 activos[2] = s3.isSelected();
                 activos[3] = s4.isSelected();
                 activos[4] = s5.isSelected();
-                Objetos.EstructuraPavimiento et[] = new Objetos.EstructuraPavimiento[dtm.getRowCount()];
-                for (int i = 0; i < dtm.getRowCount(); i++) {
-                    et[i] = new Objetos.EstructuraPavimiento(
-                            Integer.parseInt(dtm.getValueAt(i, 0)+""),
-                            dtm.getValueAt(i, 1)+"",
-                            Double.parseDouble(dtm.getValueAt(i, 2)+""),
-                            Double.parseDouble(dtm.getValueAt(i, 3)+""),
-                            Double.parseDouble(dtm.getValueAt(i, 4)+""));
-                }           
                 
-                
-                ca.IniciarAnalisisEspectral(tipoCarga.getSelectedItem() + "", activos, et);
+                ca.CargarTabla(dtm);
+                ca.IniciarAnalisisEspectral(tipoCarga.getSelectedItem() + "", activos);
                 cc = ca.getClases();
             } else {
 
