@@ -139,8 +139,9 @@ Sheets("calculos").Cells(19, 3) = Angulo_Llanta2
 Sheets("calculos").Cells(20, 3) = Angulo_Llanta3
 Sheets("calculos").Cells(21, 3) = Angulo_Llanta4
 Sheets("calculos").Cells(22, 3) = Angulo_Llanta5
-Sheets("calculos").Cells(23, 3) = Angulo_Llanta6
-Sheets("calculos").Cells(18, 4) = r_Llanta1
+    Sheets("calculos").Cells(23, 3) = Angulo_Llanta6
+
+    Sheets("calculos").Cells(18, 4) = r_Llanta1
 Sheets("calculos").Cells(19, 4) = r_LLanta2
 Sheets("calculos").Cells(20, 4) = r_LLanta3
 Sheets("calculos").Cells(21, 4) = r_LLanta4

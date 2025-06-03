@@ -8,10 +8,10 @@ import modelo.Archivos;
 
 public class CargarClases {
     public  LarguilloNormal data[] = new LarguilloNormal[100];
-    public  Respustaseje simple[] = new Respustaseje[100];
-    public  Respustaseje dual[] = new Respustaseje[100];
-    public  Respustaseje tandem[] = new Respustaseje[100];
-    public  Respustaseje tridem[] = new Respustaseje[100];
+    public  Respustaseje simpleRespuesta[] = new Respustaseje[100];
+    public  Respustaseje dualRespuesta[] = new Respustaseje[100];
+    public  Respustaseje tandemRespuesta[] = new Respustaseje[100];
+    public  Respustaseje tridemRespuesta[] = new Respustaseje[100];
     public  NumRepeEje nre[] = new NumRepeEje[100];
     public  EspecRepEspe ere[] = new EspecRepEspe[100];
     public  EspectroDano ed[] = new EspectroDano[100];
@@ -25,10 +25,10 @@ public class CargarClases {
     
      for (int j = 0; j < 100; j++) {
             data[j] = new LarguilloNormal((Archivos.getArchivo("archivos/larguillo.uwu"))[j].split("\t"));
-            simple[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-simple.uwu"))[j].split("\t"));
-            dual[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-dual.uwu"))[j].split("\t"));
-            tandem[j] = new Respustaseje((Archivos.getArchivo("archivos/larguilllo-Respuesta-eje-TANDEM.uwu"))[j].split("\t"));
-            tridem[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-TRIDEM.uwu"))[j].split("\t"));
+            simpleRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-simple.uwu"))[j].split("\t"));
+            dualRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-dual.uwu"))[j].split("\t"));
+            tandemRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguilllo-Respuesta-eje-TANDEM.uwu"))[j].split("\t"));
+            tridemRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-TRIDEM.uwu"))[j].split("\t"));
             nre[j] = new NumRepeEje((Archivos.getArchivo("archivos/larguillo-numero-repeticiones-eje.uwu"))[j].split("\t"));
             ere[j] =new EspecRepEspe((Archivos.getArchivo("archivos/larguillo-numero-repeticiones-eje.uwu"))[j].split("\t"));
             ed[j] = new EspectroDano((Archivos.getArchivo("archivos/larguillo-espectro-daño.uwu"))[j].split("\t"));        

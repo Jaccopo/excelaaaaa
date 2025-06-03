@@ -18,7 +18,42 @@ public class CapaCalculo {
     private double deformacionVerticalE2, deformacionPorTension;
     private double a, b, c, d, e, lesimaDeflexion;
     private double esfuerzoCortanteRZ, esfuerzoCortanteYZ, esfuerzoCortanteXZ;
+    
+    private double complemento1,complemento2,complemento3,complemento4;
 
+    public double getComplemento1() {
+        return complemento1;
+    }
+
+    public void setComplemento1(double complemento1) {
+        this.complemento1 = complemento1;
+    }
+
+    public double getComplemento2() {
+        return complemento2;
+    }
+
+    public void setComplemento2(double complemento2) {
+        this.complemento2 = complemento2;
+    }
+
+    public double getComplemento3() {
+        return complemento3;
+    }
+
+    public void setComplemento3(double complemento3) {
+        this.complemento3 = complemento3;
+    }
+
+    public double getComplemento4() {
+        return complemento4;
+    }
+
+    public void setComplemento4(double complemento4) {
+        this.complemento4 = complemento4;
+    }
+
+    
     public int getNumCapas() {
         return numCapas;
     }

@@ -5,7 +5,6 @@
 package Objetos;
 
 import Clases.CargarClases;
-import Objetos.EstructuraPavimiento;
 
 /**
  *
@@ -19,14 +18,26 @@ public class Datos {
     public double presion;
     public int numCapas;
     public double poisson;
-    public EstructuraPavimiento ep;
+    public EstructuraPavimiento ep[];
     public double X = 0;
     public double Y = 18;
     public double S = 36;
     public double D = 122;
+    public Calculos cal;
     
     public CargarClases cc;
+    public boolean activos[];
+    
+    public boolean damy;
 
+    public Datos(){
+        ep = new EstructuraPavimiento[4];
+        for (int i = 0; i<4;i++) {
+           ep[i] = new EstructuraPavimiento();
+        }
+        damy = false;
+        cal = new Calculos();
+    }
     public CargarClases getCc() {
         return cc;
     }
@@ -75,12 +86,12 @@ public class Datos {
         this.poisson = poisson;
     }
 
-    public EstructuraPavimiento getEp() {
-        return ep;
+    public EstructuraPavimiento getEp(int index) {
+        return ep[index];
     }
 
-    public void setEp(EstructuraPavimiento ep) {
-        this.ep = ep;
+    public void setEp(EstructuraPavimiento ep,int index) {
+        this.ep[index] = ep;
     }
 
     public double getX() {

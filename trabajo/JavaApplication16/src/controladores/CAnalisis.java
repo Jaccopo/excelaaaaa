@@ -15,12 +15,13 @@ public class CAnalisis {
     
     public void CargarTabla(DefaultTableModel dtm){
         for (int i = 0; i < dtm.getRowCount(); i++) {
-            funciones.getEp().getEp(i).setNumeroCapa(Integer.parseInt(dtm.getValueAt(i, 1)+""));
-            funciones.getEp().getEp(i).setNombre(dtm.getValueAt(i, 2)+"");
-            funciones.getEp().getEp(i).setEspesor(Double.parseDouble(dtm.getValueAt(i, 3)+""));
-            funciones.getEp().getEp(i).setModulo(Double.parseDouble(dtm.getValueAt(i, 4)+"")*1000);
-            funciones.getEp().getEp(i).setCoeficienteVariacion(Double.parseDouble(dtm.getValueAt(i, 5)+"")*1000);
+            funciones.getEp(i).setNumeroCapa(Integer.parseInt(dtm.getValueAt(i, 0)+""));
+            funciones.getEp(i).setNombre(dtm.getValueAt(i, 1)+"");
+            funciones.getEp(i).setEspesor(Double.parseDouble(dtm.getValueAt(i, 2)+""));
+            funciones.getEp(i).setModulo(Double.parseDouble(dtm.getValueAt(i, 3)+"")*1000);
+            funciones.getEp(i).setCoeficienteVariacion(Double.parseDouble(dtm.getValueAt(i, 4)+"")*1000);
         }
+        funciones.setNumCapas(dtm.getRowCount());
     }
 
     public CargarClases getClases() {
@@ -44,7 +45,7 @@ public class CAnalisis {
     }
 
     public void IniciarAnalisisEspectral(String tipoEje, boolean[] activos) {
-        funciones.IniciarAnalisisEspectral(tipoEje);
+        funciones.IniciarAnalisisEspectral(tipoEje,activos);
     }
     
    
