@@ -23,7 +23,10 @@ public class Datos {
     public double Y = 18;
     public double S = 36;
     public double D = 122;
+    
     public Calculos cal;
+    public Llantas llantas;
+    
     
     public CargarClases cc;
     public boolean activos[];
@@ -37,6 +40,7 @@ public class Datos {
         }
         damy = false;
         cal = new Calculos();
+        llantas = new Llantas();
     }
     public CargarClases getCc() {
         return cc;

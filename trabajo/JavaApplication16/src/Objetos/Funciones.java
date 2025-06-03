@@ -280,6 +280,7 @@ public class Funciones extends Datos {
         printResIndividual();
     }
 
+    /*Lista*/
     public void coordenadas() {
 
         double R11, R21, R31, R41;
@@ -288,8 +289,12 @@ public class Funciones extends Datos {
         double r_Llanta_TNatur[] = new double[6];
         double angulo_Llanta[] = new double[6];
         double f_E_Vertical_ra[] = new double[4];
-        double interfaz[] = new double[numCapas];//escribir un código donde si existen más interfaces, la ultima interfaz la ponga en interfaz 2
+        double interfaz[] = new double[2];//escribir un código donde si existen más interfaces, la ultima interfaz la ponga en interfaz 2
 
+        interfaz[0] = this.cal.getCapaCalculo(0).getEspesorParcialEquivalente();
+        interfaz[numCapas-1] = this.cal.getCapaCalculo(1).getEspesorParcialEquivalente();
+        
+        
         r_Llanta[0] = Math.pow((Math.pow(X, 2) + Math.pow(Y, 2)), 0.5);
         r_Llanta[1] = Math.pow((Math.pow(X, 2) + Math.pow((Y - S), 2)), 0.5);
         r_Llanta[2] = Math.pow((Math.pow((X - D), 2) + Math.pow(Y, 2)), 0.5);
@@ -330,71 +335,26 @@ public class Funciones extends Datos {
         R21 = r_Llanta[1] / this.cal.getCapaCalculo(0).getRCC();
         R31 = r_Llanta[2] / this.cal.getCapaCalculo(0).getRCC();
         R41 = r_Llanta[3] / this.cal.getCapaCalculo(0).getRCC(); 
-                /*
+      
+        
+       
+            f_E_Vertical_ra[0] = R11<14?R11:13.999;
+            f_E_Vertical_ra[1] = R21<14?R21:13.999;
+            f_E_Vertical_ra[2] = R31<14?R31:13.999;
+            f_E_Vertical_ra[3] = R41<14?R41:13.999;
 
-
-
-
-
-
-ReDim interfaz(NumCapas)
-'
-
-
-
-If R11 < 14 Then
-F_E_Vertical_ra_11 = R11
-Else
-F_E_Vertical_ra_11 = 13.999
-End If
-If R21 < 14 Then
-F_E_Vertical_ra_12 = R21
-Else
-F_E_Vertical_ra_12 = 13.999
-End If
-If R31 < 14 Then
-F_E_Vertical_ra_13 = R31
-Else
-F_E_Vertical_ra_13 = 13.999
-End If
-If R41 < 14 Then
-F_E_Vertical_ra_14 = R41
-Else
-F_E_Vertical_ra_14 = 13.999
-End If
-
-Sheets("calculos").Cells(18, 3) = Angulo_Llanta1
-Sheets("calculos").Cells(19, 3) = Angulo_Llanta2
-Sheets("calculos").Cells(20, 3) = Angulo_Llanta3
-Sheets("calculos").Cells(21, 3) = Angulo_Llanta4
-Sheets("calculos").Cells(22, 3) = Angulo_Llanta5
-Sheets("calculos").Cells(23, 3) = Angulo_Llanta6
-Sheets("calculos").Cells(18, 4) = r_Llanta1
-Sheets("calculos").Cells(19, 4) = r_LLanta2
-Sheets("calculos").Cells(20, 4) = r_LLanta3
-Sheets("calculos").Cells(21, 4) = r_LLanta4
-Sheets("calculos").Cells(22, 4) = r_LLanta5
-Sheets("calculos").Cells(23, 4) = r_LLanta6
-Sheets("calculos").Cells(18, 5) = R_LLanta1_Capa1
-Sheets("calculos").Cells(19, 5) = R_LLanta2_Capa1
-Sheets("calculos").Cells(20, 5) = R_LLanta3_Capa1
-Sheets("calculos").Cells(21, 5) = R_LLanta4_Capa1
-Sheets("calculos").Cells(22, 5) = R_LLanta5_Capa1
-Sheets("calculos").Cells(23, 5) = R_LLanta6_Capa1
-Sheets("calculos").Cells(18, 6) = R_LLanta1_TNatur
-Sheets("calculos").Cells(19, 6) = R_LLanta2_TNatur
-Sheets("calculos").Cells(20, 6) = R_LLanta3_TNatur
-Sheets("calculos").Cells(21, 6) = R_LLanta4_TNatur
-Sheets("calculos").Cells(22, 6) = R_LLanta5_TNatur
-Sheets("calculos").Cells(23, 6) = R_LLanta6_TNatur
-
-
-Sheets("calculos").Cells(26, 3) = F_E_Vertical_ra_11 'estas son las r/a
-Sheets("calculos").Cells(27, 3) = F_E_Vertical_ra_12 'estas son las r/a
-Sheets("calculos").Cells(28, 3) = F_E_Vertical_ra_13 'estas son las r/a
-Sheets("calculos").Cells(29, 3) = F_E_Vertical_ra_14 'estas son las r/a
-
-                 */
+            for (int i = 0; i < 6; i++) {
+            this.llantas.getLlanta(i).setAnguloHorizontal(angulo_Llanta[i]);
+            this.llantas.getLlanta(i).setDistanciaHorizontal(r_Llanta[i]);
+            this.llantas.getLlanta(i).setDistanciaRadialCarpeta(r_Llanta_capa[i]);
+            this.llantas.getLlanta(i).setDistanciaRadialSubrasante(r_Llanta_TNatur[i]);
+            
+        }
+            this.cal.getCapaCalculo(0).setEsfuerzoCortanteRZ(f_E_Vertical_ra[0]);
+            this.cal.getCapaCalculo(0).setEsfuerzoCortanteYZ(f_E_Vertical_ra[1]);
+            this.cal.getCapaCalculo(0).setEsfuerzoCortanteXZ(f_E_Vertical_ra[2]);
+            this.cal.getCapaCalculo(0).setDeformacionVerticalE2(f_E_Vertical_ra[3]);
+           
     }
 
     public void Factores_Ahlvin() {
