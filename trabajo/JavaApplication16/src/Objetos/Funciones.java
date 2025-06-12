@@ -205,7 +205,7 @@ public class Funciones extends Datos {
 
         coordenadas();//lista
         factores_Ahlvin();//lista
-        deflexionCircular();
+        deflexionCircular();//lista
 
         switch (tipo) {
 
@@ -354,7 +354,7 @@ public class Funciones extends Datos {
     }
 
     /*Lista*/
-    public void Factores_Ahlvin() {
+    public void factores_Ahlvin() {
         int  buscax = 0, buscay = 0, posx1 = 0, posx2 = 0, posy1 = 0, posy2 = 0;
         double r_sobre_a, z_sobre_a, X1, Y1;
         double valorA, valref, valorC, valorI, valorK, radioContacto, z;
@@ -520,6 +520,7 @@ public class Funciones extends Datos {
         return (((k - i) * (b - a)) / (c - a)) + i;
     }
 
+    /*Lista*/
     private void deflexionCircular() {
         double pesoNeum,radioContacto,A,psiAMpa,deflexionTotal;
         int numLlantas=1,i;
@@ -585,27 +586,33 @@ for(i=0;i< numCapas;i++){
     A = radioContacto;
     for ( i = 0; i < numCapas; i++) {
         int r = i-1<0?0:i-1;
+
+        double part1 =((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001);
+
+        double suma1=espesor[i] + he[r]
+        double suma2 =1 - 2 * poisson;
+
+        double div1 = he[r] / A;
+        double div2 = suma1/A;
+
+        double pot1 = Math.pow(div1,2);
+        double pot2 = Mat.pow(1+pot1,0.5);
+
+        double pot3 = Math.pow((suma1 / A),2);
+        double pot4 = Math.pow((1 + pot3) , 0.5);
+
+
         if (i!=numCapas) {
-            double l1,l2,l3,l4,l5,l21;
-            l1 =(((1 + poisson) * presion * psiAMpa * A) / (modElastico[i] * 0.001));
-            
-            /*esta mal esta prte*/l21 = Math.pow(Math.pow(1 + (he[r] / A), 2),0.5)+(1 - 2 * poisson)*Math.pow((1 + Math.pow((he[r] / A), 2)), 0.5) - he[r] / A;
-            l2=(1 /121 ); //  +  *  
-      //              l3 = (((1 + poisson) * presionInflado * psiAMpa * A) / (modElastico(i) * 0.001));
-    //                        l4=(1 / (1 + ((espesor(i) + he(i - 1)) / A) ^ 2) ^ 0.5 + (1 - 2 * poisson);
-  //                                  l5=((1 + ((espesor(i) + he[i - 1==?0;i - 1])) / A) ^ 2) ^ 0.5 - (espesor(i) + he(i - 1)) / A));
-            dz[i] =  l1*l2 -l3*l4*l5;
-    
+
+            dz[i] = part1*(1/pot2 + suma2*(pot2 - div1)) - part1*(1/pot4 + suma2*(pot4 - div2));
         }else{
-            double l1,l2;
-            l1 = (((1 + poisson) * presion * psiAMpa * A) / (modElastico[i] * 0.001));
-            l2 = Math.pow(1 / Math.pow(1 + (he[i-1] / A) , 2), 0.5) + (1 - 2 * poisson) * ((Math.pow(Math.pow(1 + (he[i-1] / A),2) , 0.5) - he[i-1] / A));
-        dz[i] = l1 * l2;
+
+            dz[i] = part1 *(1/pot2 + suma2*(pot2 - div1));
     
         }
            deflexionTotal = deflexionTotal + dz[i];
     }
-//Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
+                   this.cal.getCapaCalculo[0].setDeflexionTotal(deflexionTotal);   //Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
     }
 
     private void esfuerzosEjeSencillo() {
@@ -632,10 +639,6 @@ for(i=0;i< numCapas;i++){
     }
 
     private void volumenTransito() {
-    }
-
-    private void factores_Ahlvin() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void deformacionesUnitarias() {
