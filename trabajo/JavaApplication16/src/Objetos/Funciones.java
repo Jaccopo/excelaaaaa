@@ -1,7 +1,7 @@
 package Objetos;
 
 import Objetos.Datos;
-import Datos.TablaDistribucionDeCarga;
+import DatosTablas.TablaDistribucionDeCarga;
 import javax.swing.JOptionPane;
 import vista.Dialogos.Cargando;
 
@@ -9,7 +9,6 @@ public class Funciones extends Datos {
 
     private TablaDistribucionDeCarga tdc;
     private Cargando car;
-    private final double PI = 3.14159265358979;
 
     public Funciones() {
         super();
@@ -148,7 +147,7 @@ public class Funciones extends Datos {
 
     }
 
-    /*Lista*/
+    /*Lista Ver funciones que faltan*/
     private void calculoDiferencial(int index, int tipo) {
         //this.cal.getCapaCalculo(index).getPesoNeumatico() ->Dim PesoNeum As Double
         //this.tipoEje - > Dim tipoeje As String
@@ -204,8 +203,8 @@ public class Funciones extends Datos {
         this.cal.getCapaCalculo(0).setModuloElastico(modElsatico[1]);
         this.cal.getCapaCalculo(1).setModuloElastico(numCapas);
 
-        coordenadas();
-        factores_Ahlvin();
+        coordenadas();//lista
+        factores_Ahlvin();//lista
         deflexionCircular();
 
         switch (tipo) {
@@ -292,9 +291,8 @@ public class Funciones extends Datos {
         double interfaz[] = new double[2];//escribir un código donde si existen más interfaces, la ultima interfaz la ponga en interfaz 2
 
         interfaz[0] = this.cal.getCapaCalculo(0).getEspesorParcialEquivalente();
-        interfaz[numCapas-1] = this.cal.getCapaCalculo(1).getEspesorParcialEquivalente();
-        
-        
+        interfaz[numCapas - 1] = this.cal.getCapaCalculo(1).getEspesorParcialEquivalente();
+
         r_Llanta[0] = Math.pow((Math.pow(X, 2) + Math.pow(Y, 2)), 0.5);
         r_Llanta[1] = Math.pow((Math.pow(X, 2) + Math.pow((Y - S), 2)), 0.5);
         r_Llanta[2] = Math.pow((Math.pow((X - D), 2) + Math.pow(Y, 2)), 0.5);
@@ -334,30 +332,186 @@ public class Funciones extends Datos {
         R11 = r_Llanta[0] / this.cal.getCapaCalculo(0).getRCC();
         R21 = r_Llanta[1] / this.cal.getCapaCalculo(0).getRCC();
         R31 = r_Llanta[2] / this.cal.getCapaCalculo(0).getRCC();
-        R41 = r_Llanta[3] / this.cal.getCapaCalculo(0).getRCC(); 
-      
-        
-       
-            f_E_Vertical_ra[0] = R11<14?R11:13.999;
-            f_E_Vertical_ra[1] = R21<14?R21:13.999;
-            f_E_Vertical_ra[2] = R31<14?R31:13.999;
-            f_E_Vertical_ra[3] = R41<14?R41:13.999;
+        R41 = r_Llanta[3] / this.cal.getCapaCalculo(0).getRCC();
 
-            for (int i = 0; i < 6; i++) {
+        f_E_Vertical_ra[0] = R11 < 14 ? R11 : 13.999;
+        f_E_Vertical_ra[1] = R21 < 14 ? R21 : 13.999;
+        f_E_Vertical_ra[2] = R31 < 14 ? R31 : 13.999;
+        f_E_Vertical_ra[3] = R41 < 14 ? R41 : 13.999;
+
+        for (int i = 0; i < 6; i++) {
             this.llantas.getLlanta(i).setAnguloHorizontal(angulo_Llanta[i]);
             this.llantas.getLlanta(i).setDistanciaHorizontal(r_Llanta[i]);
             this.llantas.getLlanta(i).setDistanciaRadialCarpeta(r_Llanta_capa[i]);
             this.llantas.getLlanta(i).setDistanciaRadialSubrasante(r_Llanta_TNatur[i]);
-            
+
         }
-            this.cal.getCapaCalculo(0).setEsfuerzoCortanteRZ(f_E_Vertical_ra[0]);
-            this.cal.getCapaCalculo(0).setEsfuerzoCortanteYZ(f_E_Vertical_ra[1]);
-            this.cal.getCapaCalculo(0).setEsfuerzoCortanteXZ(f_E_Vertical_ra[2]);
-            this.cal.getCapaCalculo(0).setDeformacionVerticalE2(f_E_Vertical_ra[3]);
-           
+        this.cal.getCapaCalculo(0).setEsfuerzoCortanteRZ(f_E_Vertical_ra[0]);
+        this.cal.getCapaCalculo(0).setEsfuerzoCortanteYZ(f_E_Vertical_ra[1]);
+        this.cal.getCapaCalculo(0).setEsfuerzoCortanteXZ(f_E_Vertical_ra[2]);
+        this.cal.getCapaCalculo(0).setDeformacionVerticalE2(f_E_Vertical_ra[3]);
+
     }
 
+    /*Lista*/
     public void Factores_Ahlvin() {
+        int  buscax = 0, buscay = 0, posx1 = 0, posx2 = 0, posy1 = 0, posy2 = 0;
+        double r_sobre_a, z_sobre_a, X1, Y1;
+        double valorA, valref, valorC, valorI, valorK, radioContacto, z;
+        double res_interpolacion1, res_interpolacion2, res_interpolacion3;
+        double x_inter[], y_inter[];
+
+        x_inter = new double[18];
+        y_inter = new double[23];
+
+        x_inter[0] = 0;
+        x_inter[1] = 0.2;
+        x_inter[2] = 0.4;
+        x_inter[3] = 0.6;
+        x_inter[4] = 0.8;
+        x_inter[5] = 1;
+        x_inter[6] = 1.2;
+        x_inter[7] = 1.5;
+        x_inter[8] = 2;
+        x_inter[9] = 3;
+        x_inter[10] = 4;
+        x_inter[11] = 5;
+        x_inter[12] = 6;
+        x_inter[13] = 7;
+        x_inter[14] = 8;
+        x_inter[15] = 10;
+        x_inter[16] = 1;
+        x_inter[17] = 14;
+
+        y_inter[0] = 0;
+        y_inter[1] = 0.1;
+        y_inter[2] = 0.2;
+        y_inter[3] = 0.3;
+        y_inter[4] = 0.4;
+        y_inter[5] = 0.5;
+        y_inter[6] = 0.6;
+        y_inter[7] = 0.7;
+        y_inter[8] = 0.8;
+        y_inter[9] = 0.9;
+        y_inter[10] = 1;
+        y_inter[11] = 1.2;
+        y_inter[12] = 1.5;
+        y_inter[13] = 2;
+        y_inter[14] = 2.5;
+        y_inter[15] = 3;
+        y_inter[16] = 4;
+        y_inter[17] = 5;
+        y_inter[18] = 6;
+        y_inter[19] = 7;
+        y_inter[20] = 8;
+        y_inter[21] = 9;
+        y_inter[22] = 10;
+
+        // 'inicia el ciclo para las cuatro llantas
+        for (int i = 0; i < 4; i++) {
+            radioContacto = cal.getCapaCalculo(0).getRCC();
+            z = cal.getCapaCalculo(0).getEspesorParcialEquivalente();//z = Sheets("calculos").Cells(3, 7)
+
+            r_sobre_a = llantas.getLlanta(i).getRa();//Sheets("calculos").Cells(25 + llantas, 3)
+// r_sobre_a = Sheets("ANALISIS PAVIMENTO").Cells(22 + llantas, 181) ' verificar como es que daba lo mismo si los valores no cambiaban o si?
+            z_sobre_a = z / radioContacto;
+
+            if (r_sobre_a > 14) {
+                r_sobre_a = 13.999;
+            }
+            if (z_sobre_a > 10) {
+                z_sobre_a = 9.999;
+            }
+
+            X1 = r_sobre_a;
+            Y1 = z_sobre_a;
+
+            for (buscax = 0; buscax < 18; buscax++) {
+                if (X1 >= x_inter[buscax] && X1 < x_inter[buscax + 1]) {
+                    posx1 = buscax;
+                    posx2 = buscax + 1;
+                    break;
+                }
+            }
+
+            for (buscay = 0; buscay < 23; buscay++) {
+                if (Y1 >= y_inter[buscay] && Y1 < y_inter[buscay + 1]) {
+                    posy1 = buscay;
+                    posy2 = buscay + 1;
+                    break;
+                }
+            }
+
+            //'interpolación para la primera tabla
+            valorA = y_inter[buscay];
+            valorC = y_inter[buscay + 1];
+            valorI = DatosTablas.FactorEVertical.getValor(posy1, posx1);//Sheets("factor_e_vert").Cells(posy1 + 2, posx1 + 2)
+            valorK = DatosTablas.FactorEVertical.getValor(posy2, posx1);//Sheets("factor_e_vert").Cells(posy2 + 2, posx1 + 2)
+
+            valref = Y1;
+
+            res_interpolacion1 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorI = DatosTablas.FactorEVertical.getValor(posy1, posx2);//Sheets("factor_e_vert").Cells(posy1 + 2, posx2 + 2;
+            valorK = DatosTablas.FactorEVertical.getValor(posy2, posx2);//Sheets("factor_e_vert").Cells(posy2 + 2, posx2 + 2)
+
+            res_interpolacion2 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorA = x_inter[buscax];
+            valref = X1;
+            valorC = x_inter[buscax + 1];
+
+            res_interpolacion3 = interpola(valorA, valref, valorC, res_interpolacion1, res_interpolacion2);
+
+            llantas.getLlanta(i).setFactorEVertical(res_interpolacion3);//Sheets("calculos").Cells(25 + llantas, 4) = res_interpolacion3
+
+//'intepolación para la segunda tabla
+            valorA = y_inter[buscay];
+            valorC = y_inter[buscay + 1];
+            valorI = DatosTablas.FactorERadial.getValor(posy1, posx1);//Sheets("factor_e_rad").Cells(posy1 + 2, posx1 + 2)
+            valorK = DatosTablas.FactorERadial.getValor(posy2, posx1);//Sheets("factor_e_rad").Cells(posy2 + 2, posx1 + 2)
+
+            valref = Y1;
+
+            res_interpolacion1 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorI = DatosTablas.FactorERadial.getValor(posy1, posx2);//Sheets("factor_e_rad").Cells(posy1 + 2, posx2 + 2)
+            valorK = DatosTablas.FactorERadial.getValor(posy2, posx2);//Sheets("factor_e_rad").Cells(posy2 + 2, posx2 + 2)
+
+            res_interpolacion2 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorA = x_inter[buscax];
+            valref = X1;
+            valorC = x_inter[buscax + 1];
+
+            res_interpolacion3 = interpola(valorA, valref, valorC, res_interpolacion1, res_interpolacion2);
+
+            llantas.getLlanta(i).setFactorERadial(res_interpolacion3);// Sheets("calculos").Cells(25 + llantas, 5) = res_interpolacion3
+
+            //interpolación para la tercera tabla
+            valorA = y_inter[buscay];
+            valorC = y_inter[buscay + 1];
+            valorI = DatosTablas.FactorETangencial.getValor(posy1, posx1);//Sheets("factor_e_tan").Cells(posy1 + 2, posx1 + 2)
+            valorK = DatosTablas.FactorETangencial.getValor(posy2, posx1);//Sheets("factor_e_tan").Cells(posy2 + 2, posx1 + 2)
+
+            valref = Y1;
+
+            res_interpolacion1 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorI = DatosTablas.FactorETangencial.getValor(posy1, posx2); //Sheets("factor_e_tan").Cells(posy1 + 2, posx2 + 2)
+            valorK = DatosTablas.FactorETangencial.getValor(posy2, posx2); //Sheets("factor_e_tan").Cells(posy2 + 2, posx2 + 2)
+
+            res_interpolacion2 = interpola(valorA, valref, valorC, valorI, valorK);
+
+            valorA = x_inter[buscax];
+            valref = X1;
+            valorC = x_inter[buscax + 1];
+
+            res_interpolacion3 = interpola(valorA, valref, valorC, res_interpolacion1, res_interpolacion2);
+
+            llantas.getLlanta(i).setFactorETangencial(res_interpolacion3);//Sheets("calculos").Cells(25 + llantas, 6) = res_interpolacion3 
+
+        }
 
     }
 
@@ -367,7 +521,91 @@ public class Funciones extends Datos {
     }
 
     private void deflexionCircular() {
+        double pesoNeum,radioContacto,A,psiAMpa,deflexionTotal;
+        int numLlantas=1,i;
+        double espesor[],modElastico[],fCorreccion[],he[],z[],dz[];
 
+        //variables guardas en datos
+    //Pi -> PI
+    //PesoEje -> pesoEje //= Sheets("NuevoFormatoPav").Cells(7, 6)     'inputs
+    //tipoeje -> tipoEje //= Sheets("NuevoFormatoPav").Cells(8, 6)     'inputs
+    //PresionInflado -> presion //= Sheets("avanzado").Cells(2, 2)     'inputs
+    //NumCapas -> numCapas //= Sheets("NuevoFormatoPav").Cells(10, 6)   'inputs
+
+ espesor = new double[numCapas];
+ modElastico = new double[numCapas];
+ fCorreccion = new double[numCapas];
+ he = new double[numCapas-1];
+ z = new double[numCapas];
+ dz = new double[numCapas];
+
+switch (tipoEje){
+    case ("Sencillo")->{
+        numLlantas = 1;}
+    case ("Sencillo Dual")->{
+        numLlantas = 2;}
+    case ("Tandem")->{
+        numLlantas = 4;}
+    case ("Tridem")->{
+        numLlantas = 6;}
+    case ("Medio Tridem")->{
+        numLlantas = 3;}
+}
+
+pesoNeum = pesoEje / (2 * numLlantas);
+radioContacto = Math.pow(((pesoNeum * 2204.623) / (PI * presion)),0.5) * 2.54;
+//Poisson -> poisson = Sheets("NuevoFormatoPav").Cells(11, 6)
+                                                           //'anotar una condicion donde aplique que solamente
+                                                           //'funciona odemark para 2 o mas capas
+for(i=0;i< numCapas;i++){
+    espesor[i] = ep[i].getEspesor(); //Sheets("NuevoFormatoPav").Cells(13 + i, 5)
+    modElastico[i] =ep[i].getModulo(); //Sheets("NuevoFormatoPav").Cells(13 + i, 6)
+       if (numCapas == 2){
+           fCorreccion[i] = 0.9;
+       }
+       else{
+           if( i == 0) {
+            fCorreccion[i] = 1;
+                    }else{
+            fCorreccion[i] = 0.8;
+       }
+                }
+}
+                
+
+    for(i = 0; i<numCapas;i++){//For i = 1 To NumCapas - 1
+        if (i ==0)he[i] = fCorreccion[i] * (espesor[i]  + he[0]) * Math.pow((modElastico[i] / modElastico[i + 1]) , (1 / 3));
+        
+        he[i] = fCorreccion[i] * (espesor[i]  + he[i - 1]) * Math.pow((modElastico[i] / modElastico[i + 1]) , (1 / 3));
+    }
+        //Sheets("calculos").Cells(48 + i, 3) = he(i) ' sirve para anotar los espesores equivalentes de las interfaces
+
+    psiAMpa = 0.00689475719;
+    deflexionTotal = 0;
+    A = radioContacto;
+    for ( i = 0; i < numCapas; i++) {
+        int r = i-1<0?0:i-1;
+        if (i!=numCapas) {
+            double l1,l2,l3,l4,l5,l21;
+            l1 =(((1 + poisson) * presion * psiAMpa * A) / (modElastico[i] * 0.001));
+            
+            /*esta mal esta prte*/l21 = Math.pow(Math.pow(1 + (he[r] / A), 2),0.5)+(1 - 2 * poisson)*Math.pow((1 + Math.pow((he[r] / A), 2)), 0.5) - he[r] / A;
+            l2=(1 /121 ); //  +  *  
+      //              l3 = (((1 + poisson) * presionInflado * psiAMpa * A) / (modElastico(i) * 0.001));
+    //                        l4=(1 / (1 + ((espesor(i) + he(i - 1)) / A) ^ 2) ^ 0.5 + (1 - 2 * poisson);
+  //                                  l5=((1 + ((espesor(i) + he[i - 1==?0;i - 1])) / A) ^ 2) ^ 0.5 - (espesor(i) + he(i - 1)) / A));
+            dz[i] =  l1*l2 -l3*l4*l5;
+    
+        }else{
+            double l1,l2;
+            l1 = (((1 + poisson) * presion * psiAMpa * A) / (modElastico[i] * 0.001));
+            l2 = Math.pow(1 / Math.pow(1 + (he[i-1] / A) , 2), 0.5) + (1 - 2 * poisson) * ((Math.pow(Math.pow(1 + (he[i-1] / A),2) , 0.5) - he[i-1] / A));
+        dz[i] = l1 * l2;
+    
+        }
+           deflexionTotal = deflexionTotal + dz[i];
+    }
+//Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
     }
 
     private void esfuerzosEjeSencillo() {

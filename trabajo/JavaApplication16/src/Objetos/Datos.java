@@ -18,6 +18,7 @@ public class Datos {
     public double presion;
     public int numCapas;
     public double poisson;
+    
     public EstructuraPavimiento ep[];
     public double X = 0;
     public double Y = 18;
@@ -27,6 +28,7 @@ public class Datos {
     public Calculos cal;
     public Llantas llantas;
     
+    public final double PI = 3.14159265358979;
     
     public CargarClases cc;
     public boolean activos[];

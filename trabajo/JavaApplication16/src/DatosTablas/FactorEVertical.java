@@ -1,4 +1,4 @@
-package Datos;
+package DatosTablas;
 
 public class FactorEVertical {
        private static final String datos = """
