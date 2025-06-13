@@ -122,8 +122,8 @@ public class Funciones extends Datos {
                 ayuda3 = (Math.log(valor) - m3) / s3;
 
                 altura = w1 / (2.506628274631 * valor * s1) * Math.exp(-0.5 * Math.pow(ayuda1, 2))
-                        + w2 / (2.506628274631 * valor * s2) * Math.exp(-0.5 * Math.pow(ayuda2, 2))
-                        + w3 / (2.506628274631 * valor * s3) * Math.exp(-0.5 * Math.pow(ayuda3, 2));
+                                  + w2 / (2.506628274631 * valor * s2) * Math.exp(-0.5 * Math.pow(ayuda2, 2))
+                                  + w3 / (2.506628274631 * valor * s3) * Math.exp(-0.5 * Math.pow(ayuda3, 2));
                 cc.data[i].setDato(i + 1);
                 cc.data[i].setCargaPromedio((float) valor);
 
@@ -355,7 +355,7 @@ public class Funciones extends Datos {
 
     /*Lista*/
     public void factores_Ahlvin() {
-        int  buscax = 0, buscay = 0, posx1 = 0, posx2 = 0, posy1 = 0, posy2 = 0;
+        int buscax = 0, buscay = 0, posx1 = 0, posx2 = 0, posy1 = 0, posy2 = 0;
         double r_sobre_a, z_sobre_a, X1, Y1;
         double valorA, valref, valorC, valorI, valorK, radioContacto, z;
         double res_interpolacion1, res_interpolacion2, res_interpolacion3;
@@ -522,105 +522,257 @@ public class Funciones extends Datos {
 
     /*Lista*/
     private void deflexionCircular() {
-        double pesoNeum,radioContacto,A,psiAMpa,deflexionTotal;
-        int numLlantas=1,i;
-        double espesor[],modElastico[],fCorreccion[],he[],z[],dz[];
+        double pesoNeum, radioContacto, A, psiAMpa, deflexionTotal;
+        int numLlantas = 1, i;
+        double espesor[], modElastico[], fCorreccion[], he[], z[], dz[];
 
         //variables guardas en datos
-    //Pi -> PI
-    //PesoEje -> pesoEje //= Sheets("NuevoFormatoPav").Cells(7, 6)     'inputs
-    //tipoeje -> tipoEje //= Sheets("NuevoFormatoPav").Cells(8, 6)     'inputs
-    //PresionInflado -> presion //= Sheets("avanzado").Cells(2, 2)     'inputs
-    //NumCapas -> numCapas //= Sheets("NuevoFormatoPav").Cells(10, 6)   'inputs
+        //Pi -> PI
+        //PesoEje -> pesoEje //= Sheets("NuevoFormatoPav").Cells(7, 6)     'inputs
+        //tipoeje -> tipoEje //= Sheets("NuevoFormatoPav").Cells(8, 6)     'inputs
+        //PresionInflado -> presion //= Sheets("avanzado").Cells(2, 2)     'inputs
+        //NumCapas -> numCapas //= Sheets("NuevoFormatoPav").Cells(10, 6)   'inputs
+        espesor = new double[numCapas];
+        modElastico = new double[numCapas];
+        fCorreccion = new double[numCapas];
+        he = new double[numCapas - 1];
+        z = new double[numCapas];
+        dz = new double[numCapas];
 
- espesor = new double[numCapas];
- modElastico = new double[numCapas];
- fCorreccion = new double[numCapas];
- he = new double[numCapas-1];
- z = new double[numCapas];
- dz = new double[numCapas];
+        switch (tipoEje) {
+            case ("Sencillo") -> {
+                numLlantas = 1;
+            }
+            case ("Sencillo Dual") -> {
+                numLlantas = 2;
+            }
+            case ("Tandem") -> {
+                numLlantas = 4;
+            }
+            case ("Tridem") -> {
+                numLlantas = 6;
+            }
+            case ("Medio Tridem") -> {
+                numLlantas = 3;
+            }
+        }
 
-switch (tipoEje){
-    case ("Sencillo")->{
-        numLlantas = 1;}
-    case ("Sencillo Dual")->{
-        numLlantas = 2;}
-    case ("Tandem")->{
-        numLlantas = 4;}
-    case ("Tridem")->{
-        numLlantas = 6;}
-    case ("Medio Tridem")->{
-        numLlantas = 3;}
-}
-
-pesoNeum = pesoEje / (2 * numLlantas);
-radioContacto = Math.pow(((pesoNeum * 2204.623) / (PI * presion)),0.5) * 2.54;
-//Poisson -> poisson = Sheets("NuevoFormatoPav").Cells(11, 6)
-                                                           //'anotar una condicion donde aplique que solamente
-                                                           //'funciona odemark para 2 o mas capas
-for(i=0;i< numCapas;i++){
-    espesor[i] = ep[i].getEspesor(); //Sheets("NuevoFormatoPav").Cells(13 + i, 5)
-    modElastico[i] =ep[i].getModulo(); //Sheets("NuevoFormatoPav").Cells(13 + i, 6)
-       if (numCapas == 2){
-           fCorreccion[i] = 0.9;
-       }
-       else{
-           if( i == 0) {
-            fCorreccion[i] = 1;
-                    }else{
-            fCorreccion[i] = 0.8;
-       }
+        pesoNeum = pesoEje / (2 * numLlantas);
+        radioContacto = Math.pow(((pesoNeum * 2204.623) / (PI * presion)), 0.5) * 2.54;
+        //Poisson -> poisson = Sheets("NuevoFormatoPav").Cells(11, 6)
+        //'anotar una condicion donde aplique que solamente
+        //'funciona odemark para 2 o mas capas
+        for (i = 0; i < numCapas; i++) {
+            espesor[i] = ep[i].getEspesor(); //Sheets("NuevoFormatoPav").Cells(13 + i, 5)
+            modElastico[i] = ep[i].getModulo(); //Sheets("NuevoFormatoPav").Cells(13 + i, 6)
+            if (numCapas == 2) {
+                fCorreccion[i] = 0.9;
+            } else {
+                if (i == 0) {
+                    fCorreccion[i] = 1;
+                } else {
+                    fCorreccion[i] = 0.8;
                 }
-}
-                
+            }
+        }
 
-    for(i = 0; i<numCapas;i++){//For i = 1 To NumCapas - 1
-        if (i ==0)he[i] = fCorreccion[i] * (espesor[i]  + he[0]) * Math.pow((modElastico[i] / modElastico[i + 1]) , (1 / 3));
-        
-        he[i] = fCorreccion[i] * (espesor[i]  + he[i - 1]) * Math.pow((modElastico[i] / modElastico[i + 1]) , (1 / 3));
-    }
+        for (i = 0; i < numCapas; i++) {//For i = 1 To NumCapas - 1
+            if (i == 0) {
+                he[i] = fCorreccion[i] * (espesor[i] + he[0]) * Math.pow((modElastico[i] / modElastico[i + 1]), (1 / 3));
+            }
+
+            he[i] = fCorreccion[i] * (espesor[i] + he[i - 1]) * Math.pow((modElastico[i] / modElastico[i + 1]), (1 / 3));
+        }
         //Sheets("calculos").Cells(48 + i, 3) = he(i) ' sirve para anotar los espesores equivalentes de las interfaces
 
-    psiAMpa = 0.00689475719;
-    deflexionTotal = 0;
-    A = radioContacto;
-    for ( i = 0; i < numCapas; i++) {
-        int r = i-1<0?0:i-1;
+        psiAMpa = 0.00689475719;
+        deflexionTotal = 0;
+        A = radioContacto;
+        for (i = 0; i < numCapas; i++) {
+            int r = i - 1 < 0 ? 0 : i - 1;
 
-        double part1 =((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001);
+            double part1 = ((1 + poisson) * presion * psiAMpa * A) / (modElastico[i] * 0.001);
 
-        double suma1=espesor[i] + he[r]
-        double suma2 =1 - 2 * poisson;
+            double suma1 = espesor[i] + he[r];
+            double suma2 = 1 - 2 * poisson;
 
-        double div1 = he[r] / A;
-        double div2 = suma1/A;
+            double div1 = he[r] / A;
+            double div2 = suma1 / A;
 
-        double pot1 = Math.pow(div1,2);
-        double pot2 = Mat.pow(1+pot1,0.5);
+            double pot1 = Math.pow(div1, 2);
+            double pot2 = Math.pow(1 + pot1, 0.5);
 
-        double pot3 = Math.pow((suma1 / A),2);
-        double pot4 = Math.pow((1 + pot3) , 0.5);
+            double pot3 = Math.pow((suma1 / A), 2);
+            double pot4 = Math.pow((1 + pot3), 0.5);
 
+            if (i != numCapas) {
 
-        if (i!=numCapas) {
+                dz[i] = part1 * (1 / pot2 + suma2 * (pot2 - div1)) - part1 * (1 / pot4 + suma2 * (pot4 - div2));
+            } else {
 
-            dz[i] = part1*(1/pot2 + suma2*(pot2 - div1)) - part1*(1/pot4 + suma2*(pot4 - div2));
-        }else{
+                dz[i] = part1 * (1 / pot2 + suma2 * (pot2 - div1));
 
-            dz[i] = part1 *(1/pot2 + suma2*(pot2 - div1));
-    
+            }
+            deflexionTotal = deflexionTotal + dz[i];
         }
-           deflexionTotal = deflexionTotal + dz[i];
-    }
-                   this.cal.getCapaCalculo[0].setDeflexionTotal(deflexionTotal);   //Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
+        this.cal.getCapaCalculo(0).setDeflexionTotal(deflexionTotal);   //Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
     }
 
+    /*Lista 1*/
     private void esfuerzosEjeSencillo() {
+        double EvZ, Er1, Et1;
+        double he[] = new double[numCapas];
+        double radioContacto = this.cal.getCapaCalculo(0).getRCC();
+        var tipoEje = this.tipoEje;
+
+        for (int i = 0; i < numCapas - 1; i++) {
+            he[i] = this.cal.getCapaCalculo(i).getEspesorParcialEquivalente();
+            esfuerzos_Damy();
+            EvZ = 6.894757 * (presion * (1 - ((Math.pow(he[i], 3)) / Math.pow((Math.pow(radioContacto, 2) + Math.pow(he[i], 2)), 1.5))));
+            var r1 = (2 * he[i] * (1 + poisson));
+            var r2 = Math.pow(radioContacto, 2) + Math.pow(he[i], 2);
+
+            Er1 = 6.894757 * (presion / 2) * (1 + (2 * poisson) - (r1 / Math.pow(r2, 0.5)) + (((Math.pow(he[i], 3)) / (r2))));
+            Et1 = Er1;
+            this.cal.getCapaCalculo(i).setEsfuerzoVerticalO(EvZ);//Sheets("calculos").Cells(2 + i, 10) = EvZ
+            this.cal.getCapaCalculo(i).setEsfuerzoTangencialO(Er1);//Sheets("calculos").Cells(2 + i, 11) = Er1
+            this.cal.getCapaCalculo(i).setEsfuerzoRadialO(Et1);//Sheets("calculos").Cells(2 + i, 12) = Et1
+            if (i == 0) {
+                this.llantas.getLlanta(i).setOrNeumatico1(Er1);
+                this.llantas.getLlanta(i).setOtNeumatico1(Er1);
+            }
+            if (i == 2) {
+                this.llantas.getLlanta(i).setOrNeumatico2(Er1);
+                this.llantas.getLlanta(i).setOtNeumatico2(Er1);
+            }
+        }
 
     }
 
-    public void Esfuerzos_Damy(String tipoeje, int numCapa) {
+    public void esfuerzos_Damy(int numCapa) {
+        double xp, yp, Q, z, radio, parcial, suma, sigmaZ, S, D, xq, yq, sumaporllanta;
+        int num_de_calculos, calculos;
 
+        double X[] = new double[13];// As Double
+        double Y[] = new double[13];// As Double
+        double xprima[] = new double[13];// As Double
+        double yprima[] = new double[13];// As Double
+        double Teta[][] = new double[2][12];// As Double
+        double C[][] = new double[2][12];// As Double
+        double F[] = new double[12];// As Double
+        double A[] = new double[12];// As Double
+        double L[] = new double[12];// As Double
+        double B[][] = new double[2][12];//(1 To 2, 1 To 12) As Double
+        double W[][] = new double[2][12];// As Double
+        double j[][] = new double[2][12];// As Double
+        double n[][] = new double[2][12];// As Double
+
+        double posicionx[] = new double[6];// As Double
+        double posiciony[] = new double[6];// As Double
+        double llantax[] = new double[6];// As Double
+        double llantay[] = new double[6];// As Double
+
+        switch (this.tipoEje) {
+            case "Sencillo":
+                calculos = 1;
+                break;
+            case "Sencillo Dual":
+                calculos = 2;
+                break;
+
+            case "Tandem":
+                calculos = 4;
+                break;
+            case "Tridem":
+                calculos = 6;
+        }
+
+        Q = 6.895 * this.presion;
+        radio = this.cal.getCapaCalculo(0).getRCC() / 100;//Sheets("calculos").Cells(3, 6) / 100
+        xq = this.X / 100;//Sheets("avanzado").Cells(17, 2) / 100
+        yq = this.Y / 100;//Sheets("avanzado").Cells(18, 2) / 100
+        S = this.S / 100;//Sheets("avanzado").Cells(17, 4) / 100
+        D = this.D / 100;//Sheets("avanzado").Cells(18, 4) / 100; 
+
+        llantax[0] = 0;
+        llantax[1] = 0;
+        llantax[2] = D;
+        llantax[3] = D;
+        llantax[4] = 2 * D;
+        llantax[5] = 2 * D;
+        llantay[0] = 0;
+        llantay[1] = S;
+        llantay[2] = 0;
+        llantay[3] = S;
+        llantay[4] = 0;
+        llantay[5] = S;
+        
+        z = this.cal.getCapaCalculo(numCapa).getEspesorParcialEquivalente()/100;//Sheets("calculos").Cells(2 + NumCapa, 7) / 100
+        for (num_de_calculos = 0;num_de_calculos< calculos;num_de_calculos++){
+      
+        posicionx[num_de_calculos] = Math.abs(llantax[num_de_calculos] - xq);
+        posiciony[num_de_calculos] = Math.abs(llantay[num_de_calculos] - yq);
+      
+      xp = posicionx[num_de_calculos];
+      yp = posiciony[num_de_calculos];
+      
+        for (int i=0;i<12;i++){
+            
+            X[i] = radio * Math.cos((i - 1) * this.PI / 6);
+            Y[i] = radio * Math.sin((i - 1) * this.PI / 6);
+            X[1 + i] = radio *  Math.cos(i * this.PI / 6);
+            Y[1 + i] = radio *  Math.sin(i * this.PI / 6);
+            
+            xprima[i] = X[i] - xp;
+            xprima[i + 1] = X[i + 1] - xp;
+            yprima[i] = Y[i] - yp;
+            yprima[i + 1] = Y[i + 1] - yp;
+            
+            F[i] = xprima[i] * yprima[i+1] - xprima[i+1] * yprima[i];
+            L[i] = Math.pow((Math.pow((xprima[i+1] - xprima[i]),2) + Math.pow((yprima[i+1] - yprima[i]) ,2)),(1 / 2));
+            A[i] = Math.abs(z * L[i] / F[i]);
+            C[0][i] = (xprima[i] * (xprima[i+1] - xprima[i]) + yprima[i] * (yprima[i+1] - yprima[i])) / F[i];
+            C[1][i] = (xprima[i+1] * (xprima[i+1] - xprima[i]) + yprima[i+1] * (yprima[i+1] - yprima[i])) / F[i];
+            
+            Teta[0][i] = Math.atan(C[0][i]);
+            Teta[1][ i] = Math.atan(C[1][i]);
+            
+            B(1, i) = (A(i) * C(1, i)) / ((1 + ((A(i)) ^ 2) + ((C(1, i)) ^ 2)) ^ (1 / 2))
+            B(2, i) = (A(i) * C(2, i)) / ((1 + ((A(i)) ^ 2) + ((C(2, i)) ^ 2)) ^ (1 / 2))
+            W(1, i) = (1 * A(i) * C(1, i)) / ((1 + 1 ^ 2 * ((A(i)) ^ 2 + (C(1, i)) ^ 2)) ^ (1 / 2))
+            W(2, i) = (2 * A(i) * C(2, i)) / ((1 + 1 ^ 2 * ((A(i)) ^ 2 + (C(2, i)) ^ 2)) ^ (1 / 2))
+            j(1, i) = C(1, i) / ((1 + (A(i)) ^ 2) ^ (1 / 2))
+            j(2, i) = C(2, i) / ((1 + (A(i)) ^ 2) ^ (1 / 2))
+            n(1, i) = (A(i) ^ 2 * C(1, i)) / (1 + A(i) ^ 2 + C(1, i) ^ 2)
+            n(2, i) = (A(i) ^ 2 * C(2, i)) / (1 + A(i) ^ 2 + C(2, i) ^ 2)
+                          
+            parcial = Teta(2, i) - Teta(1, i) - Atn(B(2, i)) + Atn(B(1, i)) + (B(2, i) - B(1, i)) / (A(i) ^ 2 + 1)
+            suma = suma + parcial
+        
+                              }
+      sigmaZ = (Q * suma) / (2 * Pi)
+      Sheets("calculos").Cells(30 + num_de_calculos, 2 + NumCapa) = sigmaZ ' es el resultado de un calculo o un area y una profundidad
+      suma = 0
+      sumaporllanta = sumaporllanta + sigmaZ
+                        }
+                          /*
+
+'datos de entrada
+
+
+
+
+
+
+
+
+
+Pi = 3.14159265358979
+sumaporllanta = 0
+    
+    
+Sheets("calculos").Cells(5 + NumCapa, 10) = sumaporllanta
+                           */
     }
 
     private void repeticionesAdmisibles() {
