@@ -648,7 +648,8 @@ public class Funciones extends Datos {
         }
 
     }
-
+    //Revisar numCapa
+    /*Lista*/
     public void esfuerzos_Damy(int numCapa) {
         double xp, yp, Q, z, radio, parcial, suma, sigmaZ, S, D, xq, yq, sumaporllanta;
         int num_de_calculos, calculos;
@@ -706,7 +707,7 @@ public class Funciones extends Datos {
         llantay[3] = S;
         llantay[4] = 0;
         llantay[5] = S;
-        
+        sumaporllanta = 0
         z = this.cal.getCapaCalculo(numCapa).getEspesorParcialEquivalente()/100;//Sheets("calculos").Cells(2 + NumCapa, 7) / 100
         for (num_de_calculos = 0;num_de_calculos< calculos;num_de_calculos++){
       
@@ -736,46 +737,148 @@ public class Funciones extends Datos {
             
             Teta[0][i] = Math.atan(C[0][i]);
             Teta[1][ i] = Math.atan(C[1][i]);
-            
-            B(1, i) = (A(i) * C(1, i)) / ((1 + ((A(i)) ^ 2) + ((C(1, i)) ^ 2)) ^ (1 / 2))
-            B(2, i) = (A(i) * C(2, i)) / ((1 + ((A(i)) ^ 2) + ((C(2, i)) ^ 2)) ^ (1 / 2))
-            W(1, i) = (1 * A(i) * C(1, i)) / ((1 + 1 ^ 2 * ((A(i)) ^ 2 + (C(1, i)) ^ 2)) ^ (1 / 2))
-            W(2, i) = (2 * A(i) * C(2, i)) / ((1 + 1 ^ 2 * ((A(i)) ^ 2 + (C(2, i)) ^ 2)) ^ (1 / 2))
-            j(1, i) = C(1, i) / ((1 + (A(i)) ^ 2) ^ (1 / 2))
-            j(2, i) = C(2, i) / ((1 + (A(i)) ^ 2) ^ (1 / 2))
-            n(1, i) = (A(i) ^ 2 * C(1, i)) / (1 + A(i) ^ 2 + C(1, i) ^ 2)
-            n(2, i) = (A(i) ^ 2 * C(2, i)) / (1 + A(i) ^ 2 + C(2, i) ^ 2)
+
+
+            B[0][i] = (A[i] * C[0][i]) / ( Math.pow((1 + (Math.pow(A[i],2)) + Math.pow(C[0][i], 2)),(1 / 2)));
+
+            B[1][i] = (A[i] * C[0][i]) / ( Math.pow((1 + (Math.pow(A[i],2)) + Math.pow(C[1][i], 2)),(1 / 2)));
+
+            W[0][i] = (1 * A(i) * C[0][i]) / ((1 + Math.pow(1,2) * Math.pow((Math.pow(A[i],2) + (Math.pow(C[0][i] ,2))),(1 / 2));
+
+            W[1][i] = (1 * A(i) * C[1][i]) / ((1 + Math.pow(1,2) * Math.pow((Math.pow(A[i],2) + (Math.pow(C[1][i] ,2))),(1 / 2));
+
+            j[0][i] = C[0][i] / (Math.pow(Math.pow(1 + A[i],2),(1 / 2)));
+
+            j[1][i] = C[1][i] / (Math.pow(Math.pow(1 + A[i],2),(1 / 2)));
+
+            n[0][i] = (Math.pow(A[i],2) * C[0][i]) / (1 + Math.pow(A[i],2) + Math.pow(C[0][i] ,2));
+
+            n[1][i] = (Math.pow(A[i],2) * C[1][i]) / (1 + Math.pow(A[i],2) + Math.pow(C[1][i] ,2));
+
                           
-            parcial = Teta(2, i) - Teta(1, i) - Atn(B(2, i)) + Atn(B(1, i)) + (B(2, i) - B(1, i)) / (A(i) ^ 2 + 1)
+            parcial = Teta[2][i] - Teta[1][i] - Math.atan(B[2][i]) + Math.atan(B[1][i]) + (B[2][i] - B[1][i) / (Math.pow(A[i],2) + 1);
+
             suma = suma + parcial
         
-                              }
-      sigmaZ = (Q * suma) / (2 * Pi)
-      Sheets("calculos").Cells(30 + num_de_calculos, 2 + NumCapa) = sigmaZ ' es el resultado de un calculo o un area y una profundidad
-      suma = 0
-      sumaporllanta = sumaporllanta + sigmaZ
+                          }
+      sigmaZ = (Q * suma) / (2 * this.PI);
+      this.llantas.getLlanta(num_de_calculos).setValorCapa(sigmaZ);
+      suma = 0;
+      sumaporllanta = sumaporllanta + sigmaZ;
                         }
-                          /*
-
-'datos de entrada
-
-
-
-
-
-
-
-
-
-Pi = 3.14159265358979
-sumaporllanta = 0
-    
-    
-Sheets("calculos").Cells(5 + NumCapa, 10) = sumaporllanta
-                           */
+                          
     }
 
     private void repeticionesAdmisibles() {
+
+int i, eje, NumMarcasClase;
+double f1, f2, f3, f4, f5;
+double Nd, Nf ;
+double DefZ[] = new double[4] ;
+double DefT[] = new double[4];
+String TipoModeloFatiga;
+String TipoModeloDeformacion;
+double Elastico; 
+
+    // Funcion de limpiar -> //Worksheets("Larguillo").Range("AB4:AI103").ClearContents
+
+TipoModeloFatiga = "IMT";
+TipoModeloDeformacion = "IMT";
+
+Elastico = this.ep[0].getModulo();
+
+switch(TipoModeloFatiga){
+        case "Asphalt Institute":
+'            f1 = 0.0796;
+'            f2 = 3.291;
+            f1 = 0.0011358;
+            f2 = 3.291;
+            f3 = 0.854;
+            break;
+        case "Shell":
+'            f1 = 0.0685;
+'            f2 = 5.671;
+             f1 = 0.0000005356;
+             f2 = 5.671;
+             f3 = 2.363;
+             break;
+        case "Illinois DOT":
+            f1 = 0.000005;
+            f2 = 3;
+            break;
+        case "IMT" : 
+            f1 = 0.000000000166;
+            f2 = 4.32;
+            break;
+        case "BRRC, BELGICA":
+            f1 = 4.92E-14;
+            f2 = 4.76;
+            break;
+        case "Personalizado1":
+        case "Personalizado2":
+        break;
+}
+
+switch (TipoModeloDeformacion){
+        case "Asphalt Institute":
+            f4 = 0.000000001365;
+            f5 = 4.477;
+            break;
+        case "IMT":
+            f4 = 0.0000000618;
+            f5 = 3.95;
+            break;
+        case "BRRC, BELGICA":
+            f4 = 0.00000000305;
+            f5 = 4.35;
+            break;
+        case "Shell 50%":
+            f4 = 0.000000615;
+            f5 = 4;
+            break;
+        case "Shell 85%":
+            f4 = 0.000000194;
+            f5 = 4;
+            break;
+        case "Shell 95%":
+            f4 = 0.000000105;
+            f5 = 4;
+            break;
+        case "Personalizado":
+}
+
+ espectros();
+ VolumenTransito();
+
+NumMarcasClase = 100; // ya sabemos que es 100 el numero por larguillo y como lo manejan en el codigo anterior
+ 
+
+  /*While Len(Sheets("Larguillo").Cells(i, 1)) > 0
+    NumMarcasClase = NumMarcasClase + 1
+    i = i + 1
+  Wend*/
+
+
+for (eje = 0; eje < 4; eje++){
+    for(i = 0; i<100;i++){
+        DefZ[eje] = this.cc.//DefZ(eje) = Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
+        DefT(eje) = Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
+        Nf = f1 * (DefT(eje) ^ (-f2))//la unica opcion es IMT
+      
+
+       Nd = f4 * (DefZ(eje) ^ (-f5))
+   
+       Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
+       Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
+  
+    }
+}//eje = 1 To 4
+For i = 1 To NumMarcasClase
+
+      
+Next i
+Next eje
+
     }
 
     private void repeticionesEsperadas() {

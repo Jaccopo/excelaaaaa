@@ -30,6 +30,7 @@ public class Llanta {
         this.valorCapa = 0;
     }
 
+
     public Llanta(double ra, double factorEVertical,double factorERadial,
                     double factorETangencial,double res1,double res2,
                     double anguloHorizontal, double distanciaHorizontal, 
@@ -56,6 +57,14 @@ public class Llanta {
     }
 
     
+    public void setValorCapa(double valorCapa){
+        this.valorCapa = valorCapa;
+    }
+
+    public double getValorCapa(){
+        return this.valorCapa;
+    }
+
     //Getters and setters 
     public double getValorCapa() {
         return valorCapa;
