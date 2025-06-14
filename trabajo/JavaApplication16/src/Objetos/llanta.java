@@ -66,11 +66,11 @@ public class Llanta {
     }
 
     //Getters and setters 
-    public double getValorCapa() {
+    public double getValorCapa1() {
         return valorCapa;
     }
 
-    public void setValorCapa(double valorCapa) {
+    public void setValorCapa1(double valorCapa) {
         this.valorCapa = valorCapa;
     }
     

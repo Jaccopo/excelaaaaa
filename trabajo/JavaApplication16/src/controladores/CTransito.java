@@ -4,6 +4,9 @@
  */
 package controladores;
 
+import Clases.TransitoEstatico;
+import vista.Transito;
+
 /**
  *
  * @author aldoj
@@ -200,6 +203,21 @@ public class CTransito {
         NumEjes_dual_año = RepEjes_dual / años;
         NumEjes_tandem_año = RepEjes_tandem / años;
         NumEjes_tridem_año = RepEjes_tridem / años;
+        
+        
+        
+        //Utilizamos el ambiente estatico
+        TransitoEstatico.activado = 1; // mencionamos que esta listo
+        
+        TransitoEstatico.sencilloNumeroPorcentaje = RepEjes_sencillo;
+        TransitoEstatico.dualPorcentajeRepresentivo = RepEjes_dual;
+        TransitoEstatico.tridemPorcentajeRepresentivo = RepEjes_tridem;
+        TransitoEstatico.tandemPorcentajeRepresentivo = RepEjes_tandem;
+        
+        TransitoEstatico.sencilloNumeroPorcentaje=NumEjes_Sencillos_año;
+        TransitoEstatico.dualNumeroPorcentaje = NumEjes_dual_año;
+        TransitoEstatico.tridemNumeroPorcentaje = NumEjes_tridem_año;
+        TransitoEstatico.tandemNumeroPorcentaje = NumEjes_tandem_año;
 
         TransProm_anual_carga = RepEjes_sencillo / años;
         Total_ejes = NumEjes_Sencillos_año + NumEjes_dual_año + NumEjes_tandem_año + NumEjes_tridem_año;

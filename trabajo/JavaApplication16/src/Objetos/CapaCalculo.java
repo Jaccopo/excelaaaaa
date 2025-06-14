@@ -19,9 +19,28 @@ public class CapaCalculo {
     private double a, b, c, d, e, lesimaDeflexion;
     private double esfuerzoCortanteRZ, esfuerzoCortanteYZ, esfuerzoCortanteXZ;
     
+    private double aux1,aux2;
+    
     private double complemento1,complemento2,complemento3,complemento4;
 
-    public double getComplemento1() {
+    
+    
+    public void setAux1(double aux1){
+        this.aux1 = aux1;
+    }
+    public double getAux1(){
+        return this.aux1 ;
+    }
+    
+    public void setAux2(double aux2){
+        this.aux2 = aux2;
+    }
+    
+    public double getAux2(){
+        return this.aux2 ;
+    }
+
+    public double getComplemento1(){
         return complemento1;
     }
 

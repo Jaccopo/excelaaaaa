@@ -25,6 +25,13 @@ public class EspectroDano {
         this.TRIDEMFat = Float.parseFloat(datos[7]);
     }
 
+    public float sumaDeformacion(){
+        return this.simpleDef+this.dualDef+this.TRIDEMEDef+this.TANDEMDef;
+    }
+     public float sumaFatiga(){
+        return this.simpleFat+this.dualFat+this.TANDEMFat+this.TRIDEMFat;
+    }
+    
     public float getSimpleDef() {
         return simpleDef;
     }

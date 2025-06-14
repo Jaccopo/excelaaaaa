@@ -1,5 +1,6 @@
 package Objetos;
 
+import Clases.TransitoEstatico;
 import Objetos.Datos;
 import DatosTablas.TablaDistribucionDeCarga;
 import javax.swing.JOptionPane;
@@ -627,7 +628,7 @@ public class Funciones extends Datos {
 
         for (int i = 0; i < numCapas - 1; i++) {
             he[i] = this.cal.getCapaCalculo(i).getEspesorParcialEquivalente();
-            esfuerzos_Damy();
+            esfuerzos_Damy(i);
             EvZ = 6.894757 * (presion * (1 - ((Math.pow(he[i], 3)) / Math.pow((Math.pow(radioContacto, 2) + Math.pow(he[i], 2)), 1.5))));
             var r1 = (2 * he[i] * (1 + poisson));
             var r2 = Math.pow(radioContacto, 2) + Math.pow(he[i], 2);
@@ -648,11 +649,11 @@ public class Funciones extends Datos {
         }
 
     }
-    //Revisar numCapa
+
     /*Lista*/
     public void esfuerzos_Damy(int numCapa) {
-        double xp, yp, Q, z, radio, parcial, suma, sigmaZ, S, D, xq, yq, sumaporllanta;
-        int num_de_calculos, calculos;
+        double xp, yp, Q, z, radio, parcial, suma = 0, sigmaZ, S, D, xq, yq, sumaporllanta;
+        int num_de_calculos, calculos = 0;
 
         double X[] = new double[13];// As Double
         double Y[] = new double[13];// As Double
@@ -707,197 +708,302 @@ public class Funciones extends Datos {
         llantay[3] = S;
         llantay[4] = 0;
         llantay[5] = S;
-        sumaporllanta = 0
-        z = this.cal.getCapaCalculo(numCapa).getEspesorParcialEquivalente()/100;//Sheets("calculos").Cells(2 + NumCapa, 7) / 100
-        for (num_de_calculos = 0;num_de_calculos< calculos;num_de_calculos++){
-      
-        posicionx[num_de_calculos] = Math.abs(llantax[num_de_calculos] - xq);
-        posiciony[num_de_calculos] = Math.abs(llantay[num_de_calculos] - yq);
-      
-      xp = posicionx[num_de_calculos];
-      yp = posiciony[num_de_calculos];
-      
-        for (int i=0;i<12;i++){
-            
-            X[i] = radio * Math.cos((i - 1) * this.PI / 6);
-            Y[i] = radio * Math.sin((i - 1) * this.PI / 6);
-            X[1 + i] = radio *  Math.cos(i * this.PI / 6);
-            Y[1 + i] = radio *  Math.sin(i * this.PI / 6);
-            
-            xprima[i] = X[i] - xp;
-            xprima[i + 1] = X[i + 1] - xp;
-            yprima[i] = Y[i] - yp;
-            yprima[i + 1] = Y[i + 1] - yp;
-            
-            F[i] = xprima[i] * yprima[i+1] - xprima[i+1] * yprima[i];
-            L[i] = Math.pow((Math.pow((xprima[i+1] - xprima[i]),2) + Math.pow((yprima[i+1] - yprima[i]) ,2)),(1 / 2));
-            A[i] = Math.abs(z * L[i] / F[i]);
-            C[0][i] = (xprima[i] * (xprima[i+1] - xprima[i]) + yprima[i] * (yprima[i+1] - yprima[i])) / F[i];
-            C[1][i] = (xprima[i+1] * (xprima[i+1] - xprima[i]) + yprima[i+1] * (yprima[i+1] - yprima[i])) / F[i];
-            
-            Teta[0][i] = Math.atan(C[0][i]);
-            Teta[1][ i] = Math.atan(C[1][i]);
+        sumaporllanta = 0;
+        z = this.cal.getCapaCalculo(numCapa).getEspesorParcialEquivalente() / 100;//Sheets("calculos").Cells(2 + NumCapa, 7) / 100
+        for (num_de_calculos = 0; num_de_calculos < calculos; num_de_calculos++) {
 
+            posicionx[num_de_calculos] = Math.abs(llantax[num_de_calculos] - xq);
+            posiciony[num_de_calculos] = Math.abs(llantay[num_de_calculos] - yq);
 
-            B[0][i] = (A[i] * C[0][i]) / ( Math.pow((1 + (Math.pow(A[i],2)) + Math.pow(C[0][i], 2)),(1 / 2)));
+            xp = posicionx[num_de_calculos];
+            yp = posiciony[num_de_calculos];
 
-            B[1][i] = (A[i] * C[0][i]) / ( Math.pow((1 + (Math.pow(A[i],2)) + Math.pow(C[1][i], 2)),(1 / 2)));
+            for (int i = 0; i < 12; i++) {
 
-            W[0][i] = (1 * A(i) * C[0][i]) / ((1 + Math.pow(1,2) * Math.pow((Math.pow(A[i],2) + (Math.pow(C[0][i] ,2))),(1 / 2));
+                X[i] = radio * Math.cos((i - 1) * this.PI / 6);
+                Y[i] = radio * Math.sin((i - 1) * this.PI / 6);
+                X[1 + i] = radio * Math.cos(i * this.PI / 6);
+                Y[1 + i] = radio * Math.sin(i * this.PI / 6);
 
-            W[1][i] = (1 * A(i) * C[1][i]) / ((1 + Math.pow(1,2) * Math.pow((Math.pow(A[i],2) + (Math.pow(C[1][i] ,2))),(1 / 2));
+                xprima[i] = X[i] - xp;
+                xprima[i + 1] = X[i + 1] - xp;
+                yprima[i] = Y[i] - yp;
+                yprima[i + 1] = Y[i + 1] - yp;
 
-            j[0][i] = C[0][i] / (Math.pow(Math.pow(1 + A[i],2),(1 / 2)));
+                F[i] = xprima[i] * yprima[i + 1] - xprima[i + 1] * yprima[i];
+                L[i] = Math.pow((Math.pow((xprima[i + 1] - xprima[i]), 2) + Math.pow((yprima[i + 1] - yprima[i]), 2)), (1 / 2));
+                A[i] = Math.abs(z * L[i] / F[i]);
+                C[0][i] = (xprima[i] * (xprima[i + 1] - xprima[i]) + yprima[i] * (yprima[i + 1] - yprima[i])) / F[i];
+                C[1][i] = (xprima[i + 1] * (xprima[i + 1] - xprima[i]) + yprima[i + 1] * (yprima[i + 1] - yprima[i])) / F[i];
 
-            j[1][i] = C[1][i] / (Math.pow(Math.pow(1 + A[i],2),(1 / 2)));
+                Teta[0][i] = Math.atan(C[0][i]);
+                Teta[1][i] = Math.atan(C[1][i]);
 
-            n[0][i] = (Math.pow(A[i],2) * C[0][i]) / (1 + Math.pow(A[i],2) + Math.pow(C[0][i] ,2));
+                B[0][i] = (A[i] * C[0][i]) / (Math.pow((1 + (Math.pow(A[i], 2)) + Math.pow(C[0][i], 2)), (1 / 2)));
 
-            n[1][i] = (Math.pow(A[i],2) * C[1][i]) / (1 + Math.pow(A[i],2) + Math.pow(C[1][i] ,2));
+                B[1][i] = (A[i] * C[0][i]) / (Math.pow((1 + (Math.pow(A[i], 2)) + Math.pow(C[1][i], 2)), (1 / 2)));
 
-                          
-            parcial = Teta[2][i] - Teta[1][i] - Math.atan(B[2][i]) + Math.atan(B[1][i]) + (B[2][i] - B[1][i) / (Math.pow(A[i],2) + 1);
+                W[0][i] = (2 * A[i] * C[0][i]) / (1 + 1 * Math.pow((Math.pow(A[i], 2)) + Math.pow(C[0][i], 2), (1 / 2)));
 
-            suma = suma + parcial
-        
-                          }
-      sigmaZ = (Q * suma) / (2 * this.PI);
-      this.llantas.getLlanta(num_de_calculos).setValorCapa(sigmaZ);
-      suma = 0;
-      sumaporllanta = sumaporllanta + sigmaZ;
-                        }
-                          
+                W[1][i] = (2 * A[i] * C[1][i]) / (1 + 1 * Math.pow((Math.pow(A[i], 2)) + Math.pow(C[1][i], 2), (1 / 2)));
+
+                j[0][i] = C[0][i] / (Math.pow(Math.pow(1 + A[i], 2), (1 / 2)));
+
+                j[1][i] = C[1][i] / (Math.pow(Math.pow(1 + A[i], 2), (1 / 2)));
+
+                n[0][i] = (Math.pow(A[i], 2) * C[0][i]) / (1 + Math.pow(A[i], 2) + Math.pow(C[0][i], 2));
+
+                n[1][i] = (Math.pow(A[i], 2) * C[1][i]) / (1 + Math.pow(A[i], 2) + Math.pow(C[1][i], 2));
+
+                parcial = Teta[2][i] - Teta[1][i] - Math.atan(B[2][i]) + Math.atan(B[1][i]) + (B[2][i] - B[1][i]) / (Math.pow(A[i], 2) + 1);
+
+                suma = suma + parcial;
+
+            }
+            sigmaZ = (Q * suma) / (2 * this.PI);
+            this.llantas.getLlanta(num_de_calculos).setValorCapa(sigmaZ);
+            suma = 0;
+            sumaporllanta = sumaporllanta + sigmaZ;
+        }
+        this.cal.getCapaCalculo(0).setAux1(sumaporllanta);//Sheets("calculos").Cells(5 + NumCapa, 10) = sumaporllanta     
     }
 
+    /*Lista*/
     private void repeticionesAdmisibles() {
 
-int i, eje, NumMarcasClase;
-double f1, f2, f3, f4, f5;
-double Nd, Nf ;
-double DefZ[] = new double[4] ;
-double DefT[] = new double[4];
-String TipoModeloFatiga;
-String TipoModeloDeformacion;
-double Elastico; 
+        int i, eje, NumMarcasClase;
+        double f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
+        double Nd = 0, Nf = 0;
+        double DefZ[] = new double[4];
+        double DefT[] = new double[4];
+        String TipoModeloFatiga;
+        String TipoModeloDeformacion;
+        double Elastico;
 
-    // Funcion de limpiar -> //Worksheets("Larguillo").Range("AB4:AI103").ClearContents
+        // Funcion de limpiar -> //Worksheets("Larguillo").Range("AB4:AI103").ClearContents
+        TipoModeloFatiga = "IMT";
+        TipoModeloDeformacion = "IMT";
 
-TipoModeloFatiga = "IMT";
-TipoModeloDeformacion = "IMT";
+        Elastico = this.ep[0].getModulo();
 
-Elastico = this.ep[0].getModulo();
+        switch (TipoModeloFatiga) {
+            case "IMT":
+                f1 = 0.000000000166;
+                f2 = 4.32;
+                f4 = 0.0000000618;
+                f5 = 3.95;
+                break;
+        }
+        espectros();
 
-switch(TipoModeloFatiga){
-        case "Asphalt Institute":
-'            f1 = 0.0796;
-'            f2 = 3.291;
-            f1 = 0.0011358;
-            f2 = 3.291;
-            f3 = 0.854;
-            break;
-        case "Shell":
-'            f1 = 0.0685;
-'            f2 = 5.671;
-             f1 = 0.0000005356;
-             f2 = 5.671;
-             f3 = 2.363;
-             break;
-        case "Illinois DOT":
-            f1 = 0.000005;
-            f2 = 3;
-            break;
-        case "IMT" : 
-            f1 = 0.000000000166;
-            f2 = 4.32;
-            break;
-        case "BRRC, BELGICA":
-            f1 = 4.92E-14;
-            f2 = 4.76;
-            break;
-        case "Personalizado1":
-        case "Personalizado2":
-        break;
-}
-
-switch (TipoModeloDeformacion){
-        case "Asphalt Institute":
-            f4 = 0.000000001365;
-            f5 = 4.477;
-            break;
-        case "IMT":
-            f4 = 0.0000000618;
-            f5 = 3.95;
-            break;
-        case "BRRC, BELGICA":
-            f4 = 0.00000000305;
-            f5 = 4.35;
-            break;
-        case "Shell 50%":
-            f4 = 0.000000615;
-            f5 = 4;
-            break;
-        case "Shell 85%":
-            f4 = 0.000000194;
-            f5 = 4;
-            break;
-        case "Shell 95%":
-            f4 = 0.000000105;
-            f5 = 4;
-            break;
-        case "Personalizado":
-}
-
- espectros();
- VolumenTransito();
-
-NumMarcasClase = 100; // ya sabemos que es 100 el numero por larguillo y como lo manejan en el codigo anterior
- 
-
-  /*While Len(Sheets("Larguillo").Cells(i, 1)) > 0
+        NumMarcasClase = 100; // ya sabemos que es 100 el numero por larguillo y como lo manejan en el codigo anterior
+        /*While Len(Sheets("Larguillo").Cells(i, 1)) > 0
     NumMarcasClase = NumMarcasClase + 1
     i = i + 1
   Wend*/
 
+        //se hara por cada uno de los eje
+        eje = 0;
+        for (i = 0; i < NumMarcasClase; i++) {
+            DefZ[eje] = this.cc.simpleRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
+            DefT[eje] = this.cc.simpleRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
+            Nd = f4 * (Math.pow(DefZ[eje], (-f5)));
 
-for (eje = 0; eje < 4; eje++){
-    for(i = 0; i<100;i++){
-        DefZ[eje] = this.cc.//DefZ(eje) = Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
-        DefT(eje) = Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-        Nf = f1 * (DefT(eje) ^ (-f2))//la unica opcion es IMT
-      
+            this.cc.nre[i].setSimDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
+            this.cc.nre[i].setSimFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
 
-       Nd = f4 * (DefZ(eje) ^ (-f5))
-   
-       Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
-       Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
-  
+        }
+
+        eje++; //dual
+        for (i = 0; i < NumMarcasClase; i++) {
+            DefZ[eje] = this.cc.dualRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
+            DefT[eje] = this.cc.dualRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
+            Nd = f4 * (Math.pow(DefZ[eje], (-f5)));
+
+            this.cc.nre[i].setDualDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
+            this.cc.nre[i].setDualFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
+        }
+        eje++; //tridem
+        for (i = 0; i < NumMarcasClase; i++) {
+            DefZ[eje] = this.cc.tridemRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
+            DefT[eje] = this.cc.tridemRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
+            Nd = f4 * (Math.pow(DefZ[eje], (-f5)));
+
+            this.cc.nre[i].setTRIDEMDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
+            this.cc.nre[i].setTRIDEMFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
+        }
+        eje++; //tandem
+        for (i = 0; i < NumMarcasClase; i++) {
+            DefZ[eje] = this.cc.tandemRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
+            DefT[eje] = this.cc.tandemRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
+            Nd = f4 * (Math.pow(DefZ[eje], (-f5)));
+
+            this.cc.nre[i].setTANDEMDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
+            this.cc.nre[i].setTANDEMFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
+        }
+
     }
-}//eje = 1 To 4
-For i = 1 To NumMarcasClase
 
-      
-Next i
-Next eje
-
-    }
-
+    /*Lista*/
     private void repeticionesEsperadas() {
+
+        int i, eje = 0;
+        double NumEjes[] = new double[4];
+        double RepEsperadas[] = new double[4];
+
+        NumEjes[eje] = TransitoEstatico.sencilloPorcentajeRepresentivo; //Sheets("Tránsito").Cells(19 + eje, 7)
+        for (i = 0; i < 100; i++) {
+            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 2 + eje)
+            this.cc.ere[i].setSimple((float) RepEsperadas[eje]);//Sheets("Larguillo").Cells(3 + i, 36 + eje) = RepEsperadas(eje)
+        }
+        eje++;
+        NumEjes[eje] = TransitoEstatico.dualPorcentajeRepresentivo; //Sheets("Tránsito").Cells(19 + eje, 7)
+        for (i = 0; i < 100; i++) {
+            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 2 + eje)
+            this.cc.ere[i].setDual((float) RepEsperadas[eje]);//Sheets("Larguillo").Cells(3 + i, 36 + eje) = RepEsperadas(eje)
+        }
+        eje++;
+        NumEjes[eje] = TransitoEstatico.tandemPorcentajeRepresentivo; //Sheets("Tránsito").Cells(19 + eje, 7)
+        for (i = 0; i < 100; i++) {
+            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 2 + eje)
+            this.cc.ere[i].setTandem((float) RepEsperadas[eje]);//Sheets("Larguillo").Cells(3 + i, 36 + eje) = RepEsperadas(eje)
+        }
+        eje++;
+        NumEjes[eje] = TransitoEstatico.tridemPorcentajeRepresentivo; //Sheets("Tránsito").Cells(19 + eje, 7)
+        for (i = 0; i < 100; i++) {
+            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 2 + eje)
+            this.cc.ere[i].setTridem((float) RepEsperadas[eje]);//Sheets("Larguillo").Cells(3 + i, 36 + eje) = RepEsperadas(eje)
+        }
+
     }
 
+    /*Lista*/
     private void espectrosDano() {
-    }
+        int i, eje = 0;// As Integer
+        double Nd, Nf, DañoDef, DañoFat;// As Double
+        double RepEsperadas[] = new double[4];//(1 To 4) As Double
 
+        //sencillo
+        for (i = 0; i < 100; i++) {
+            RepEsperadas[eje] = this.cc.ere[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 36 + eje)
+            Nd = this.cc.nre[i].getSimDeformacion();//Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje)
+            Nf = this.cc.nre[i].getSimFatiga();//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje)
+            DañoDef = RepEsperadas[eje] / Nd;
+            DañoFat = RepEsperadas[eje] / Nf;
+            this.cc.ed[i].setSimpleDef((float) DañoDef); //  Sheets("Larguillo").Cells(3 + i, 40 + 2 * eje) = DañoDef
+            this.cc.ed[i].setSimpleFat((float) DañoFat);//Sheets("Larguillo").Cells(3 + i, 41 + 2 * eje) = DañoFat
+        }
+        eje++;
+
+        //dual
+        for (i = 0; i < 100; i++) {
+            RepEsperadas[eje] = this.cc.ere[i].getDual();//Sheets("Larguillo").Cells(3 + i, 36 + eje)
+            Nd = this.cc.nre[i].getDualDeformacion();//Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje)
+            Nf = this.cc.nre[i].getDualFatiga();//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje)
+            DañoDef = RepEsperadas[eje] / Nd;
+            DañoFat = RepEsperadas[eje] / Nf;
+            this.cc.ed[i].setDualDef((float) DañoDef); //  Sheets("Larguillo").Cells(3 + i, 40 + 2 * eje) = DañoDef
+            this.cc.ed[i].setDualFat((float) DañoFat);//Sheets("Larguillo").Cells(3 + i, 41 + 2 * eje) = DañoFat
+        }
+        eje++;
+
+        //tandem
+        for (i = 0; i < 100; i++) {
+            RepEsperadas[eje] = this.cc.ere[i].getTandem();//Sheets("Larguillo").Cells(3 + i, 36 + eje)
+            Nd = this.cc.nre[i].getTANDEMDeformacion();//Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje)
+            Nf = this.cc.nre[i].getTANDEMFatiga();//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje)
+            DañoDef = RepEsperadas[eje] / Nd;
+            DañoFat = RepEsperadas[eje] / Nf;
+            this.cc.ed[i].setTANDEMDef((float) DañoDef); //  Sheets("Larguillo").Cells(3 + i, 40 + 2 * eje) = DañoDef
+            this.cc.ed[i].setTANDEMFat((float) DañoFat);//Sheets("Larguillo").Cells(3 + i, 41 + 2 * eje) = DañoFat
+        }
+        eje++;
+        //tridem
+        for (i = 0; i < 100; i++) {
+            RepEsperadas[eje] = this.cc.ere[i].getTridem();//Sheets("Larguillo").Cells(3 + i, 36 + eje)
+            Nd = this.cc.nre[i].getTRIDEMDeformacion();//Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje)
+            Nf = this.cc.nre[i].getTRIDEMFatiga();//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje)
+            DañoDef = RepEsperadas[eje] / Nd;
+            DañoFat = RepEsperadas[eje] / Nf;
+            this.cc.ed[i].setTRIDEMEDef((float)DañoDef);
+             //  Sheets("Larguillo").Cells(3 + i, 40 + 2 * eje) = DañoDef
+            this.cc.ed[i].setTRIDEMFat((float) DañoFat);//Sheets("Larguillo").Cells(3 + i, 41 + 2 * eje) = DañoFat
+        }
+
+    }
+    /*Lista*/
     private void sumas() {
+        int i, eje, NumMarcasClase;// As Integer
+        double Nd, Nf, DañoDef, DañoFat;// As Double
+        double RepEsperadas[] = new double[4];// As Double
+        double suma1, suma2, suma3, suma4, suma5, suma6, suma7, suma8;// As Double
+
+        NumMarcasClase = 100;
+        i = 0;
+        suma1 = suma2 = suma3 = suma4 = suma5 = suma6 = suma7 = suma8 = 0;
+
+        for (i = 0; i < 100; i++) {
+
+            this.cc.et[i].setDefTotal(this.cc.ed[i].sumaDeformacion());  //Sheets("Larguillo").Cells(3 + i, 51) = //Sheets("Larguillo").Cells(3 + i, 42) + _
+            //Sheets("Larguillo").Cells(3 + i, 44) + _
+            //Sheets("Larguillo").Cells(3 + i, 46) + _
+            //Sheets("Larguillo").Cells(3 + i, 48)
+
+            this.cc.et[i].setFatTodos(this.cc.ed[i].sumaFatiga());
+            //Sheets("Larguillo").Cells(3 + i, 52) = Sheets("Larguillo").Cells(3 + i, 43) + _
+            //Sheets("Larguillo").Cells(3 + i, 45) + _
+            //Sheets("Larguillo").Cells(3 + i, 47) + _
+            //Sheets("Larguillo").Cells(3 + i, 49)
+
+            suma1 = this.cc.ed[i].getSimpleDef() + suma1;//Sheets("Larguillo").Cells(3 + i, 42) + suma1
+            this.cc.eda[i].setDefSimple((float) suma1);//Sheets("Larguillo").Cells(3 + i, 54) = suma1
+
+            suma2 = this.cc.ed[i].getDualDef() + suma2;//Sheets("Larguillo").Cells(3 + i, 44) + suma2
+            this.cc.eda[i].setDefDual((float) suma2);//Sheets("Larguillo").Cells(3 + i, 55) = suma2
+
+            suma3 = this.cc.ed[i].getTANDEMDef() + suma3;//Sheets("Larguillo").Cells(3 + i, 46) + suma3
+            this.cc.eda[i].setDefTANDEM((float) suma3);//Sheets("Larguillo").Cells(3 + i, 56) = suma3
+
+            suma4 = this.cc.ed[i].getTRIDEMEDef() + suma4;//Sheets("Larguillo").Cells(3 + i, 48) + suma4
+            this.cc.eda[i].setDefTRIDEM((float) suma4);//Sheets("Larguillo").Cells(3 + i, 57) = suma4
+
+            this.cc.eda[i].sumaDeformaciones();
+
+            //Sheets("Larguillo").Cells(3 + i, 58) = Sheets("Larguillo").Cells(3 + i, 54) + _
+            //                                     Sheets("Larguillo").Cells(3 + i, 55) + _
+            //                                   Sheets("Larguillo").Cells(3 + i, 56) + _
+            //                                 Sheets("Larguillo").Cells(3 + i, 57)
+            suma5 = this.cc.ed[i].getSimpleFat() + suma5;//Sheets("Larguillo").Cells(3 + i, 42) + suma1
+            this.cc.eda[i].setFatSimple((float) suma5);//Sheets("Larguillo").Cells(3 + i, 54) = suma1
+
+            suma6 = this.cc.ed[i].getDualFat() + suma6;//Sheets("Larguillo").Cells(3 + i, 44) + suma2
+            this.cc.eda[i].setFatDual((float) suma6);//Sheets("Larguillo").Cells(3 + i, 55) = suma2
+
+            suma7 = this.cc.ed[i].getTANDEMFat() + suma7;//Sheets("Larguillo").Cells(3 + i, 46) + suma3
+            this.cc.eda[i].setFatTANDEM((float) suma7);//Sheets("Larguillo").Cells(3 + i, 56) = suma3
+
+            suma8 = this.cc.ed[i].getTANDEMFat() + suma8;//Sheets("Larguillo").Cells(3 + i, 48) + suma4
+            this.cc.eda[i].setFatTrideem((float) suma8);//Sheets("Larguillo").Cells(3 + i, 57) = suma4
+
+            this.cc.eda[i].sumaFatiga();
+            //Sheets("Larguillo").Cells(3 + i, 63) = Sheets("Larguillo").Cells(3 + i, 59) + _
+            //                                     Sheets("Larguillo").Cells(3 + i, 60) + _
+            //                                   Sheets("Larguillo").Cells(3 + i, 61) + _
+            //                                 Sheets("Larguillo").Cells(3 + i, 62)
+        }
     }
 
     private void vidaRemanente() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                //se vera que afecta
     }
-
-    private void volumenTransito() {
-    }
+    
+    //ya existe
+    /*private void volumenTransito() {
+    }*/
 
     private void deformacionesUnitarias() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 
     private void deformacionesTension() {
