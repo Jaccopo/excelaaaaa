@@ -30,7 +30,7 @@ public class EspectroDanoAcomulado {
         this.fatTODOS= this.fatSimple+this.fatDual+this.fatTANDEM+this.fatTrideem;
     }
     public void sumaDeformaciones(){
-        this.defTodos = this.defSimple+this.defDual+this.defTANDEM+this.defTrideem;
+        this.defTodos = this.defSimple+this.defDual+this.defTANDEM+this.defTRIDEM;
     }
     
     public float getDefSimple() {
