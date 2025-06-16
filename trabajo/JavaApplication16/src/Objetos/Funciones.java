@@ -995,13 +995,13 @@ public class Funciones extends Datos {
     }
 
     private void vidaRemanente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         //se vera que afecta
     }
 
     //ya existe
     /*private void volumenTransito() {
     }*/
+ /*Lista */
     private void deformacionesUnitarias() {
         double Ez, Er, Et, Epsilon_z, Epsilon_r, Epsilon_t, Ez_damy, Epsilon_z_damy;
         double ModElastico[] = new double[numCapas];// As Double
@@ -1026,6 +1026,7 @@ public class Funciones extends Datos {
         }
     }
 
+    /*Lista */
     private void deformacionesTension() {
         double AX, BX, CX, DX, EX, FX, GX, HX, IX, JX, KX, LX;
         double AY, BY, CY, DY, EY, FY, GY, HY, IY, JY, KY, LY;
@@ -1173,6 +1174,7 @@ public class Funciones extends Datos {
         }
     }
 
+    /*Lista */
     private void deformacionesVerticales() {
         // Dim i As Integer
         //Dim NumCapas As Integer
@@ -1202,6 +1204,7 @@ public class Funciones extends Datos {
         }//Next i
     }
 
+    /*Lista */
     private void esfuerzoVerticalPuntual() {
 
         int NumCapa;//As Integer
@@ -1239,7 +1242,7 @@ public class Funciones extends Datos {
             Ez5 = KgAKpa * (3 * P * Math.pow(z, 3)) / (2 * PI * Math.pow(R5, 5));
             Ez6 = KgAKpa * (3 * P * Math.pow(z, 3)) / (2 * PI * Math.pow(R6, 5));
 
-            switch (tipoeje) {
+            switch (tipoEje) {
                 case "Sencillo":
                     EzP = Ez1;
                     break;
@@ -1255,6 +1258,8 @@ public class Funciones extends Datos {
                 case "Medio Tridem":
                     EzP = Ez1 + Ez3 + Ez5;
                     break;
+                default:
+                    EzP = 0;
             }
 
             this.cal.getCapaCalculo(i).setEsfuerzoVerticalO(EzP);
@@ -1266,478 +1271,743 @@ public class Funciones extends Datos {
         }//Next NumCapa
     }
 
+    /*Lista*/    
     private void esfuerzoRadialPuntual() {
 
+        double ra1, ra2, ra3, ra4, ra5, ra6;// As Double
+        double R1, R2, R3, R4, R5, R6;// As Double
+        double Er1, Er2, Er3, Er4, Er5, Er6;// As Double
+        double z, P;// As Double
+        double KgAKpa;//As Double
+
+        double PesoNeum;// As Double
+        var tipoeje = this.tipoEje;// As String
+        double ErP;// As Double
+
+        KgAKpa = 98.0665;
+
+        PesoNeum = this.cal.getCapaCalculo(0).getPesoNeumatico();//Sheets("calculos").Cells(3, 4)
+        P = 1000 * PesoNeum;
+
+        ra1 = this.llantas.getLlanta(0).getDistanciaHorizontal();//Sheets("calculos").Cells(18, 4)
+        ra2 = this.llantas.getLlanta(0).getDistanciaHorizontal();
+        ra3 = this.llantas.getLlanta(0).getDistanciaHorizontal();
+        ra4 = this.llantas.getLlanta(0).getDistanciaHorizontal();
+        ra5 = this.llantas.getLlanta(0).getDistanciaHorizontal();
+        ra6 = this.llantas.getLlanta(0).getDistanciaHorizontal();
+
+        for (int i = 0; i < numCapas - 1; i++) {
+
+            z = this.cal.getCapaCalculo(i).getEspesorParcialEquivalente();//Sheets("calculos").Cells(2 + i, 7)
+
+            R1 = (i == 0) ? this.llantas.getLlanta(0).getDistanciaRadialCarpeta() : this.llantas.getLlanta(0).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(18, 4 + i)
+            R2 = (i == 0) ? this.llantas.getLlanta(1).getDistanciaRadialCarpeta() : this.llantas.getLlanta(1).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(19, 4 + i)
+            R3 = (i == 0) ? this.llantas.getLlanta(2).getDistanciaRadialCarpeta() : this.llantas.getLlanta(2).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(20, 4 + i)
+            R4 = (i == 0) ? this.llantas.getLlanta(3).getDistanciaRadialCarpeta() : this.llantas.getLlanta(3).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(21, 4 + i)
+            R5 = (i == 0) ? this.llantas.getLlanta(4).getDistanciaRadialCarpeta() : this.llantas.getLlanta(4).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(22, 4 + i)
+            R6 = (i == 0) ? this.llantas.getLlanta(5).getDistanciaRadialCarpeta() : this.llantas.getLlanta(5).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(23, 4 + i)
+
+            Er1 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra1, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R1 * (R1 + z)))));
+            Er2 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra2, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R2 * (R2 + z)))));
+            Er3 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra3, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R3 * (R3 + z)))));
+            Er4 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra4, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R4 * (R4 + z)))));
+            Er5 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra5, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R5 * (R5 + z)))));
+            Er6 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra6, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R6 * (R6 + z)))));
+
+            switch (tipoeje) {
+                case "Sencillo":
+                    ErP = Er1;
+                case "Sencillo Dual":
+                    ErP = Er1 + Er2;
+                case "Tandem":
+                    ErP = Er1 + Er2 + Er3 + Er4;
+                case "Tridem":
+                    ErP = Er1 + Er2 + Er3 + Er4 + Er5 + Er6;
+                case "Medio Tridem":
+                    ErP = Er1 + Er3 + Er5;
+                default:
+                    ErP = 0;
+            }
+
+            this.cal.getCapaCalculo(i).setEsfuerzoRadialO(ErP);//Sheets("calculos").Cells(2 + i, 11) = ErP
+
+            if (i == 0) {
+                this.llantas.getLlanta(0).setOrNeumatico1(Er1);
+                this.llantas.getLlanta(1).setOrNeumatico1(Er2);
+                this.llantas.getLlanta(2).setOrNeumatico1(Er3);
+                this.llantas.getLlanta(3).setOrNeumatico1(Er4);
+                this.llantas.getLlanta(4).setOrNeumatico1(Er5);
+                this.llantas.getLlanta(5).setOrNeumatico1(Er6);
+            } else {
+                this.llantas.getLlanta(0).setOrNeumatico2(Er1);
+                this.llantas.getLlanta(1).setOrNeumatico2(Er2);
+                this.llantas.getLlanta(2).setOrNeumatico2(Er3);
+                this.llantas.getLlanta(3).setOrNeumatico2(Er4);
+                this.llantas.getLlanta(4).setOrNeumatico2(Er5);
+                this.llantas.getLlanta(5).setOrNeumatico2(Er6);
+            }
+
+        }
     }
-    //Faltan
+
+    /*Lista */
     private void esfuerzoTangencialPuntual() {
-Dim i As Integer
-Dim NumCapas As Integer
-Dim R1, R2, R3, R4, R5, R6 As Double
-Dim Et1, Et2, Et3, Et4, Et5, Et6 As Double
-Dim z, P As Double
-Dim KgAKpa As Double
-Dim Pi As Double
+//Dim i As Integer
+//Dim NumCapas As Integer
+        double R1, R2, R3, R4, R5, R6;// As Double
+        double Et1, Et2, Et3, Et4, Et5, Et6;// As Double
+        double z, P;// As Double
+        double KgAKpa;// As Double
 
-Dim PesoNeum As Double
-Dim tipoeje As String
-Dim Poisson As Double
-Dim EtP As Double
+        double PesoNeum;// As Double
+        String tipoeje = this.tipoEje;// As String
+        double EtP;// As Double
 
-Pi = 3.14159265358979
-KgAKpa = 98.0665
+        KgAKpa = 98.0665;
 
-NumCapas = Sheets("NuevoFormatoPav").Cells(10, 6)
-tipoeje = Sheets("NuevoFormatoPav").Cells(8, 6)
-Poisson = Sheets("calculos").Cells(3, 5)
-PesoNeum = Sheets("calculos").Cells(3, 4)
-P = 1000 * PesoNeum
+        PesoNeum = this.cal.getCapaCalculo(0).getPesoNeumatico(); //Sheets("calculos").Cells(3, 4)
+        P = 1000 * PesoNeum;
 
-For i = 1 To 2 'NumCapas - 1
+        for (int i = 0; i < numCapas - 1; i++) {// = 1 To 2 'NumCapas - 1
 
-z = Sheets("calculos").Cells(2 + i, 7)
+            z = this.cal.getCapaCalculo(i).getEspesorParcialEquivalente(); //Sheets("calculos").Cells(2 + i, 7)
 
-R1 = Sheets("calculos").Cells(18, 4 + i)
-R2 = Sheets("calculos").Cells(19, 4 + i)
-R3 = Sheets("calculos").Cells(20, 4 + i)
-R4 = Sheets("calculos").Cells(21, 4 + i)
-R5 = Sheets("calculos").Cells(22, 4 + i)
-R6 = Sheets("calculos").Cells(23, 4 + i)
+            R1 = i == 0 ? this.llantas.getLlanta(0).getAnguloHorizontal() : this.llantas.getLlanta(0).getDistanciaHorizontal(); //Sheets("calculos").Cells(18, 4 + i)
+            R2 = i == 0 ? this.llantas.getLlanta(1).getAnguloHorizontal() : this.llantas.getLlanta(1).getDistanciaHorizontal(); //Sheets("calculos").Cells(19, 4 + i)
+            R3 = i == 0 ? this.llantas.getLlanta(2).getAnguloHorizontal() : this.llantas.getLlanta(2).getDistanciaHorizontal(); //Sheets("calculos").Cells(20, 4 + i)
+            R4 = i == 0 ? this.llantas.getLlanta(3).getAnguloHorizontal() : this.llantas.getLlanta(3).getDistanciaHorizontal(); // Sheets("calculos").Cells(21, 4 + i)
+            R5 = i == 0 ? this.llantas.getLlanta(4).getAnguloHorizontal() : this.llantas.getLlanta(4).getDistanciaHorizontal(); //Sheets("calculos").Cells(22, 4 + i)
+            R6 = i == 0 ? this.llantas.getLlanta(5).getAnguloHorizontal() : this.llantas.getLlanta(5).getDistanciaHorizontal(); // Sheets("calculos").Cells(23, 4 + i)
 
-Et1 = KgAKpa * (((1 - 2 * Poisson) * (P / (2 * Pi))) * ((1 / (R1 * (R1 + z))) - (z / R1 ^ 3)))
-Et2 = KgAKpa * (((1 - 2 * Poisson) * (P / (2 * Pi))) * ((1 / (R2 * (R2 + z))) - (z / R2 ^ 3)))
-Et3 = KgAKpa * (((1 - 2 * Poisson) * (P / (2 * Pi))) * ((1 / (R3 * (R3 + z))) - (z / R3 ^ 3)))
-Et4 = KgAKpa * (((1 - 2 * Poisson) * (P / (2 * Pi))) * ((1 / (R4 * (R4 + z))) - (z / R4 ^ 3)))
-Et5 = KgAKpa * (((1 - 2 * Poisson) * (P / (2 * Pi))) * ((1 / (R5 * (R5 + z))) - (z / R5 ^ 3)))
-Et6 = KgAKpa * (((1 - 2 * Poisson) * (P / (2 * Pi))) * ((1 / (R6 * (R6 + z))) - (z / R6 ^ 3)))
+            Et1 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R1 * (R1 + z))) - (z / Math.pow(R1, 3))));
+            Et2 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R2 * (R2 + z))) - (z / Math.pow(R1, 3))));
+            Et3 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R3 * (R3 + z))) - (z / Math.pow(R1, 3))));
+            Et4 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R4 * (R4 + z))) - (z / Math.pow(R1, 3))));
+            Et5 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R5 * (R5 + z))) - (z / Math.pow(R1, 3))));
+            Et6 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R6 * (R6 + z))) - (z / Math.pow(R1, 3))));
 
+            switch (tipoeje) {
+                case "Sencillo":
+                    EtP = Et1;
+                    break;
+                case "Sencillo Dual":
+                    EtP = Et1 + Et2;
+                    break;
+                case "Tandem":
+                    EtP = Et1 + Et2 + Et3 + Et4;
+                    break;
+                case "Tridem":
+                    EtP = Et1 + Et2 + Et3 + Et4 + Et5 + Et6;
+                    break;
+                case "Medio Tridem":
+                    EtP = Et1 + Et3 + Et5;
+                    break;
+                default:
+                    EtP = 0;
 
-Select Case tipoeje
-    Case "Sencillo"
-        EtP = Et1
-    Case "Sencillo Dual"
-        EtP = Et1 + Et2
-    Case "Tandem"
-       EtP = Et1 + Et2 + Et3 + Et4
-    Case "Tridem"
-        EtP = Et1 + Et2 + Et3 + Et4 + Et5 + Et6
-    Case "Medio Tridem"
-        EtP = Et1 + Et3 + Et5
-End Select
+            }
 
-    Sheets("calculos").Cells(2 + i, 12) = EtP
+            this.cal.getCapaCalculo(i).setEsfuerzoTangencialO(EtP);//Sheets("calculos").Cells(2 + i, 12) = EtP
+            if (i == 0) {
+                this.llantas.getLlanta(0).setOtNeumatico1(Et1);
+                this.llantas.getLlanta(1).setOtNeumatico1(Et2);
+                this.llantas.getLlanta(2).setOtNeumatico1(Et3);
+                this.llantas.getLlanta(3).setOtNeumatico1(Et4);
+                this.llantas.getLlanta(4).setOtNeumatico1(Et5);
+                this.llantas.getLlanta(5).setOtNeumatico1(Et6);
+            } else {
+                this.llantas.getLlanta(0).setOtNeumatico2(Et1);
+                this.llantas.getLlanta(1).setOtNeumatico2(Et2);
+                this.llantas.getLlanta(2).setOtNeumatico2(Et3);
+                this.llantas.getLlanta(3).setOtNeumatico2(Et4);
+                this.llantas.getLlanta(4).setOtNeumatico2(Et5);
+                this.llantas.getLlanta(5).setOtNeumatico2(Et6);
 
-    Sheets("calculos").Cells(41, 4 + i) = Et1
-    Sheets("calculos").Cells(42, 4 + i) = Et2
-    Sheets("calculos").Cells(43, 4 + i) = Et3
-    Sheets("calculos").Cells(44, 4 + i) = Et4
-    Sheets("calculos").Cells(45, 4 + i) = Et5
-    Sheets("calculos").Cells(46, 4 + i) = Et6
+            }//Sheets("calculos").Cells(41, 4 + i) = Et1
 
-Next i
+        }
     }
 
+    /*Lista */
     private void esfuerzosEjeSencilloDual() {
-Dim PsiAKpa As Double
-Dim Er1, Er2 As Double
-Dim Et1, Et2 As Double
+        double PsiAKpa;// As Double
+        double Er1, Er2;// As Double
+        double Et1, Et2;// As Double
 
-Dim PresionInflado As Double
-Dim FEV1, FEV2, FEV3, FEV4, FER1, FER2, FER3, FER4, FET1, FET2, FET3, FET4 As Double
-Dim NumCapas As Integer
-Dim NumCapa As Integer
-Dim tipoeje As String
+        double PresionInflado = this.presion;// As Double
+        double FEV1, FEV2, FEV3, FEV4, FER1, FER2, FER3, FER4, FET1, FET2, FET3, FET4;// As Double
+        //Dim NumCapas As Integer
+        int NumCapa;// As Integer
+        String tipoeje = tipoEje;// As String
 
-PsiAKpa = 6.894757
+        PsiAKpa = 6.894757;
 
-PresionInflado = Sheets("NuevoFormatoPav").Cells(9, 6)
-NumCapas = Sheets("NuevoFormatoPav").Cells(10, 6)
-tipoeje = Sheets("NuevoFormatoPav").Cells(8, 6)
+        FEV1 = this.llantas.getLlanta(0).getFactorEVertical();//Sheets("calculos").Cells(26, 4)
+        FEV2 = this.llantas.getLlanta(1).getFactorEVertical();//Sheets("calculos").Cells(27, 4)
+        FER1 = this.llantas.getLlanta(0).getFactorERadial();//Sheets("calculos").Cells(26, 5)
+        FER2 = this.llantas.getLlanta(1).getFactorERadial();//Sheets("calculos").Cells(27, 5)
+        FET1 = this.llantas.getLlanta(0).getFactorETangencial();//Sheets("calculos").Cells(26, 6)
+        FET2 = this.llantas.getLlanta(1).getFactorETangencial();// Sheets("calculos").Cells(27, 6)
 
-FEV1 = Sheets("calculos").Cells(26, 4)
-FEV2 = Sheets("calculos").Cells(27, 4)
-FER1 = Sheets("calculos").Cells(26, 5)
-FER2 = Sheets("calculos").Cells(27, 5)
-FET1 = Sheets("calculos").Cells(26, 6)
-FET2 = Sheets("calculos").Cells(27, 6)
+        //'ESFUERZO VERTICAL
+        this.cal.getCapaCalculo(0).setEsfuerzoVerticalO(PsiAKpa * presion * (FEV1 + FEV2));//Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (FEV1 + FEV2)   
 
-'ESFUERZO VERTICAL
-    Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (FEV1 + FEV2)  'para la primer capa
-    Call E_VERTICAL_PTODOS_MA                                                   'para el resto de las capas
-    
-    For NumCapa = 1 To 2 ' NumCapas - 1
-        Call Esfuerzos_Damy(tipoeje, NumCapa)
-    Next NumCapa
-    
-                                                  
+        //'para la primer capa
+        E_VERTICAL_PTODOS_MA();
 
-'ESFUERZO RADIAL
-    Sheets("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (FER1 + FER2)  'para la primer capa
+        //'para el resto de las capas
+        for (NumCapa = 0; NumCapa < numCapas - 1; NumCapa++) {// ' NumCapas - 1
+            esfuerzos_Damy(NumCapa);
+        }
 
-    Er1 = PsiAKpa * PresionInflado * FER1                                       'para el resto de las capas
-    Er2 = PsiAKpa * PresionInflado * FER2
-    
-    Call E_RADIAL_PTODOS_MA
+        //'ESFUERZO RADIAL
+        this.cal.getCapaCalculo(0).setEsfuerzoRadialO(PsiAKpa * presion * (FER1 + FER2));//Sheets("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (FER1 + FER2)   
 
-'ESFUERZO TANGENCIAL
-    Sheets("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (FET1 + FET2)  'para la primer capa
-    
-    Et1 = PsiAKpa * PresionInflado * FET1                                       'para el resto de las capas
-    Et2 = PsiAKpa * PresionInflado * FET2
-        
-    Call E_TANGENCIAL_PTODOS_MA
+        //'para la primer capa
+        Er1 = PsiAKpa * presion * FER1;
 
-Sheets("calculos").Cells(41, 3) = Er1
-Sheets("calculos").Cells(42, 3) = Er2
-Sheets("calculos").Cells(41, 5) = Et1
-Sheets("calculos").Cells(42, 5) = Et2
+        //'para el resto de las capas
+        Er2 = PsiAKpa * presion * FER2;
+
+        E_RADIAL_PTODOS_MA();
+
+        //'ESFUERZO TANGENCIAL
+        this.cal.getCapaCalculo(0).setEsfuerzoTangencialO(PsiAKpa * presion * (FET1 + FET2));//Sheets("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (FET1 + FET2)   
+
+        //'para la primer capa
+        Et1 = PsiAKpa * presion * FET1;
+
+        //'para el resto de las capas
+        Et2 = PsiAKpa * presion * FET2;
+
+        E_TANGENCIAL_PTODOS_MA();
+
+        this.llantas.getLlanta(0).setOrNeumatico1(Er1);//Sheets("calculos").Cells(41, 3) = Er1
+        this.llantas.getLlanta(1).setOrNeumatico1(Er2);//Sheets("calculos").Cells(42, 3) = Er2
+        this.llantas.getLlanta(0).setOtNeumatico1(Et1);//Sheets("calculos").Cells(41, 5) = Et1
+        this.llantas.getLlanta(1).setOtNeumatico1(Et2);//Sheets("calculos").Cells(42, 5) = Et2
     }
 
+    /*Lista */
     private void esfuerzosEjeTridem() {
-Dim PsiAKpa As Double
-Dim Er1, Er2, Er3, Er4, Er5, Er6 As Double
-Dim Et1, Et2, Et3, Et4, Et5, Et6 As Double
+        double PsiAKpa;// As Double
+        double Er1, Er2, Er3, Er4, Er5, Er6;// As Double
+        double Et1, Et2, Et3, Et4, Et5, Et6;// As Double
 
-Dim PresionInflado As Double
-Dim FEV1, FEV2, FEV3, FEV4, FER1, FER2, FER3, FER4, FET1, FET2, FET3, FET4 As Double
-Dim X, Y, S, D As Double
+        double PresionInflado = presion;// As Double
+        double FEV1, FEV2, FEV3, FEV4, FER1, FER2, FER3, FER4, FET1, FET2, FET3, FET4;// As Double
+        double X, Y, S, D;// As Double
 
-Dim NumCapas As Integer
-Dim NumCapa As Integer
-Dim tipoeje As String
+        PsiAKpa = 6.894757;
 
+        X = this.X;//Sheets("Avanzado").Cells(17, 2)
+        Y = this.Y;//Sheets("Avanzado").Cells(18, 2)
+        S = this.S;//Sheets("Avanzado").Cells(17, 4)
+        D = this.D;//Sheets("Avanzado").Cells(18, 4)
 
-PsiAKpa = 6.894757
+        FEV1 = this.llantas.getLlanta(0).getFactorEVertical();// Sheets("calculos").Cells(26, 4)
+        FEV2 = this.llantas.getLlanta(1).getFactorEVertical();//Sheets("calculos").Cells(27, 4)
+        FEV3 = this.llantas.getLlanta(2).getFactorEVertical();//Sheets("calculos").Cells(28, 4)
+        FEV4 = this.llantas.getLlanta(3).getFactorEVertical();//Sheets("calculos").Cells(29, 4)
+        FER1 = this.llantas.getLlanta(0).getFactorERadial();//Sheets("calculos").Cells(26, 5)
+        FER2 = this.llantas.getLlanta(1).getFactorERadial();//Sheets("calculos").Cells(27, 5)
+        FER3 = this.llantas.getLlanta(2).getFactorERadial();//Sheets("calculos").Cells(28, 5)
+        FER4 = this.llantas.getLlanta(3).getFactorERadial();//Sheets("calculos").Cells(29, 5)
+        FET1 = this.llantas.getLlanta(0).getFactorETangencial();// Sheets("calculos").Cells(26, 6)
+        FET2 = this.llantas.getLlanta(1).getFactorETangencial();//Sheets("calculos").Cells(27, 6)
+        FET3 = this.llantas.getLlanta(2).getFactorETangencial();//Sheets("calculos").Cells(28, 6)
+        FET4 = this.llantas.getLlanta(3).getFactorETangencial();//Sheets("calculos").Cells(29, 6)
 
-X = Sheets("Avanzado").Cells(17, 2)
-Y = Sheets("Avanzado").Cells(18, 2)
-S = Sheets("Avanzado").Cells(17, 4)
-D = Sheets("Avanzado").Cells(18, 4)
+        //'ESFUERZO VERTICAL
+        if (X == D) {
 
-PresionInflado = Sheets("NuevoFormatoPav").Cells(9, 6)
-NumCapas = Sheets("NuevoFormatoPav").Cells(10, 6)
-tipoeje = Sheets("NuevoFormatoPav").Cells(8, 6)
+            this.cal.getCapaCalculo(0).setEsfuerzoVerticalO(PsiAKpa * PresionInflado * (2 * (FEV1 + FEV2) + FEV3 + FEV4));//Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (2 * (FEV1 + FEV2) + FEV3 + FEV4);
+        } else {
+            this.cal.getCapaCalculo(0).setEsfuerzoVerticalO(PsiAKpa * PresionInflado * (FEV1 + FEV2 + FEV3 + FEV4));// Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (FEV1 + FEV2 + FEV3 + FEV4);
+        }
 
-FEV1 = Sheets("calculos").Cells(26, 4)
-FEV2 = Sheets("calculos").Cells(27, 4)
-FEV3 = Sheets("calculos").Cells(28, 4)
-FEV4 = Sheets("calculos").Cells(29, 4)
-FER1 = Sheets("calculos").Cells(26, 5)
-FER2 = Sheets("calculos").Cells(27, 5)
-FER3 = Sheets("calculos").Cells(28, 5)
-FER4 = Sheets("calculos").Cells(29, 5)
-FET1 = Sheets("calculos").Cells(26, 6)
-FET2 = Sheets("calculos").Cells(27, 6)
-FET3 = Sheets("calculos").Cells(28, 6)
-FET4 = Sheets("calculos").Cells(29, 6)
+        E_VERTICAL_PTODOS_MA();
 
+        for (int numCapa = 0; numCapa < numCapas - 1; numCapa++) {
+            esfuerzos_Damy(numCapa);
+        }
 
-'ESFUERZO VERTICAL
-   
-        If X = D Then
-        Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (2 * (FEV1 + FEV2) + FEV3 + FEV4)
-        Else
-        Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (FEV1 + FEV2 + FEV3 + FEV4)
-        End If
-   
-    Call E_VERTICAL_PTODOS_MA
+        //'ESFUERZO RADIAL
+        if (X == D) { //Then Sheets
+            this.cal.getCapaCalculo(0).setEsfuerzoRadialO(PsiAKpa * PresionInflado * (2 * (FER1 + FER2) + FER3 + FER4));//("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (2 * (FER1 + FER2) + FER3 + FER4)
 
-    For NumCapa = 1 To 2 'NumCapas - 1
-        Call Esfuerzos_Damy(tipoeje, NumCapa)
-    Next NumCapa
+            Er1 = PsiAKpa * PresionInflado * FER1;
+            Er2 = PsiAKpa * PresionInflado * FER2;
+            Er3 = PsiAKpa * PresionInflado * FER3;
+            Er4 = PsiAKpa * PresionInflado * FER4;
+            Er5 = PsiAKpa * PresionInflado * FER1;
+            Er6 = PsiAKpa * PresionInflado * FER2;
 
-'ESFUERZO RADIAL
-    
-        If X = D Then
-        Sheets("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (2 * (FER1 + FER2) + FER3 + FER4)
+        } else {
+            this.cal.getCapaCalculo(0).setEsfuerzoRadialO(PsiAKpa * PresionInflado * (FER1 + FER2 + FER3 + FER4));//("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (FER1 + FER2 + FER3 + FER4)
+            Er1 = PsiAKpa * PresionInflado * FER1;
+            Er2 = PsiAKpa * PresionInflado * FER2;
+            Er3 = PsiAKpa * PresionInflado * FER3;
+            Er4 = PsiAKpa * PresionInflado * FER4;
+            Er5 = 0;
+            Er6 = 0;
 
-        Er1 = PsiAKpa * PresionInflado * FER1
-        Er2 = PsiAKpa * PresionInflado * FER2
-        Er3 = PsiAKpa * PresionInflado * FER3
-        Er4 = PsiAKpa * PresionInflado * FER4
-        Er5 = PsiAKpa * PresionInflado * FER1
-        Er6 = PsiAKpa * PresionInflado * FER2
-        
-        Else
-        
-        Sheets("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (FER1 + FER2 + FER3 + FER4)
-        Er1 = PsiAKpa * PresionInflado * FER1
-        Er2 = PsiAKpa * PresionInflado * FER2
-        Er3 = PsiAKpa * PresionInflado * FER3
-        Er4 = PsiAKpa * PresionInflado * FER4
-        Er5 = 0
-        Er6 = 0
-       
-        End If
-    
-    Call E_RADIAL_PTODOS_MA
+        }
 
-'ESFUERZO TANGENCIAL
-    
-        If X = D Then
-        Sheets("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (2 * (FET1 + FET2) + FET3 + FET4)
+        E_RADIAL_PTODOS_MA();
 
-        Et1 = PsiAKpa * PresionInflado * FET1
-        Et2 = PsiAKpa * PresionInflado * FET2
-        Et3 = PsiAKpa * PresionInflado * FET3
-        Et4 = PsiAKpa * PresionInflado * FET4
-        Et5 = PsiAKpa * PresionInflado * FET1
-        Et6 = PsiAKpa * PresionInflado * FET2
-        
-        Else
-        Sheets("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (FET1 + FET2 + FET3 + FET4)
+        //'ESFUERZO TANGENCIAL
+        if (X == D) {// Then Sheets
+            this.cal.getCapaCalculo(0).setEsfuerzoTangencialO(PsiAKpa * PresionInflado * (2 * (FET1 + FET2) + FET3 + FET4));//("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (2 * (FET1 + FET2) + FET3 + FET4)
 
-        Et1 = PsiAKpa * PresionInflado * FET1
-        Et2 = PsiAKpa * PresionInflado * FET2
-        Et3 = PsiAKpa * PresionInflado * FET3
-        Et4 = PsiAKpa * PresionInflado * FET4
-        Et5 = 0
-        Et6 = 0
-     
-        End If
-    
-    Call E_TANGENCIAL_PTODOS_MA
+            Et1 = PsiAKpa * PresionInflado * FET1;
+            Et2 = PsiAKpa * PresionInflado * FET2;
+            Et3 = PsiAKpa * PresionInflado * FET3;
+            Et4 = PsiAKpa * PresionInflado * FET4;
+            Et5 = PsiAKpa * PresionInflado * FET1;
+            Et6 = PsiAKpa * PresionInflado * FET2;
 
-    Sheets("calculos").Cells(41, 3) = Er1
-    Sheets("calculos").Cells(42, 3) = Er2
-    Sheets("calculos").Cells(43, 3) = Er3
-    Sheets("calculos").Cells(44, 3) = Er4
-    Sheets("calculos").Cells(45, 3) = Er5
-    Sheets("calculos").Cells(46, 3) = Er6
-    Sheets("calculos").Cells(41, 5) = Et1
-    Sheets("calculos").Cells(42, 5) = Et2
-    Sheets("calculos").Cells(43, 5) = Et3
-    Sheets("calculos").Cells(44, 5) = Et4
-    Sheets("calculos").Cells(45, 5) = Et5
-    Sheets("calculos").Cells(46, 5) = Et6
+        } else {
+            this.cal.getCapaCalculo(0).setEsfuerzoTangencialO(PsiAKpa * PresionInflado * (FET1 + FET2) + FET3 + FET4);
+
+            Et1 = PsiAKpa * PresionInflado * FET1;
+            Et2 = PsiAKpa * PresionInflado * FET2;
+            Et3 = PsiAKpa * PresionInflado * FET3;
+            Et4 = PsiAKpa * PresionInflado * FET4;
+            Et5 = 0;
+            Et6 = 0;
+
+        }
+
+        E_TANGENCIAL_PTODOS_MA();
+
+        this.llantas.getLlanta(0).setOrNeumatico1(Er1);// Sheets("calculos").Cells(41, 3) = Er1
+        this.llantas.getLlanta(1).setOrNeumatico1(Er2);
+        this.llantas.getLlanta(2).setOrNeumatico1(Er3);
+        this.llantas.getLlanta(3).setOrNeumatico1(Er4);
+        this.llantas.getLlanta(4).setOrNeumatico1(Er5);
+        this.llantas.getLlanta(5).setOrNeumatico1(Er6);
+
+        this.llantas.getLlanta(0).setOtNeumatico1(Et1);
+        this.llantas.getLlanta(1).setOtNeumatico1(Et2);
+        this.llantas.getLlanta(2).setOtNeumatico1(Et3);
+        this.llantas.getLlanta(3).setOtNeumatico1(Et4);
+        this.llantas.getLlanta(4).setOtNeumatico1(Et5);
+        this.llantas.getLlanta(5).setOtNeumatico1(Et6);
     }
 
+    /*Funcion Decrepita*/
     private void printResIndividual() {
-Dim i As Integer
-Dim TipoAnalisis As String
-Dim NumCapas As Integer
-Dim X As Integer
+        //Dim i As Integer
+        /*Dim TipoAnalisis As String
+        Dim NumCapas As Integer
+        Dim X As Integer
 
 
-TipoAnalisis = Sheets("Avanzado").Cells(3, 4)
-NumCapas = Sheets("Análisis Individual").Cells(10, 6)
+        TipoAnalisis = Sheets("Avanzado").Cells(3, 4)
+        NumCapas = Sheets("Análisis Individual").Cells(10, 6)
 
-If TipoAnalisis = "Individual" Then
-
-            Sheets("Análisis Individual").Cells(15, 25) = Sheets("calculos").Cells(3, 22)
-            Sheets("Análisis Individual").Cells(17, 13) = Sheets("calculos").Cells(3, 30)
-            Sheets("Análisis Individual").Cells(17, 28) = Sheets("calculos").Cells(6, 10)
+        If TipoAnalisis = "Individual" Then Sheets
+        ("Análisis Individual").Cells(15, 25) = Sheets("calculos").Cells(3, 22)
+        Sheets("Análisis Individual").Cells(17, 13) = Sheets("calculos").Cells(3, 30)
+        Sheets("Análisis Individual").Cells(17, 28) = Sheets("calculos").Cells(6, 10)
             
-    Select Case NumCapas
-     Case Is = 2
-                X = 19
-     Case Is = 3
-                X = 19
-     Case Is = 4
-                X = 21
-     Case Is = 5
-                X = 23
-     Case Is >= 6
+        Select Case NumCapas Case Is = 2
+        X = 19
+        Case Is = 3
+        X = 19
+        Case Is = 4
+        X = 21
+        Case Is = 5
+        X = 23
+        Case Is >= 6
                 X = 25
-     Case Else
+        Case Else
       
-    End Select
-            Sheets("Análisis Individual").Cells(X, 13) = Sheets("calculos").Cells(4, 29)
-            Sheets("Análisis Individual").Cells(X, 28) = Sheets("calculos").Cells(7, 10)
-Else
-End If
+        End Select
+        Sheets("Análisis Individual").Cells(X, 13) = Sheets("calculos").Cells(4, 29)
+        Sheets("Análisis Individual").Cells(X, 28) = Sheets("calculos").Cells(7, 10)
+        Else End If*/
 
+        //Funcion inaxesible por usuario.
     }
 
+    /*Lista */
     private void esfuerzosEjeMedioTridem() {
-Dim PsiAKpa As Double
-Dim Er1, Er2, Er3, Er4, Er5, Er6 As Double
-Dim Et1, Et2, Et3, Et4, Et5, Et6 As Double
 
-Dim PresionInflado As Double
-Dim FEV1, FEV2, FEV3, FEV4, FER1, FER2, FER3, FER4, FET1, FET2, FET3, FET4 As Double
-Dim X, Y, S, D As Double
+        double PsiAKpa;// As Double
+        double Er1, Er2, Er3, Er4, Er5, Er6;// As Double
+        double Et1, Et2, Et3, Et4, Et5, Et6;// As Double
 
-Dim NumCapas As Integer
-Dim NumCapa As Integer
-Dim tipoeje As String
+        double PresionInflado = presion;// As Double
+        double FEV1, FEV2, FEV3, FEV4, FER1, FER2, FER3, FER4, FET1, FET2, FET3, FET4;// As Double
+        double X, Y, S, D;// As Double
 
+        PsiAKpa = 6.894757;
 
-PsiAKpa = 6.894757
+        X = this.X;//Sheets("Avanzado").Cells(17, 2)
+        Y = this.Y;//Sheets("Avanzado").Cells(18, 2)
+        S = this.S;//Sheets("Avanzado").Cells(17, 4)
+        D = this.D;//Sheets("Avanzado").Cells(18, 4)
 
-X = Sheets("Avanzado").Cells(17, 2)
-Y = Sheets("Avanzado").Cells(18, 2)
-S = Sheets("Avanzado").Cells(17, 4)
-D = Sheets("Avanzado").Cells(18, 4)
+        FEV1 = this.llantas.getLlanta(0).getFactorEVertical();// Sheets("calculos").Cells(26, 4)
+        FEV2 = this.llantas.getLlanta(1).getFactorEVertical();//Sheets("calculos").Cells(27, 4)
+        FEV3 = this.llantas.getLlanta(2).getFactorEVertical();//Sheets("calculos").Cells(28, 4)
+        FEV4 = this.llantas.getLlanta(3).getFactorEVertical();//Sheets("calculos").Cells(29, 4)
+        FER1 = this.llantas.getLlanta(0).getFactorERadial();//Sheets("calculos").Cells(26, 5)
+        FER2 = this.llantas.getLlanta(1).getFactorERadial();//Sheets("calculos").Cells(27, 5)
+        FER3 = this.llantas.getLlanta(2).getFactorERadial();//Sheets("calculos").Cells(28, 5)
+        FER4 = this.llantas.getLlanta(3).getFactorERadial();//Sheets("calculos").Cells(29, 5)
+        FET1 = this.llantas.getLlanta(0).getFactorETangencial();// Sheets("calculos").Cells(26, 6)
+        FET2 = this.llantas.getLlanta(1).getFactorETangencial();//Sheets("calculos").Cells(27, 6)
+        FET3 = this.llantas.getLlanta(2).getFactorETangencial();//Sheets("calculos").Cells(28, 6)
+        FET4 = this.llantas.getLlanta(3).getFactorETangencial();//Sheets("calculos").Cells(29, 6)
 
-PresionInflado = Sheets("NuevoFormatoPav").Cells(9, 6)
-NumCapas = Sheets("NuevoFormatoPav").Cells(10, 6)
-tipoeje = Sheets("NuevoFormatoPav").Cells(8, 6)
+        //'ESFUERZO VERTICAL
+        if (X == D) {
 
-FEV1 = Sheets("calculos").Cells(26, 4)
-FEV2 = Sheets("calculos").Cells(27, 4)
-FEV3 = Sheets("calculos").Cells(28, 4)
-FEV4 = Sheets("calculos").Cells(29, 4)
-FER1 = Sheets("calculos").Cells(26, 5)
-FER2 = Sheets("calculos").Cells(27, 5)
-FER3 = Sheets("calculos").Cells(28, 5)
-FER4 = Sheets("calculos").Cells(29, 5)
-FET1 = Sheets("calculos").Cells(26, 6)
-FET2 = Sheets("calculos").Cells(27, 6)
-FET3 = Sheets("calculos").Cells(28, 6)
-FET4 = Sheets("calculos").Cells(29, 6)
+            this.cal.getCapaCalculo(0).setEsfuerzoVerticalO(PsiAKpa * PresionInflado * (2 * FEV1 + FEV3));//Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (2 * (FEV1 + FEV2) + FEV3 + FEV4);
+        } else {
+            this.cal.getCapaCalculo(0).setEsfuerzoVerticalO(PsiAKpa * PresionInflado * (FEV1 + FEV3));// Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (FEV1 + FEV2 + FEV3 + FEV4);
+        }
 
+        E_VERTICAL_PTODOS_MA();
 
-'ESFUERZO VERTICAL
-   
-        If X = D Then
-        Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (2 * FEV1 + FEV3)
-        Else
-        Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (FEV1 + FEV3)
-        End If
-   
-    Call E_VERTICAL_PTODOS_MA
+        for (int numCapa = 0; numCapa < numCapas - 1; numCapa++) {
+            esfuerzos_Damy(numCapa);
+        }
 
-    For NumCapa = 1 To 2 'NumCapas - 1
-        Call Esfuerzos_Damy(tipoeje, NumCapa)
-    Next NumCapa
+        //'ESFUERZO RADIAL
+        if (X == D) { //Then Sheets
+            this.cal.getCapaCalculo(0).setEsfuerzoRadialO(PsiAKpa * PresionInflado * (2 * FER1 + FER3));//("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (2 * (FER1 + FER2) + FER3 + FER4)
 
-'ESFUERZO RADIAL
-    
-        If X = D Then
-        Sheets("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (2 * FER1 + FER3)
+            Er1 = PsiAKpa * PresionInflado * FER1;
+            Er2 = PsiAKpa * PresionInflado * FER2;
+            Er3 = PsiAKpa * PresionInflado * FER3;
+            Er4 = PsiAKpa * PresionInflado * FER4;
+            Er5 = PsiAKpa * PresionInflado * FER1;
+            Er6 = PsiAKpa * PresionInflado * FER2;
 
-        Er1 = PsiAKpa * PresionInflado * FER1
-        Er2 = PsiAKpa * PresionInflado * FER2
-        Er3 = PsiAKpa * PresionInflado * FER3
-        Er4 = PsiAKpa * PresionInflado * FER4
-        Er5 = PsiAKpa * PresionInflado * FER1
-        Er6 = PsiAKpa * PresionInflado * FER2
-        
-        Else
-        
-        Sheets("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (FER1 + FER3)
-        Er1 = PsiAKpa * PresionInflado * FER1
-        Er2 = PsiAKpa * PresionInflado * FER2
-        Er3 = PsiAKpa * PresionInflado * FER3
-        Er4 = PsiAKpa * PresionInflado * FER4
-        Er5 = 0
-        Er6 = 0
-       
-        End If
-    
-    Call E_RADIAL_PTODOS_MA
+        } else {
+            this.cal.getCapaCalculo(0).setEsfuerzoRadialO(PsiAKpa * PresionInflado * (FER1 + FER3));//("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (FER1 + FER2 + FER3 + FER4)
+            Er1 = PsiAKpa * PresionInflado * FER1;
+            Er2 = PsiAKpa * PresionInflado * FER2;
+            Er3 = PsiAKpa * PresionInflado * FER3;
+            Er4 = PsiAKpa * PresionInflado * FER4;
+            Er5 = 0;
+            Er6 = 0;
 
-'ESFUERZO TANGENCIAL
-    
-        If X = D Then
-        Sheets("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (2 * FET1 + FET3)
+        }
 
-        Et1 = PsiAKpa * PresionInflado * FET1
-        Et2 = PsiAKpa * PresionInflado * FET2
-        Et3 = PsiAKpa * PresionInflado * FET3
-        Et4 = PsiAKpa * PresionInflado * FET4
-        Et5 = PsiAKpa * PresionInflado * FET1
-        Et6 = PsiAKpa * PresionInflado * FET2
-        
-        Else
-        Sheets("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (FET1 + FET3)
+        E_RADIAL_PTODOS_MA();
 
-        Et1 = PsiAKpa * PresionInflado * FET1
-        Et2 = PsiAKpa * PresionInflado * FET2
-        Et3 = PsiAKpa * PresionInflado * FET3
-        Et4 = PsiAKpa * PresionInflado * FET4
-        Et5 = 0
-        Et6 = 0
-     
-        End If
-    
-    Call E_TANGENCIAL_PTODOS_MA
+        //'ESFUERZO TANGENCIAL
+        if (X == D) {// Then Sheets
+            this.cal.getCapaCalculo(0).setEsfuerzoTangencialO(PsiAKpa * PresionInflado * (2 * FET1 + FET3));//("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (2 * (FET1 + FET2) + FET3 + FET4)
 
-    Sheets("calculos").Cells(41, 3) = Er1
-    Sheets("calculos").Cells(42, 3) = Er2
-    Sheets("calculos").Cells(43, 3) = Er3
-    Sheets("calculos").Cells(44, 3) = Er4
-    Sheets("calculos").Cells(45, 3) = Er5
-    Sheets("calculos").Cells(46, 3) = Er6
-    Sheets("calculos").Cells(41, 5) = Et1
-    Sheets("calculos").Cells(42, 5) = Et2
-    Sheets("calculos").Cells(43, 5) = Et3
-    Sheets("calculos").Cells(44, 5) = Et4
-    Sheets("calculos").Cells(45, 5) = Et5
-    Sheets("calculos").Cells(46, 5) = Et6
+            Et1 = PsiAKpa * PresionInflado * FET1;
+            Et2 = PsiAKpa * PresionInflado * FET2;
+            Et3 = PsiAKpa * PresionInflado * FET3;
+            Et4 = PsiAKpa * PresionInflado * FET4;
+            Et5 = PsiAKpa * PresionInflado * FET1;
+            Et6 = PsiAKpa * PresionInflado * FET2;
+
+        } else {
+            this.cal.getCapaCalculo(0).setEsfuerzoTangencialO(PsiAKpa * PresionInflado * (FET1 + FET3));
+
+            Et1 = PsiAKpa * PresionInflado * FET1;
+            Et2 = PsiAKpa * PresionInflado * FET2;
+            Et3 = PsiAKpa * PresionInflado * FET3;
+            Et4 = PsiAKpa * PresionInflado * FET4;
+            Et5 = 0;
+            Et6 = 0;
+
+        }
+
+        E_TANGENCIAL_PTODOS_MA();
+
+        this.llantas.getLlanta(0).setOrNeumatico1(Er1);// Sheets("calculos").Cells(41, 3) = Er1
+        this.llantas.getLlanta(1).setOrNeumatico1(Er2);
+        this.llantas.getLlanta(2).setOrNeumatico1(Er3);
+        this.llantas.getLlanta(3).setOrNeumatico1(Er4);
+        this.llantas.getLlanta(4).setOrNeumatico1(Er5);
+        this.llantas.getLlanta(5).setOrNeumatico1(Er6);
+
+        this.llantas.getLlanta(0).setOtNeumatico1(Et1);
+        this.llantas.getLlanta(1).setOtNeumatico1(Et2);
+        this.llantas.getLlanta(2).setOtNeumatico1(Et3);
+        this.llantas.getLlanta(3).setOtNeumatico1(Et4);
+        this.llantas.getLlanta(4).setOtNeumatico1(Et5);
+        this.llantas.getLlanta(5).setOtNeumatico1(Et6);
     }
 
+    /*Lista */
     private void esfuerzosEjeTandem() {
-        Dim PsiAKpa As Double
-Dim Er1, Er2, Er3, Er4 As Double
-Dim Et1, Et2, Et3, Et4 As Double
 
-Dim PresionInflado As Double
+        double PsiAKpa;// As Double
+        double Er1, Er2, Er3, Er4, Er5, Er6;// As Double
+        double Et1, Et2, Et3, Et4, Et5, Et6;// As Double
 
-Dim FEV1, FEV2, FEV3, FEV4, FER1, FER2, FER3, FER4, FET1, FET2, FET3, FET4 As Double
-Dim NumCapas As Integer
-Dim NumCapa As Integer
-Dim tipoeje As String
+        double PresionInflado = presion;// As Double
+        double FEV1, FEV2, FEV3, FEV4, FER1, FER2, FER3, FER4, FET1, FET2, FET3, FET4;// As Double
+        double X, Y, S, D;// As Double
 
-PsiAKpa = 6.894757
-PresionInflado = Sheets("NuevoFormatoPav").Cells(9, 6)
-NumCapas = Sheets("NuevoFormatoPav").Cells(10, 6)
-tipoeje = Sheets("NuevoFormatoPav").Cells(8, 6)
+        PsiAKpa = 6.894757;
 
-FEV1 = Sheets("calculos").Cells(26, 4)
-FEV2 = Sheets("calculos").Cells(27, 4)
-FEV3 = Sheets("calculos").Cells(28, 4)
-FEV4 = Sheets("calculos").Cells(29, 4)
-FER1 = Sheets("calculos").Cells(26, 5)
-FER2 = Sheets("calculos").Cells(27, 5)
-FER3 = Sheets("calculos").Cells(28, 5)
-FER4 = Sheets("calculos").Cells(29, 5)
-FET1 = Sheets("calculos").Cells(26, 6)
-FET2 = Sheets("calculos").Cells(27, 6)
-FET3 = Sheets("calculos").Cells(28, 6)
-FET4 = Sheets("calculos").Cells(29, 6)
+        X = this.X;//Sheets("Avanzado").Cells(17, 2)
+        Y = this.Y;//Sheets("Avanzado").Cells(18, 2)
+        S = this.S;//Sheets("Avanzado").Cells(17, 4)
+        D = this.D;//Sheets("Avanzado").Cells(18, 4)
 
+        FEV1 = this.llantas.getLlanta(0).getFactorEVertical();// Sheets("calculos").Cells(26, 4)
+        FEV2 = this.llantas.getLlanta(1).getFactorEVertical();//Sheets("calculos").Cells(27, 4)
+        FEV3 = this.llantas.getLlanta(2).getFactorEVertical();//Sheets("calculos").Cells(28, 4)
+        FEV4 = this.llantas.getLlanta(3).getFactorEVertical();//Sheets("calculos").Cells(29, 4)
+        FER1 = this.llantas.getLlanta(0).getFactorERadial();//Sheets("calculos").Cells(26, 5)
+        FER2 = this.llantas.getLlanta(1).getFactorERadial();//Sheets("calculos").Cells(27, 5)
+        FER3 = this.llantas.getLlanta(2).getFactorERadial();//Sheets("calculos").Cells(28, 5)
+        FER4 = this.llantas.getLlanta(3).getFactorERadial();//Sheets("calculos").Cells(29, 5)
+        FET1 = this.llantas.getLlanta(0).getFactorETangencial();// Sheets("calculos").Cells(26, 6)
+        FET2 = this.llantas.getLlanta(1).getFactorETangencial();//Sheets("calculos").Cells(27, 6)
+        FET3 = this.llantas.getLlanta(2).getFactorETangencial();//Sheets("calculos").Cells(28, 6)
+        FET4 = this.llantas.getLlanta(3).getFactorETangencial();//Sheets("calculos").Cells(29, 6)
 
+        //'ESFUERZO VERTICAL
+        this.cal.getCapaCalculo(0).setEsfuerzoVerticalO(PsiAKpa * PresionInflado * (FEV1 + FEV2 + FEV3 + FEV4));//Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (2 * (FEV1 + FEV2) + FEV3 + FEV4);
 
-'ESFUERZO VERTICAL
-    
-     Sheets("calculos").Cells(3, 10) = PsiAKpa * PresionInflado * (FEV1 + FEV2 + FEV3 + FEV4)
-    Call E_VERTICAL_PTODOS_MA
-  
-    For NumCapa = 1 To 2 'NumCapas - 1
-        Call Esfuerzos_Damy(tipoeje, NumCapa)
-    Next NumCapa
-      
-'ESFUERZO RADIAL
-    Sheets("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (FER1 + FER2 + FER3 + FER4)
+        E_VERTICAL_PTODOS_MA();
 
-    Er1 = PsiAKpa * PresionInflado * FER1
-    Er2 = PsiAKpa * PresionInflado * FER2
-    Er3 = PsiAKpa * PresionInflado * FER3
-    Er4 = PsiAKpa * PresionInflado * FER4
-        
-    Call E_RADIAL_PTODOS_MA
+        for (int numCapa = 0; numCapa < numCapas - 1; numCapa++) {
+            esfuerzos_Damy(numCapa);
+        }
 
-'ESFUERZO TANGENCIAL
-    
-    Sheets("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (FET1 + FET2 + FET3 + FET4)
+        //'ESFUERZO RADIAL
+        this.cal.getCapaCalculo(0).setEsfuerzoRadialO(PsiAKpa * PresionInflado * (FER1 + FER2 + FER3 + FER4));//("calculos").Cells(3, 11) = PsiAKpa * PresionInflado * (2 * (FER1 + FER2) + FER3 + FER4)
 
-    Et1 = PsiAKpa * PresionInflado * FET1
-    Et2 = PsiAKpa * PresionInflado * FET2
-    Et3 = PsiAKpa * PresionInflado * FET3
-    Et4 = PsiAKpa * PresionInflado * FET4
-            
-    Call E_TANGENCIAL_PTODOS_MA
+        Er1 = PsiAKpa * PresionInflado * FER1;
+        Er2 = PsiAKpa * PresionInflado * FER2;
+        Er3 = PsiAKpa * PresionInflado * FER3;
+        Er4 = PsiAKpa * PresionInflado * FER4;
 
-    Sheets("calculos").Cells(41, 3) = Er1
-    Sheets("calculos").Cells(42, 3) = Er2
-    Sheets("calculos").Cells(43, 3) = Er3
-    Sheets("calculos").Cells(44, 3) = Er4
-    Sheets("calculos").Cells(41, 5) = Et1
-    Sheets("calculos").Cells(42, 5) = Et2
-    Sheets("calculos").Cells(43, 5) = Et3
-    Sheets("calculos").Cells(44, 5) = Et4
+        E_RADIAL_PTODOS_MA();
+
+        //'ESFUERZO TANGENCIAL
+        this.cal.getCapaCalculo(0).setEsfuerzoTangencialO(PsiAKpa * PresionInflado * (FET1 + FET2 + FET3 + FET4));//("calculos").Cells(3, 12) = PsiAKpa * PresionInflado * (2 * (FET1 + FET2) + FET3 + FET4)
+
+        Et1 = PsiAKpa * PresionInflado * FET1;
+        Et2 = PsiAKpa * PresionInflado * FET2;
+        Et3 = PsiAKpa * PresionInflado * FET3;
+        Et4 = PsiAKpa * PresionInflado * FET4;
+
+        E_TANGENCIAL_PTODOS_MA();
+
+        this.llantas.getLlanta(0).setOrNeumatico1(Er1);// Sheets("calculos").Cells(41, 3) = Er1
+        this.llantas.getLlanta(1).setOrNeumatico1(Er2);
+        this.llantas.getLlanta(2).setOrNeumatico1(Er3);
+        this.llantas.getLlanta(3).setOrNeumatico1(Er4);
+
+        this.llantas.getLlanta(0).setOtNeumatico1(Et1);
+        this.llantas.getLlanta(1).setOtNeumatico1(Et2);
+        this.llantas.getLlanta(2).setOtNeumatico1(Et3);
+        this.llantas.getLlanta(3).setOtNeumatico1(Et4);
+
+    }
+
+    /*Lista*/
+    private void E_VERTICAL_PTODOS_MA() {
+        int RENGLON;// As Integer
+        int NCAPAS;// As Integer
+        double A;// As Double
+        double B1, B2, B3, B4, B5, B6;// As Double
+        double C1, C2, C3, C4, C5, C6;// As Double
+        double ra1, ra2, ra3, ra4, ra5, ra6;// As Double
+        double R1, R2, R3, R4, R5, R6;// As Double
+        double Ez1, Ez2, Ez3, Ez4, Ez5, Ez6;// As Double
+        double z, P;// As Double
+        double KgAKpa;//a As Double
+        double PESO_EJE;// As Double
+
+        double PesoNeum;// As Double
+        String tipoeje = this.tipoEje;// As String
+        double EvZ;// As Double
+
+        KgAKpa = 98.0665;
+        PesoNeum = this.cal.getCapaCalculo(0).getPesoNeumatico(); //Sheets("calculos").Cells(3, 4)
+        z = this.cal.getCapaCalculo(1).getEspesorParcialEquivalente();// Sheets("calculos").Cells(4, 7)
+        P = 1000 * PesoNeum;
+
+        R1 = this.llantas.getLlanta(0).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(18, 6)
+        R2 = this.llantas.getLlanta(1).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(19, 6)
+        R3 = this.llantas.getLlanta(2).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(20, 6)
+        R4 = this.llantas.getLlanta(3).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(21, 6)
+        R5 = this.llantas.getLlanta(4).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(22, 6)
+        R6 = this.llantas.getLlanta(5).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(23, 6)
+
+        double aux1 = Math.pow(R1, 3);
+        Ez1 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
+        Ez2 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
+        Ez3 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
+        Ez4 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
+        Ez5 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
+        Ez6 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
+
+        switch (tipoeje) {
+            case "Sencillo":
+                EvZ = Ez1;
+                break;
+            case "Sencillo Dual":
+                EvZ = Ez1 + Ez2;
+                break;
+            case "Tandem":
+                EvZ = Ez1 + Ez2 + Ez3 + Ez4;
+                break;
+            case "Tridem":
+                EvZ = Ez1 + Ez2 + Ez3 + Ez4 + Ez5 + Ez6;
+                break;
+            case "Medio Tridem":
+                EvZ = Ez1 + Ez3 + Ez5;
+                break;
+            default:
+                EvZ = 0;
+
+        }
+        this.cal.getCapaCalculo(1).setEsfuerzoVerticalO(EvZ);//Sheets("calculos").Cells(4, 10) = EvZ
+    }
+
+    /*Lista*/
+    private void E_RADIAL_PTODOS_MA() {
+
+        double A;//As Double
+        double ra1, ra2, ra3, ra4, ra5, ra6;//As Double
+        double R1, R2, R3, R4, R5, R6;// As Double
+        double Er1, Er2, Er3, Er4, Er5, Er6;// As Double
+        double z, P;// As Double
+        double KgAKpa;// As Double
+        String tipoeje = this.tipoEje;// As String
+        double PesoNeum;// As Double
+        double ErZ;// As Double
+
+        KgAKpa = 98.0665;
+        z = this.cal.getCapaCalculo(1).getEspesorParcialEquivalente();// Sheets("calculos").Cells(4, 7)
+        PesoNeum = this.cal.getCapaCalculo(0).getPesoNeumatico(); //Sheets("calculos").Cells(3, 4)
+        P = 1000 * PesoNeum;
+        A = P / (2 * PI);
+
+        ra1 = this.llantas.getLlanta(0).getDistanciaHorizontal();//Sheets("calculos").Cells(18, 4)
+        ra2 = this.llantas.getLlanta(1).getDistanciaHorizontal();//Sheets("calculos").Cells(19, 4)
+        ra3 = this.llantas.getLlanta(2).getDistanciaHorizontal();//Sheets("calculos").Cells(20, 4)
+        ra4 = this.llantas.getLlanta(3).getDistanciaHorizontal();//Sheets("calculos").Cells(21, 4)
+        ra5 = this.llantas.getLlanta(4).getDistanciaHorizontal();//Sheets("calculos").Cells(22, 4)
+        ra6 = this.llantas.getLlanta(5).getDistanciaHorizontal();//Sheets("calculos").Cells(23, 4)
+
+        R1 = this.llantas.getLlanta(0).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(18, 6)
+        R2 = this.llantas.getLlanta(1).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(19, 6)
+        R3 = this.llantas.getLlanta(2).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(20, 6)
+        R4 = this.llantas.getLlanta(3).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(21, 6)
+        R5 = this.llantas.getLlanta(4).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(22, 6)
+        R6 = this.llantas.getLlanta(5).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(23, 6)
+
+        Er1 = KgAKpa * (A * (((3 * z * Math.pow(ra1, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R1 * (R1 + z)))));// 'ecuacion 3.13
+        Er2 = KgAKpa * (A * (((3 * z * Math.pow(ra2, 2)) / Math.pow(R2, 5)) - ((1 - 2 * poisson) / (R2 * (R2 + z)))));
+        Er3 = KgAKpa * (A * (((3 * z * Math.pow(ra3, 2)) / Math.pow(R3, 5)) - ((1 - 2 * poisson) / (R3 * (R3 + z)))));
+        Er4 = KgAKpa * (A * (((3 * z * Math.pow(ra4, 2)) / Math.pow(R4, 5)) - ((1 - 2 * poisson) / (R4 * (R4 + z)))));
+        Er5 = KgAKpa * (A * (((3 * z * Math.pow(ra5, 2)) / Math.pow(R5, 5)) - ((1 - 2 * poisson) / (R5 * (R5 + z)))));
+        Er6 = KgAKpa * (A * (((3 * z * Math.pow(ra6, 2)) / Math.pow(R6, 5)) - ((1 - 2 * poisson) / (R6 * (R6 + z)))));
+
+        switch (tipoeje) {
+            case "Sencillo":
+                ErZ = Er1;
+                break;
+            case "Sencillo Dual":
+                ErZ = Er1 + Er2;
+                break;
+            case "Tandem":
+                ErZ = Er1 + Er2 + Er3 + Er4;
+                break;
+            case "Tridem":
+                ErZ = Er1 + Er2 + Er3 + Er4 + Er5 + Er6;
+                break;
+            case "Medio Tridem":
+                ErZ = Er1 + Er3 + Er5;
+                break;
+            default:
+                ErZ = 0;
+        }
+
+        this.cal.getCapaCalculo(1).setEsfuerzoRadialO(ErZ);//Sheets("calculos").Cells(4, 11) = ErZ
+
+        this.llantas.getLlanta(0).setOrNeumatico2(Er1);//Sheets("calculos").Cells(41, 4) = Er1  'ojo con esta parte no desechar aun
+        this.llantas.getLlanta(1).setOrNeumatico2(Er2);//Sheets("calculos").Cells(42, 4) = Er2
+        this.llantas.getLlanta(2).setOrNeumatico2(Er3);//Sheets("calculos").Cells(43, 4) = Er3
+        this.llantas.getLlanta(3).setOrNeumatico2(Er4);//Sheets("calculos").Cells(44, 4) = Er4
+        this.llantas.getLlanta(4).setOrNeumatico2(Er5);//Sheets("calculos").Cells(45, 4) = Er5
+        this.llantas.getLlanta(5).setOrNeumatico2(Er6);//Sheets("calculos").Cells(46, 4) = Er6
+    }
+
+    /*Lista*/
+    private void E_TANGENCIAL_PTODOS_MA() {
+
+        double A;// As Double
+        double ra1, ra2, ra3, ra4, ra5, ra6;// As Double
+        double R1, R2, R3, R4, R5, R6;// As Double
+        double Et1, Et2, Et3, Et4, Et5, Et6;// As Double
+        double z, P;// As Double
+        double KgAKpa;//a As Double
+        double PESO_EJE;// As Double
+
+        double PesoNeum;// As Double
+        String tipoeje = this.tipoEje;// As String
+        double EtZ;// As Double
+
+        KgAKpa = 98.0665;
+
+        z = this.cal.getCapaCalculo(1).getEspesorParcialEquivalente();// Sheets("calculos").Cells(4, 7)
+        PesoNeum = this.cal.getCapaCalculo(0).getPesoNeumatico(); //Sheets("calculos").Cells(3, 4)
+        P = 1000 * PesoNeum;
+        A = (1 - 2 * poisson) * (P / (2 * PI));
+
+        R1 = this.llantas.getLlanta(0).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(18, 6)
+        R2 = this.llantas.getLlanta(1).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(19, 6)
+        R3 = this.llantas.getLlanta(2).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(20, 6)
+        R4 = this.llantas.getLlanta(3).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(21, 6)
+        R5 = this.llantas.getLlanta(4).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(22, 6)
+        R6 = this.llantas.getLlanta(5).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(23, 6)
+
+        Et1 = KgAKpa * (A * ((1 / (R1 * (R1 + z))) - (z / Math.pow(R1, 3))));// 'ecuacion 3.14
+        Et2 = KgAKpa * (A * ((1 / (R2 * (R2 + z))) - (z / Math.pow(R2, 3))));//
+        Et3 = KgAKpa * (A * ((1 / (R3 * (R3 + z))) - (z / Math.pow(R3, 3))));
+        Et4 = KgAKpa * (A * ((1 / (R4 * (R4 + z))) - (z / Math.pow(R4, 3))));
+        Et5 = KgAKpa * (A * ((1 / (R5 * (R5 + z))) - (z / Math.pow(R5, 3))));
+        Et6 = KgAKpa * (A * ((1 / (R6 * (R6 + z))) - (z / Math.pow(R6, 3))));
+
+        switch (tipoeje) {
+            case "Sencillo":
+                EtZ = Et1;
+                break;
+            case "Sencillo Dual":
+                EtZ = Et1 + Et2;
+                break;
+            case "Tandem":
+                EtZ = Et1 + Et2 + Et3 + Et4;
+                break;
+            case "Tridem":
+                EtZ = Et1 + Et2 + Et3 + Et4 + Et5 + Et6;
+                break;
+            case "Medio Tridem":
+                EtZ = Et1 + Et3 + Et5;
+                break;
+            default:
+                EtZ = 0;
+
+        }
+        this.cal.getCapaCalculo(1).setEsfuerzoTangencialO(EtZ);//Sheets("calculos").Cells(4, 12) = EtZ
+
+        this.llantas.getLlanta(0).setOtNeumatico2(Et1);//Sheets("calculos").Cells(41, 6) = Et1 //' ojo con estas anotaciones aun no se desechan
+        this.llantas.getLlanta(1).setOtNeumatico2(Et2);//Sheets("calculos").Cells(42, 6) = Et2
+        this.llantas.getLlanta(2).setOtNeumatico2(Et3);//Sheets("calculos").Cells(43, 6) = Et3
+        this.llantas.getLlanta(3).setOtNeumatico2(Et4);//Sheets("calculos").Cells(44, 6) = Et4
+        this.llantas.getLlanta(4).setOtNeumatico2(Et5);//Sheets("calculos").Cells(45, 6) = Et5
+        this.llantas.getLlanta(5).setOtNeumatico2(Et6);//Sheets("calculos").Cells(46, 6) = Et6
     }
 
 }
