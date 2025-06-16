@@ -414,7 +414,7 @@ public class Funciones extends Datos {
             z = cal.getCapaCalculo(0).getEspesorParcialEquivalente();//z = Sheets("calculos").Cells(3, 7)
 
             r_sobre_a = llantas.getLlanta(i).getRa();//Sheets("calculos").Cells(25 + llantas, 3)
-// r_sobre_a = Sheets("ANALISIS PAVIMENTO").Cells(22 + llantas, 181) ' verificar como es que daba lo mismo si los valores no cambiaban o si?
+            // r_sobre_a = Sheets("ANALISIS PAVIMENTO").Cells(22 + llantas, 181) ' verificar como es que daba lo mismo si los valores no cambiaban o si?
             z_sobre_a = z / radioContacto;
 
             if (r_sobre_a > 14) {
@@ -466,7 +466,7 @@ public class Funciones extends Datos {
 
             llantas.getLlanta(i).setFactorEVertical(res_interpolacion3);//Sheets("calculos").Cells(25 + llantas, 4) = res_interpolacion3
 
-//'intepolación para la segunda tabla
+            //'intepolación para la segunda tabla
             valorA = y_inter[buscay];
             valorC = y_inter[buscay + 1];
             valorI = DatosTablas.FactorERadial.getValor(posy1, posx1);//Sheets("factor_e_rad").Cells(posy1 + 2, posx1 + 2)
@@ -797,10 +797,10 @@ public class Funciones extends Datos {
         espectros();
 
         NumMarcasClase = 100; // ya sabemos que es 100 el numero por larguillo y como lo manejan en el codigo anterior
-        /*While Len(Sheets("Larguillo").Cells(i, 1)) > 0
-    NumMarcasClase = NumMarcasClase + 1
-    i = i + 1
-  Wend*/
+                /*While Len(Sheets("Larguillo").Cells(i, 1)) > 0
+            NumMarcasClase = NumMarcasClase + 1
+            i = i + 1
+        Wend*/
 
         //se hara por cada uno de los eje
         eje = 0;
@@ -1073,8 +1073,8 @@ public class Funciones extends Datos {
             Et5 = i == 0 ? this.llantas.getLlanta(4).getOtNeumatico1() : this.llantas.getLlanta(4).getOtNeumatico2();//Sheets("calculos").Cells(45, i + 4)
             Et6 = i == 0 ? this.llantas.getLlanta(5).getOtNeumatico1() : this.llantas.getLlanta(5).getOtNeumatico2();//Sheets("calculos").Cells(46, i + 4)
 
-//Esfuerzo normal x
-//COMPONENTE X ESFUERZO RADIAL
+        //Esfuerzo normal x
+        //COMPONENTE X ESFUERZO RADIAL
             AX = Er1 * (Math.pow(Math.cos(Angulo_Llanta1 * Grados), 2));
             CX = Er2 * (Math.pow(Math.cos(Angulo_Llanta2 * Grados), 2));
             EX = Er3 * (Math.pow(Math.cos(Angulo_Llanta3 * Grados), 2));
@@ -1082,7 +1082,7 @@ public class Funciones extends Datos {
             IX = Er5 * (Math.pow(Math.cos(Angulo_Llanta5 * Grados), 2));
             KX = Er6 * (Math.pow(Math.cos(Angulo_Llanta6 * Grados), 2));
 
-//'COMPONENTE X ESFUERZO TANGENCIAL
+        //'COMPONENTE X ESFUERZO TANGENCIAL
             BX = Et1 * (Math.pow(Math.sin(Angulo_Llanta1 * Grados), 2));
             DX = Et2 * (Math.pow(Math.sin(Angulo_Llanta2 * Grados), 2));
             FX = Et3 * (Math.pow(Math.sin(Angulo_Llanta3 * Grados), 2));
@@ -1090,8 +1090,8 @@ public class Funciones extends Datos {
             JX = Et5 * (Math.pow(Math.sin(Angulo_Llanta5 * Grados), 2));
             LX = Et6 * (Math.pow(Math.sin(Angulo_Llanta6 * Grados), 2));
 
-//'Esfuerzo normal y
-//'COMPONENTE Y ESFUERZO RADIAL
+            //'Esfuerzo normal y
+            //'COMPONENTE Y ESFUERZO RADIAL
             AY = Er1 * (Math.pow(Math.sin(Angulo_Llanta1 * Grados), 2));
             CY = Er2 * (Math.pow(Math.sin(Angulo_Llanta2 * Grados), 2));
             EY = Er3 * (Math.pow(Math.sin(Angulo_Llanta3 * Grados), 2));
@@ -1099,7 +1099,7 @@ public class Funciones extends Datos {
             IY = Er5 * (Math.pow(Math.sin(Angulo_Llanta5 * Grados), 2));
             KY = Er6 * (Math.pow(Math.sin(Angulo_Llanta6 * Grados), 2));
 
-//'COMPONENTE Y ESFUERZO TANGENCIAL
+            //'COMPONENTE Y ESFUERZO TANGENCIAL
             BY = Et1 * (Math.pow(Math.cos(Angulo_Llanta1 * Grados), 2));
             DY = Et2 * (Math.pow(Math.cos(Angulo_Llanta2 * Grados), 2));
             FY = Et3 * (Math.pow(Math.cos(Angulo_Llanta3 * Grados), 2));
@@ -1107,7 +1107,7 @@ public class Funciones extends Datos {
             JY = Et5 * (Math.pow(Math.cos(Angulo_Llanta5 * Grados), 2));
             LY = Et6 * (Math.pow(Math.cos(Angulo_Llanta6 * Grados), 2));
 
-//'ESFUERZO CORTANTE XY
+            //'ESFUERZO CORTANTE XY
             O = (Er1 - Et1) * (Math.sin(Angulo_Llanta1 * Grados)) * (Math.cos(Angulo_Llanta1 * Grados));
             P = (Er2 - Et2) * (Math.sin(Angulo_Llanta2 * Grados)) * (Math.cos(Angulo_Llanta2 * Grados));
             Q = (Er3 - Et3) * (Math.sin(Angulo_Llanta3 * Grados)) * (Math.cos(Angulo_Llanta3 * Grados));
@@ -1149,7 +1149,7 @@ public class Funciones extends Datos {
 
         }
 
-//'DEFORMACIÓN POR TENSIÓN
+            //'DEFORMACIÓN POR TENSIÓN
         for (int i = 0; i < numCapas - 1; i++) {
             EvZ = this.cal.getCapaCalculo(i).getEsfuerzoVerticalO();//Sheets("calculos").Cells(i + 2, 10)
             ModElastico[i] = this.cal.getCapaCalculo(i).getModuloElastico();//Sheets("calculos").Cells(i + 2, 3)
@@ -1164,7 +1164,7 @@ public class Funciones extends Datos {
             DefTension = ((DEFx + DEFy) / 2) - Math.pow(Math.pow((Math.pow(((DEFx - DEFy) / 2), 2)) + GAMAxy, 2), 0.5);
             this.cal.getCapaCalculo(i).setDeformacionPorTension(DefTension);//Sheets("calculos").Cells(2 + i, 30) = DefTension
 
-//'calculados con damy
+            //'calculados con damy
             EvZ_damy = this.cal.getCapaCalculo(i).getAux1();//Sheets("calculos").Cells(i + 5, 10)
             DEFx_damy = (1 / ModElastico[i]) * (Enormal_x - (poisson * (Enormal_y + EvZ_damy)));
             DEFy_damy = (1 / ModElastico[i]) * (Enormal_y - (poisson * (Enormal_x + EvZ_damy)));
@@ -1183,9 +1183,9 @@ public class Funciones extends Datos {
         double DefVertical;// As Double
         double EvZ_damy, DefVertical_damy;//  As Double
 
-//NumCapas = Sheets("NuevoFormatoPav").Cells(10, 6)
-//Poisson = Sheets("calculos").Cells(3, 5)
-//ReDim ModElastico(NumCapas)
+        //NumCapas = Sheets("NuevoFormatoPav").Cells(10, 6)
+        //Poisson = Sheets("calculos").Cells(3, 5)
+        //ReDim ModElastico(NumCapas)
         for (int i = 0; i < numCapas - 1; i++) {// = 1 To 2 'NumCapas - 1
             ModElastico[i]
                               = //Sheets("calculos").Cells(i + 2, 3)
@@ -1196,7 +1196,7 @@ public class Funciones extends Datos {
             DefVertical = (1 / ModElastico[i]) * (EvZ - ((Enormal_x + Enormal_y) * poisson));
             this.cal.getCapaCalculo(i).setDeformacionVerticalE2(DefVertical);//Sheets("calculos").Cells(i + 2, 29) = DefVertical
 
-//'calculados con damy
+            //'calculados con damy
             EvZ_damy = this.cal.getCapaCalculo(i).getAux1();//Sheets("calculos").Cells(i + 5, 10)
             DefVertical_damy = (1 / ModElastico[i]) * (EvZ_damy - ((Enormal_x + Enormal_y) * poisson));
             this.cal.getCapaCalculo(i).setauxVerDamy(DefVertical_damy);//Sheets("calculos").Cells(i + 5, 29) = DefVertical_damy
@@ -1352,8 +1352,8 @@ public class Funciones extends Datos {
 
     /*Lista */
     private void esfuerzoTangencialPuntual() {
-//Dim i As Integer
-//Dim NumCapas As Integer
+        //Dim i As Integer
+        //Dim NumCapas As Integer
         double R1, R2, R3, R4, R5, R6;// As Double
         double Et1, Et2, Et3, Et4, Et5, Et6;// As Double
         double z, P;// As Double
@@ -2009,5 +2009,8 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(4).setOtNeumatico2(Et5);//Sheets("calculos").Cells(45, 6) = Et5
         this.llantas.getLlanta(5).setOtNeumatico2(Et6);//Sheets("calculos").Cells(46, 6) = Et6
     }
+
+
+    
 
 }
