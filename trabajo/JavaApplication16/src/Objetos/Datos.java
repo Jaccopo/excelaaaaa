@@ -30,6 +30,15 @@ public class Datos {
     public boolean activos[];
     
     public boolean damy;
+    
+    public String porcentajeConfiabilidad;
+    
+    public void setPorcentajeConfiabilidad(String porcentajeConfiabilidad){
+        this.porcentajeConfiabilidad = porcentajeConfiabilidad;
+    }
+    public String getPorcentajeConfiabilidad(){
+        return this.porcentajeConfiabilidad;
+    }
 
     public Datos(){
         ep = new EstructuraPavimiento[4];

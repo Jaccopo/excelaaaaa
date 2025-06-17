@@ -3,6 +3,7 @@ package Objetos;
 import Clases.TransitoEstatico;
 import Objetos.Datos;
 import DatosTablas.TablaDistribucionDeCarga;
+import java.util.HashSet;
 import javax.swing.JOptionPane;
 import vista.Dialogos.Cargando;
 
@@ -2042,6 +2043,144 @@ public class Funciones extends Datos {
             }
 
         }
+    }
+    
+    public void ejecutaCorridas(){
+
+//num_capas = Sheets("Análisis Espectral").Cells(7, 6)
+int combinaciones =(int) Math.pow( 2,numCapas);
+
+double sumavf = 0
+double sumavd = 0
+double sumavf2 = 0
+double sumavd2 = 0
+double z = 0
+'''''Call pintacontornobarraazul                                                                'para que funcione con la hoja protegida quité esta linea
+
+for(int analisis =0;analisis <combinaciones;analisis++){
+
+    for (int i = 0; i < numCapas; i++) {
+        this.cc.tablaRepeticiones[i].setE(i, this.ep[i].getModuloEntreMil());
+    }
+    
+//Sheets("Análisis Espectral").Cells(13, 6) = Sheets("larguillo").Cells(3 + analisis, 82)
+//Sheets("Análisis Espectral").Cells(14, 6) = Sheets("larguillo").Cells(3 + analisis, 83)
+//Sheets("Análisis Espectral").Cells(15, 6) = Sheets("larguillo").Cells(3 + analisis, 84)
+//Sheets("Análisis Espectral").Cells(16, 6) = Sheets("larguillo").Cells(3 + analisis, 85)
+//Sheets("Análisis Espectral").Cells(17, 6) = Sheets("larguillo").Cells(3 + analisis, 86)
+//Sheets("Análisis Espectral").Cells(18, 6) = Sheets("larguillo").Cells(3 + analisis, 87)
+
+IniciarAnalisisEspectral();
+vidaf = this.cc.vi[0].getDefTodos();//Sheets("larguillo").Cells(4, 74)  'fatiga
+vidad = Sheets("larguillo").Cells(4, 69)  'deformacion
+
+
+Sheets("larguillo").Cells(3 + analisis, 88) = vidaf
+Sheets("larguillo").Cells(3 + analisis, 89) = vidaf ^ 2
+Sheets("larguillo").Cells(3 + analisis, 90) = vidad
+Sheets("larguillo").Cells(3 + analisis, 91) = vidad ^ 2
+
+sumavf = sumavf + vidaf
+sumavf2 = sumavf2 + vidaf ^ 2
+sumavd = sumavd + vidad
+sumavd2 = sumavd2 + vidad ^ 2
+
+avan = 64 / combinaciones
+
+'pone la fuente de la celda de avance color blanco
+'''''With Sheets("Análisis Probabilista").Cells(3, 13).Font                     'IDem
+'''''    .ThemeColor = xlThemeColorDark1                                        'idem
+'''''    .TintAndShade = 0                                                      'idem
+'''''End With                                                                   'idem
+    
+    Sheets("Análisis Probabilista").Cells(3, 13) = analisis / (combinaciones + 1)
+    Sheets("Análisis Probabilista").Cells(3, 12) = "Ejecutando análisis..."
+'pinta de azul el avance
+'''''For Y = 14 + ((analisis - 1) * avan) To 14 + (analisis * avan)
+'''''With Sheets("Análisis probabilista").Cells(3, Y).Interior
+'''''        .Pattern = xlSolid
+'''''        .PatternColorIndex = xlAutomatic
+'''''        .Color = 16360849
+'''''        .TintAndShade = 0
+'''''        .PatternTintAndShade = 0
+'''''End With
+'''''Next Y
+}
+
+
+
+Evf = sumavf / combinaciones
+Ev2f = sumavf2 / combinaciones
+Evd = sumavd / combinaciones
+Ev2d = sumavd2 / combinaciones
+
+Vvf = Ev2f - Evf ^ 2
+Vvd = Ev2d - Evd ^ 2
+
+ValorConfiabilidad = Worksheets("Análisis Probabilista").ComboBoxConfiabilidad.Text
+
+Select Case ValorConfiabilidad
+
+Case Is = "55%"
+    PConfiabilidad = 55
+    z = -0.125661
+Case Is = "60%"
+    PConfiabilidad = 60
+    z = -0.253347
+Case Is = "65%"
+    PConfiabilidad = 65
+    z = -0.38532
+Case Is = "70%"
+    PConfiabilidad = 70
+    z = -0.524401
+Case Is = "75%"
+    PConfiabilidad = 75
+    z = -0.67449
+Case Is = "80%"
+    PConfiabilidad = 80
+    z = -0.841621
+Case Is = "85%"
+    PConfiabilidad = 85
+    z = -1.036433
+Case Is = "90%"
+    PConfiabilidad = 90
+    z = -1.281552
+Case Is = "95%"
+    PConfiabilidad = 95
+    z = -1.644854
+End Select
+
+
+Confiabilidad = PConfiabilidad / 100
+
+X = 1 - Confiabilidad
+'z = Application.WorksheetFunction.NormSInv(X)
+Rf = Evf + z * (Vvf) ^ 0.5
+Rd = Evd + z * (Vvd) ^ 0.5
+
+
+If Rf > CDbl(Sheets("Tránsito").años1.Text) Then
+Sheets("Análisis Probabilista").Cells(15, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
+Else
+  If Rf < 1 Then
+    Sheets("Análisis Probabilista").Cells(15, 12) = " < 1"
+    Else
+    Sheets("Análisis Probabilista").Cells(15, 12) = Rf
+  End If
+End If
+
+If Rd > CDbl(Sheets("Tránsito").años1.Text) Then
+Sheets("Análisis Probabilista").Cells(16, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
+Else
+If Rd < 1 Then
+  Sheets("Análisis Probabilista").Cells(16, 12) = " < 1"
+    Else
+    Sheets("Análisis Probabilista").Cells(16, 12) = Rd
+  End If
+End If
+
+
+
     }
 
 }
