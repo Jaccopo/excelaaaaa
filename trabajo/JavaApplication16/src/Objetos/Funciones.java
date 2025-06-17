@@ -797,7 +797,7 @@ public class Funciones extends Datos {
         espectros();
 
         NumMarcasClase = 100; // ya sabemos que es 100 el numero por larguillo y como lo manejan en el codigo anterior
-                /*While Len(Sheets("Larguillo").Cells(i, 1)) > 0
+        /*While Len(Sheets("Larguillo").Cells(i, 1)) > 0
             NumMarcasClase = NumMarcasClase + 1
             i = i + 1
         Wend*/
@@ -1073,8 +1073,8 @@ public class Funciones extends Datos {
             Et5 = i == 0 ? this.llantas.getLlanta(4).getOtNeumatico1() : this.llantas.getLlanta(4).getOtNeumatico2();//Sheets("calculos").Cells(45, i + 4)
             Et6 = i == 0 ? this.llantas.getLlanta(5).getOtNeumatico1() : this.llantas.getLlanta(5).getOtNeumatico2();//Sheets("calculos").Cells(46, i + 4)
 
-        //Esfuerzo normal x
-        //COMPONENTE X ESFUERZO RADIAL
+            //Esfuerzo normal x
+            //COMPONENTE X ESFUERZO RADIAL
             AX = Er1 * (Math.pow(Math.cos(Angulo_Llanta1 * Grados), 2));
             CX = Er2 * (Math.pow(Math.cos(Angulo_Llanta2 * Grados), 2));
             EX = Er3 * (Math.pow(Math.cos(Angulo_Llanta3 * Grados), 2));
@@ -1082,7 +1082,7 @@ public class Funciones extends Datos {
             IX = Er5 * (Math.pow(Math.cos(Angulo_Llanta5 * Grados), 2));
             KX = Er6 * (Math.pow(Math.cos(Angulo_Llanta6 * Grados), 2));
 
-        //'COMPONENTE X ESFUERZO TANGENCIAL
+            //'COMPONENTE X ESFUERZO TANGENCIAL
             BX = Et1 * (Math.pow(Math.sin(Angulo_Llanta1 * Grados), 2));
             DX = Et2 * (Math.pow(Math.sin(Angulo_Llanta2 * Grados), 2));
             FX = Et3 * (Math.pow(Math.sin(Angulo_Llanta3 * Grados), 2));
@@ -1149,7 +1149,7 @@ public class Funciones extends Datos {
 
         }
 
-            //'DEFORMACIÓN POR TENSIÓN
+        //'DEFORMACIÓN POR TENSIÓN
         for (int i = 0; i < numCapas - 1; i++) {
             EvZ = this.cal.getCapaCalculo(i).getEsfuerzoVerticalO();//Sheets("calculos").Cells(i + 2, 10)
             ModElastico[i] = this.cal.getCapaCalculo(i).getModuloElastico();//Sheets("calculos").Cells(i + 2, 3)
@@ -1271,7 +1271,7 @@ public class Funciones extends Datos {
         }//Next NumCapa
     }
 
-    /*Lista*/    
+    /*Lista*/
     private void esfuerzoRadialPuntual() {
 
         double ra1, ra2, ra3, ra4, ra5, ra6;// As Double
@@ -2010,7 +2010,38 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(5).setOtNeumatico2(Et6);//Sheets("calculos").Cells(46, 6) = Et6
     }
 
+    public void distribuyemelos(){
 
-    
+        double modulocapa[] = new double[numCapas];
+        double coefcapa[] = new double[numCapas];
+        int combinaciones;
+        int contador = 0,a;
+
+        //Sheets("Análisis Probabilista").Cells(3, 12) = "Ejecutando análisis..."
+        //num_capas = Sheets("Análisis Espectral").Cells(7, 6)
+        //n = num_capas
+        combinaciones =(int) Math.pow(2, numCapas);
+
+        for(int capa = 0;capa<numCapas;capa++){//capa = num_capas To 1 Step - 1
+        modulocapa[capa] = this.ep[capa].getModulo();
+            coefcapa[capa] = this.ep[capa].getCoeficienteVariacion();
+            contador = 1;
+            a =(int) Math.pow(2 ,(numCapas - capa));
+            for (int i = 0; i < combinaciones; i++) {
+
+                if (contador <= a) {// Then
+                    this.cc.tablaRepeticiones[capa].setE(i,modulocapa[i] * (1 + coefcapa[capa] / 100));//Sheets("larguillo").Cells(3 + i, 81 + capa) = modulocapa[i] * (1 + coefcapa(capa) / 100)
+                } else {
+                    this.cc.tablaRepeticiones[capa].setE(i,modulocapa[i] * (1 - coefcapa[capa] / 100));//("larguillo").Cells(3 + i, 81 + capa) = modulocapa(capa) * (1 - coefcapa(capa) / 100)
+                }
+                contador++;
+                if (contador > 2 * a) {
+                    contador = 1;
+                }
+
+            }
+
+        }
+    }
 
 }

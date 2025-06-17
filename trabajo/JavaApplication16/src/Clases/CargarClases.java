@@ -18,6 +18,7 @@ public class CargarClases {
     public  EspectroTotal et[] = new EspectroTotal[100];
     public  EspectroDanoAcomulado eda[] = new EspectroDanoAcomulado[100];
     public  VidaUtil vi[] = new VidaUtil[100];
+    public  TablaRepeticiones tablaRepeticiones[] = new TablaRepeticiones[64];
     
     public boolean cargado= false;
     
@@ -39,6 +40,9 @@ public class CargarClases {
         }
         for (int i = 0; i < 3; i++) {
             vi[i] = new VidaUtil((Archivos.getArchivo("archivos/larguillo-vida-util.uwu"))[i].split("\t"));
+        }
+        for (int i = 0; i < 10; i++) {
+            tablaRepeticiones[i] = new TablaRepeticiones();
         }
      cargado = true;
     }
