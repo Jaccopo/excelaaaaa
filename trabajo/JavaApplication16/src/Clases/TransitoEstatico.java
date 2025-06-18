@@ -19,5 +19,7 @@ public class TransitoEstatico {
     public static double tandemNumeroPorcentaje;
     public static double tridemNumeroPorcentaje;
     
+    public static int añosProyecto;
+    
     public static int activado = 0;
 }

@@ -13,7 +13,9 @@ public class CAnalisis {
         funciones.setCc(cc);
     }
     
-    public void CargarTabla(DefaultTableModel dtm){
+    public void CargarTabla(DefaultTableModel dtm,double vidaFatiga,double vidaDeformacion){
+        funciones.setVidaFatiga(vidaFatiga);
+        funciones.setVidaDeformacion(vidaDeformacion);
         for (int i = 0; i < dtm.getRowCount(); i++) {
             funciones.getEp(i).setNumeroCapa(Integer.parseInt(dtm.getValueAt(i, 0)+""));
             funciones.getEp(i).setNombre(dtm.getValueAt(i, 1)+"");

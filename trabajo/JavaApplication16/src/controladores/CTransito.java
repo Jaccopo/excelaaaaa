@@ -14,7 +14,8 @@ import vista.Transito;
 public class CTransito {
 
     double A, B2, B3, C2, C3, T3S2, T3S3, T3S2R4, otros;
-    double Tasa, TDPA, años, FDS, FDC;
+    double Tasa, TDPA, FDS, FDC;
+    int años;
     double CoefAcumTrans, TTotalAcum, Trans_Prom_anual;
     double Porcentaje_sencillo, Porcentaje_dual, Porcentaje_tandem, Porcentaje_tridem;
     double RepEjes_sencillo, RepEjes_dual, RepEjes_tandem, RepEjes_tridem;
@@ -149,11 +150,11 @@ public class CTransito {
         this.TDPA = TDPA;
     }
 
-    public double getAños() {
+    public int getAños() {
         return años;
     }
 
-    public void setAños(double años) {
+    public void setAños(int años) {
         this.años = años;
     }
 
@@ -218,6 +219,8 @@ public class CTransito {
         TransitoEstatico.dualNumeroPorcentaje = NumEjes_dual_año;
         TransitoEstatico.tridemNumeroPorcentaje = NumEjes_tridem_año;
         TransitoEstatico.tandemNumeroPorcentaje = NumEjes_tandem_año;
+        
+        TransitoEstatico.añosProyecto = años;
 
         TransProm_anual_carga = RepEjes_sencillo / años;
         Total_ejes = NumEjes_Sencillos_año + NumEjes_dual_año + NumEjes_tandem_año + NumEjes_tridem_año;

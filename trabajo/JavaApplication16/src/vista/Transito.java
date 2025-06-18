@@ -667,7 +667,7 @@ public class Transito extends javax.swing.JInternalFrame implements FocusListene
             ct.setT3S2R4(Double.parseDouble(T3S2R4.getText()));
             ct.setOtros(Double.parseDouble(Otros.getText()));
             
-            ct.setAños(Double.parseDouble(años.getText()));
+            ct.setAños(Integer.parseInt(años.getText()));
             ct.setFDC(Double.parseDouble(FDC.getText()));
             ct.setFDS(Double.parseDouble(FDS.getText()));
             ct.setTDPA(Double.parseDouble(TDPA.getText()));

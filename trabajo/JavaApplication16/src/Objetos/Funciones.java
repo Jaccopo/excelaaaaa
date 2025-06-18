@@ -17,7 +17,7 @@ public class Funciones extends Datos {
     }
 
     public void IniciarAnalisisEspectral(String tipoCarga, boolean activos[]) {
-
+        this.tipoCarga = tipoCarga;
         this.activos = activos;
         if (numCapas > 3) {
             JOptionPane.showMessageDialog(null, "Solo se puede calcular tres capas", "Error", JOptionPane.ERROR_MESSAGE);
@@ -124,8 +124,8 @@ public class Funciones extends Datos {
                 ayuda3 = (Math.log(valor) - m3) / s3;
 
                 altura = w1 / (2.506628274631 * valor * s1) * Math.exp(-0.5 * Math.pow(ayuda1, 2))
-                                  + w2 / (2.506628274631 * valor * s2) * Math.exp(-0.5 * Math.pow(ayuda2, 2))
-                                  + w3 / (2.506628274631 * valor * s3) * Math.exp(-0.5 * Math.pow(ayuda3, 2));
+                        + w2 / (2.506628274631 * valor * s2) * Math.exp(-0.5 * Math.pow(ayuda2, 2))
+                        + w3 / (2.506628274631 * valor * s3) * Math.exp(-0.5 * Math.pow(ayuda3, 2));
                 cc.data[i].setDato(i + 1);
                 cc.data[i].setCargaPromedio((float) valor);
 
@@ -1189,8 +1189,8 @@ public class Funciones extends Datos {
         //ReDim ModElastico(NumCapas)
         for (int i = 0; i < numCapas - 1; i++) {// = 1 To 2 'NumCapas - 1
             ModElastico[i]
-                              = //Sheets("calculos").Cells(i + 2, 3)
-                              EvZ = this.cal.getCapaCalculo(i).getEsfuerzoVerticalO();// Sheets("calculos").Cells(i + 2, 10)
+                    = //Sheets("calculos").Cells(i + 2, 3)
+                    EvZ = this.cal.getCapaCalculo(i).getEsfuerzoVerticalO();// Sheets("calculos").Cells(i + 2, 10)
             Enormal_x = this.cal.getCapaCalculo(i).getEsfuerzoNormalX();//Sheets("calculos").Cells(i + 2, 23)
             Enormal_y = this.cal.getCapaCalculo(i).getEsfuerzoNormalY();//Sheets("calculos").Cells(i + 2, 24)
 
@@ -2011,29 +2011,29 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(5).setOtNeumatico2(Et6);//Sheets("calculos").Cells(46, 6) = Et6
     }
 
-    public void distribuyemelos(){
+    public void distribuyemelos() {
 
         double modulocapa[] = new double[numCapas];
         double coefcapa[] = new double[numCapas];
         int combinaciones;
-        int contador = 0,a;
+        int contador = 0, a;
 
         //Sheets("Análisis Probabilista").Cells(3, 12) = "Ejecutando análisis..."
         //num_capas = Sheets("Análisis Espectral").Cells(7, 6)
         //n = num_capas
-        combinaciones =(int) Math.pow(2, numCapas);
+        combinaciones = (int) Math.pow(2, numCapas);
 
-        for(int capa = 0;capa<numCapas;capa++){//capa = num_capas To 1 Step - 1
-        modulocapa[capa] = this.ep[capa].getModulo();
+        for (int capa = 0; capa < numCapas; capa++) {//capa = num_capas To 1 Step - 1
+            modulocapa[capa] = this.ep[capa].getModulo();
             coefcapa[capa] = this.ep[capa].getCoeficienteVariacion();
             contador = 1;
-            a =(int) Math.pow(2 ,(numCapas - capa));
+            a = (int) Math.pow(2, (numCapas - capa));
             for (int i = 0; i < combinaciones; i++) {
 
                 if (contador <= a) {// Then
-                    this.cc.tablaRepeticiones[capa].setE(i,modulocapa[i] * (1 + coefcapa[capa] / 100));//Sheets("larguillo").Cells(3 + i, 81 + capa) = modulocapa[i] * (1 + coefcapa(capa) / 100)
+                    this.cc.tablaRepeticiones[capa].setE(i, modulocapa[i] * (1 + coefcapa[capa] / 100));//Sheets("larguillo").Cells(3 + i, 81 + capa) = modulocapa[i] * (1 + coefcapa(capa) / 100)
                 } else {
-                    this.cc.tablaRepeticiones[capa].setE(i,modulocapa[i] * (1 - coefcapa[capa] / 100));//("larguillo").Cells(3 + i, 81 + capa) = modulocapa(capa) * (1 - coefcapa(capa) / 100)
+                    this.cc.tablaRepeticiones[capa].setE(i, modulocapa[i] * (1 - coefcapa[capa] / 100));//("larguillo").Cells(3 + i, 81 + capa) = modulocapa(capa) * (1 - coefcapa(capa) / 100)
                 }
                 contador++;
                 if (contador > 2 * a) {
@@ -2044,142 +2044,147 @@ public class Funciones extends Datos {
 
         }
     }
-    
-    public void ejecutaCorridas(){
+
+    public void ejecutaCorridas() {
 
 //num_capas = Sheets("Análisis Espectral").Cells(7, 6)
-int combinaciones =(int) Math.pow( 2,numCapas);
+        int combinaciones = (int) Math.pow(2, numCapas);
 
-double sumavf = 0
-double sumavd = 0
-double sumavf2 = 0
-double sumavd2 = 0
-double z = 0
-'''''Call pintacontornobarraazul                                                                'para que funcione con la hoja protegida quité esta linea
+        double sumavf = 0;
+        double sumavd = 0;
+        double sumavf2 = 0;
+        double sumavd2 = 0;
+        double z = 0;
+//'''''Call pintacontornobarraazul                                                                'para que funcione con la hoja protegida quité esta linea
 
-for(int analisis =0;analisis <combinaciones;analisis++){
+        for (int analisis = 0; analisis < combinaciones; analisis++) {
 
-    for (int i = 0; i < numCapas; i++) {
-        this.cc.tablaRepeticiones[i].setE(i, this.ep[i].getModuloEntreMil());
-    }
-    
+            for (int i = 0; i < numCapas; i++) {
+                this.cc.tablaRepeticiones[i].setE(i, this.ep[i].getModuloEntreMil());
+            }
+
 //Sheets("Análisis Espectral").Cells(13, 6) = Sheets("larguillo").Cells(3 + analisis, 82)
 //Sheets("Análisis Espectral").Cells(14, 6) = Sheets("larguillo").Cells(3 + analisis, 83)
 //Sheets("Análisis Espectral").Cells(15, 6) = Sheets("larguillo").Cells(3 + analisis, 84)
 //Sheets("Análisis Espectral").Cells(16, 6) = Sheets("larguillo").Cells(3 + analisis, 85)
 //Sheets("Análisis Espectral").Cells(17, 6) = Sheets("larguillo").Cells(3 + analisis, 86)
 //Sheets("Análisis Espectral").Cells(18, 6) = Sheets("larguillo").Cells(3 + analisis, 87)
+            boolean soloParaAvanzar[] = new boolean[3];
+            for (int i = 0; i < 3; i++) {
+                soloParaAvanzar[i] = true;
+            }
+            this.IniciarAnalisisEspectral(this.tipoEje, soloParaAvanzar);
 
-IniciarAnalisisEspectral();
-vidaf = this.cc.vi[0].getDefTodos();//Sheets("larguillo").Cells(4, 74)  'fatiga
-vidad = Sheets("larguillo").Cells(4, 69)  'deformacion
+            double vidaf = this.cc.vi[0].getDefTodos();//Sheets("larguillo").Cells(4, 74)  'fatiga
+            double vidad = this.cc.vi[0].getDefTodos();// Sheets("larguillo").Cells(4, 69)  'deformacion
 
+            this.cc.tablaRepeticiones[analisis].setVf(vidaf);// = vidaf
+            this.cc.tablaRepeticiones[analisis].setVf2(Math.pow(vidaf, 2));//Sheets("larguillo").Cells(3 + analisis, 89) = vidaf ^ 2
+            this.cc.tablaRepeticiones[analisis].setVd(vidad);//Sheets("larguillo").Cells(3 + analisis, 90) = vidad
+            this.cc.tablaRepeticiones[analisis].setVd(Math.pow(vidad, 2));//Sheets("larguillo").Cells(3 + analisis, 91) = vidad ^ 2
 
-Sheets("larguillo").Cells(3 + analisis, 88) = vidaf
-Sheets("larguillo").Cells(3 + analisis, 89) = vidaf ^ 2
-Sheets("larguillo").Cells(3 + analisis, 90) = vidad
-Sheets("larguillo").Cells(3 + analisis, 91) = vidad ^ 2
+            sumavf = sumavf + vidaf;
+            sumavf2 = sumavf2 + Math.pow(vidaf, 2);
+            sumavd = sumavd + vidad;
+            sumavd2 = sumavd2 + Math.pow(vidad, 2);
 
-sumavf = sumavf + vidaf
-sumavf2 = sumavf2 + vidaf ^ 2
-sumavd = sumavd + vidad
-sumavd2 = sumavd2 + vidad ^ 2
+//int avan = 64 / combinaciones;
+//'pone la fuente de la celda de avance color blanco
+//'''''With Sheets("Análisis Probabilista").Cells(3, 13).Font                     'IDem
+//'''''    .ThemeColor = xlThemeColorDark1                                        'idem
+//'''''    .TintAndShade = 0                                                      'idem
+//'''''End With                                                                   'idem
+            //  Sheets("Análisis Probabilista").Cells(3, 13) = analisis / (combinaciones + 1)
+            //  Sheets("Análisis Probabilista").Cells(3, 12) = "Ejecutando análisis..."
+//'pinta de azul el avance
+//'''''For Y = 14 + ((analisis - 1) * avan) To 14 + (analisis * avan)
+//'''''With Sheets("Análisis probabilista").Cells(3, Y).Interior
+//'''''        .Pattern = xlSolid
+//'''''        .PatternColorIndex = xlAutomatic
+//'''''        .Color = 16360849
+//'''''        .TintAndShade = 0
+//'''''        .PatternTintAndShade = 0
+//'''''End With
+//'''''Next Y
+        }
 
-avan = 64 / combinaciones
+        double Evf = sumavf / combinaciones;
+        double Ev2f = sumavf2 / combinaciones;
+        double Evd = sumavd / combinaciones;
+        double Ev2d = sumavd2 / combinaciones;
 
-'pone la fuente de la celda de avance color blanco
-'''''With Sheets("Análisis Probabilista").Cells(3, 13).Font                     'IDem
-'''''    .ThemeColor = xlThemeColorDark1                                        'idem
-'''''    .TintAndShade = 0                                                      'idem
-'''''End With                                                                   'idem
-    
-    Sheets("Análisis Probabilista").Cells(3, 13) = analisis / (combinaciones + 1)
-    Sheets("Análisis Probabilista").Cells(3, 12) = "Ejecutando análisis..."
-'pinta de azul el avance
-'''''For Y = 14 + ((analisis - 1) * avan) To 14 + (analisis * avan)
-'''''With Sheets("Análisis probabilista").Cells(3, Y).Interior
-'''''        .Pattern = xlSolid
-'''''        .PatternColorIndex = xlAutomatic
-'''''        .Color = 16360849
-'''''        .TintAndShade = 0
-'''''        .PatternTintAndShade = 0
-'''''End With
-'''''Next Y
-}
+        double Vvf = Ev2f - Math.pow(Evf, 2);
+        double Vvd = Ev2d - Math.pow(Evd, 2);
 
+        double PConfiabilidad = 0;
+        var ValorConfiabilidad = this.getPorcentajeConfiabilidad();//Worksheets("Análisis Probabilista").ComboBoxConfiabilidad.Text
 
+        switch (ValorConfiabilidad) {
 
-Evf = sumavf / combinaciones
-Ev2f = sumavf2 / combinaciones
-Evd = sumavd / combinaciones
-Ev2d = sumavd2 / combinaciones
+            case "55%":
+                PConfiabilidad = 55;
+                z = -0.125661;
+                break;
+            case "60%":
+                PConfiabilidad = 60;
+                z = -0.253347;
+                break;
+            case "65%":
+                PConfiabilidad = 65;
+                z = -0.38532;
+                break;
+            case "70%":
+                PConfiabilidad = 70;
+                z = -0.524401;
+                break;
+            case "75%":
+                PConfiabilidad = 75;
+                z = -0.67449;
+                break;
+            case "80%":
+                PConfiabilidad = 80;
+                z = -0.841621;
+                break;
+            case "85%":
+                PConfiabilidad = 85;
+                z = -1.036433;
+                break;
+            case "90%":
+                PConfiabilidad = 90;
+                z = -1.281552;
+                break;
+            case "95%":
+                PConfiabilidad = 95;
+                z = -1.644854;
+                break;
+        }
 
-Vvf = Ev2f - Evf ^ 2
-Vvd = Ev2d - Evd ^ 2
+        double Confiabilidad = PConfiabilidad / 100;
 
-ValorConfiabilidad = Worksheets("Análisis Probabilista").ComboBoxConfiabilidad.Text
+        double X = 1 - Confiabilidad;
 
-Select Case ValorConfiabilidad
+        //'z = Application.WorksheetFunction.NormSInv(X)
+        double Rf = Evf + z * Math.pow(Vvf, 0.5);
+        double Rd = Evd + z * Math.pow(Vvd, 0.5);
 
-Case Is = "55%"
-    PConfiabilidad = 55
-    z = -0.125661
-Case Is = "60%"
-    PConfiabilidad = 60
-    z = -0.253347
-Case Is = "65%"
-    PConfiabilidad = 65
-    z = -0.38532
-Case Is = "70%"
-    PConfiabilidad = 70
-    z = -0.524401
-Case Is = "75%"
-    PConfiabilidad = 75
-    z = -0.67449
-Case Is = "80%"
-    PConfiabilidad = 80
-    z = -0.841621
-Case Is = "85%"
-    PConfiabilidad = 85
-    z = -1.036433
-Case Is = "90%"
-    PConfiabilidad = 90
-    z = -1.281552
-Case Is = "95%"
-    PConfiabilidad = 95
-    z = -1.644854
-End Select
+        
+        if (Rf > TransitoEstatico.añosProyecto) {
+           this.vidaFatiga=0; // caso 0 ("Análisis Probabilista").Cells(15, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
+        } else if (Rf < 1) {
+            this.vidaFatiga = 0.001;//caso 0.001("Análisis Probabilista").Cells(15, 12) = " < 1"
+        } else {
+            this.vidaFatiga = Rf;
+        }
 
-
-Confiabilidad = PConfiabilidad / 100
-
-X = 1 - Confiabilidad
-'z = Application.WorksheetFunction.NormSInv(X)
-Rf = Evf + z * (Vvf) ^ 0.5
-Rd = Evd + z * (Vvd) ^ 0.5
-
-
-If Rf > CDbl(Sheets("Tránsito").años1.Text) Then
-Sheets("Análisis Probabilista").Cells(15, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
-Else
-  If Rf < 1 Then
-    Sheets("Análisis Probabilista").Cells(15, 12) = " < 1"
-    Else
-    Sheets("Análisis Probabilista").Cells(15, 12) = Rf
-  End If
-End If
-
-If Rd > CDbl(Sheets("Tránsito").años1.Text) Then
-Sheets("Análisis Probabilista").Cells(16, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
-Else
-If Rd < 1 Then
-  Sheets("Análisis Probabilista").Cells(16, 12) = " < 1"
-    Else
-    Sheets("Análisis Probabilista").Cells(16, 12) = Rd
-  End If
-End If
-
-
+        
+        if (Rd> TransitoEstatico.añosProyecto) {
+           this.vidaDeformacion = 0; //caso 0("Análisis Probabilista").Cells(16, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
+        } else if (Rf < 1) {
+            this.vidaDeformacion = 0.001;
+            //("Análisis Probabilista").Cells(16, 12) = " < 1"
+        } else {
+            this.vidaDeformacion = Rd;
+        }
 
     }
 
