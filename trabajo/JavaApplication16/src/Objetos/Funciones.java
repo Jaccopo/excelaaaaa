@@ -293,7 +293,7 @@ public class Funciones extends Datos {
         double interfaz[] = new double[2];//escribir un código donde si existen más interfaces, la ultima interfaz la ponga en interfaz 2
 
         interfaz[0] = this.cal.getCapaCalculo(0).getEspesorParcialEquivalente();
-        interfaz[numCapas - 1] = this.cal.getCapaCalculo(1).getEspesorParcialEquivalente();
+        interfaz[1] = this.cal.getCapaCalculo(1).getEspesorParcialEquivalente();
 
         r_Llanta[0] = Math.pow((Math.pow(X, 2) + Math.pow(Y, 2)), 0.5);
         r_Llanta[1] = Math.pow((Math.pow(X, 2) + Math.pow((Y - S), 2)), 0.5);
@@ -303,8 +303,8 @@ public class Funciones extends Datos {
         r_Llanta[5] = Math.pow((Math.pow((X - 2 * D), 2) + Math.pow((Y - S), 2)), 0.5);
 
         for (int i = 0; i < 6; i++) {
-            r_Llanta_capa[i] = Math.pow((Math.pow(r_Llanta[i], 2) + Math.pow(interfaz[i], 2)), 0.5);
-            r_Llanta_TNatur[i] = Math.pow((Math.pow(r_Llanta[i], 2) + Math.pow(interfaz[2], 2)), 0.5);
+            r_Llanta_capa[i] = Math.pow((Math.pow(r_Llanta[i], 2) + Math.pow(interfaz[0], 2)), 0.5);
+            r_Llanta_TNatur[i] = Math.pow((Math.pow(r_Llanta[i], 2) + Math.pow(interfaz[1], 2)), 0.5);
         }
 
         if (X == 0) {
@@ -578,12 +578,12 @@ public class Funciones extends Datos {
             }
         }
 
-        for (i = 0; i < numCapas; i++) {//For i = 1 To NumCapas - 1
+        for (i = 0; i < numCapas-1; i++) {//For i = 1 To NumCapas - 1
             if (i == 0) {
-                he[i] = fCorreccion[i] * (espesor[i] + he[0]) * Math.pow((modElastico[i] / modElastico[i + 1]), (1 / 3));
+                he[i] = fCorreccion[i] * (espesor[i] + he[0]) * Math.pow((modElastico[i] / modElastico[i + 1==numCapas?i:i+1]), (1 / 3));
             }
 
-            he[i] = fCorreccion[i] * (espesor[i] + he[i - 1]) * Math.pow((modElastico[i] / modElastico[i + 1]), (1 / 3));
+            he[i] = fCorreccion[i] * (espesor[i] + he[i==0?0:i-1]) * Math.pow((modElastico[i] / modElastico[i + 1==numCapas?i:i+1]), (1 / 3));
         }
         //Sheets("calculos").Cells(48 + i, 3) = he(i) ' sirve para anotar los espesores equivalentes de las interfaces
 
@@ -756,7 +756,7 @@ public class Funciones extends Datos {
 
                 n[1][i] = (Math.pow(A[i], 2) * C[1][i]) / (1 + Math.pow(A[i], 2) + Math.pow(C[1][i], 2));
 
-                parcial = Teta[2][i] - Teta[1][i] - Math.atan(B[2][i]) + Math.atan(B[1][i]) + (B[2][i] - B[1][i]) / (Math.pow(A[i], 2) + 1);
+                parcial = Teta[1][i] - Teta[1][i] - Math.atan(B[1][i]) + Math.atan(B[0][i]) + (B[1][i] - B[0][i]) / (Math.pow(A[i], 2) + 1);
 
                 suma = suma + parcial;
 
@@ -1674,6 +1674,7 @@ public class Funciones extends Datos {
 
         E_VERTICAL_PTODOS_MA();
 
+        
         for (int numCapa = 0; numCapa < numCapas - 1; numCapa++) {
             esfuerzos_Damy(numCapa);
         }

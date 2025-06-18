@@ -39,7 +39,7 @@ public class CAnalisis {
    }
 
     public void setPresion(double valor) {
-        funciones.setPoisson(valor);
+        funciones.setPresion(valor);
     }
 
     public double getPresion() {
