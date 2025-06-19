@@ -25,21 +25,21 @@ public class CargarClases {
     public CargarClases(){
     
      for (int j = 0; j < 100; j++) {
-            data[j] = new LarguilloNormal((Archivos.getArchivo("archivos/larguillo.uwu"))[j].split("\t"));
-            simpleRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-simple.uwu"))[j].split("\t"));
-            dualRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-dual.uwu"))[j].split("\t"));
-            tandemRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguilllo-Respuesta-eje-TANDEM.uwu"))[j].split("\t"));
-            tridemRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-TRIDEM.uwu"))[j].split("\t"));
-            nre[j] = new NumRepeEje((Archivos.getArchivo("archivos/larguillo-numero-repeticiones-eje.uwu"))[j].split("\t"));
-            ere[j] =new EspecRepEspe((Archivos.getArchivo("archivos/larguillo-numero-repeticiones-eje.uwu"))[j].split("\t"));
-            ed[j] = new EspectroDano((Archivos.getArchivo("archivos/larguillo-espectro-daño.uwu"))[j].split("\t"));        
-            et[j] = new EspectroTotal((Archivos.getArchivo("archivos/larguillo-espectro-daño-total.uwu"))[j].split("\t"));
-            eda[j] =new EspectroDanoAcomulado((Archivos.getArchivo("archivos/larguillo-espectro-daño-acomulado.uwu"))[j].split("\t"));
+            data[j] = new LarguilloNormal((Archivos.getArchivo("archivos/larguillo.tbl"))[j].split("\t"));
+            simpleRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-simple.tbl"))[j].split("\t"));
+            dualRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-dual.tbl"))[j].split("\t"));
+            tandemRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguilllo-Respuesta-eje-TANDEM.tbl"))[j].split("\t"));
+            tridemRespuesta[j] = new Respustaseje((Archivos.getArchivo("archivos/larguillo-Respuesta-eje-TRIDEM.tbl"))[j].split("\t"));
+            nre[j] = new NumRepeEje((Archivos.getArchivo("archivos/larguillo-numero-repeticiones-eje.tbl"))[j].split("\t"));
+            ere[j] =new EspecRepEspe((Archivos.getArchivo("archivos/larguillo-numero-repeticiones-eje.tbl"))[j].split("\t"));
+            ed[j] = new EspectroDano((Archivos.getArchivo("archivos/larguillo-espectro-daño.tbl"))[j].split("\t"));        
+            et[j] = new EspectroTotal((Archivos.getArchivo("archivos/larguillo-espectro-daño-total.tbl"))[j].split("\t"));
+            eda[j] =new EspectroDanoAcomulado((Archivos.getArchivo("archivos/larguillo-espectro-daño-acomulado.tbl"))[j].split("\t"));
             //System.out.println(data[j].toString());
             //System.out.println(j);
         }
         for (int i = 0; i < 3; i++) {
-            vi[i] = new VidaUtil((Archivos.getArchivo("archivos/larguillo-vida-util.uwu"))[i].split("\t"));
+            vi[i] = new VidaUtil((Archivos.getArchivo("archivos/larguillo-vida-util.tbl"))[i].split("\t"));
         }
         for (int i = 0; i < 10; i++) {
             tablaRepeticiones[i] = new TablaRepeticiones();
