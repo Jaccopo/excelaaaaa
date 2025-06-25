@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.Vector;
+
 /**
  *
  * @author aldoj
@@ -14,6 +16,12 @@ public class EspectroTotal {
     public EspectroTotal(String[] datos) {
         this.defTotal = Float.parseFloat(datos[0]);
         this.fatTodos = Float.parseFloat(datos[1]);
+    }
+    public Vector getVector(){
+        var fila = new Vector();
+        fila.add(this.defTotal);
+        fila.add(this.fatTodos);
+        return fila;
     }
 
     public float getDefTotal() {

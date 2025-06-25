@@ -11,7 +11,7 @@ public class FactorEVertical {
         return values[fila][columna];
     }
     
-    private static void iniciarFactor() {
+    public static void iniciarFactor() {
         String rows[] = datos.split("\n");
         values = new float[rows.length][rows[0].split("\t").length];
 

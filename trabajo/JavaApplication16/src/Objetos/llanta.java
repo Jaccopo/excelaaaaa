@@ -10,6 +10,15 @@ public class Llanta {
     private double res1, res2;
     private double orNeumatico1, orNeumatico2, otNeumatico1, otNeumatico2;
     double valorCapa;
+    double numcapa;
+
+    public double getNumcapa() {
+        return numcapa;
+    }
+
+    public void setNumcapa(double numcapa) {
+        this.numcapa = numcapa;
+    }
 
     
     public Llanta() {

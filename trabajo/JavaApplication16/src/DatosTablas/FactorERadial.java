@@ -12,7 +12,7 @@ public class FactorERadial {
         return values[fila][columna];
     }
     
-    private static void iniciarFactorRadial() {
+    public static void iniciarFactorRadial() {
         String rows[] = datos.split("\n");
         values = new float[rows.length][rows[0].split("\t").length];
 

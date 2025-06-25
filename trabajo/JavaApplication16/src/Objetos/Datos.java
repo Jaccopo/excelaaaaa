@@ -11,9 +11,9 @@ public class Datos {
     //Datos de nuevo formato pav
     public double pesoEje;
     public String tipoEje;
-    public double presion;
+    public double presion=90;
     public int numCapas;
-    public double poisson;
+    public double poisson = .35;
     
     public EstructuraPavimiento ep[];
     public double X = 0;
@@ -29,7 +29,7 @@ public class Datos {
     public CargarClases cc;
     public boolean activos[];
     
-    public boolean damy;
+    public boolean damy = false;
     
     public String porcentajeConfiabilidad;
     

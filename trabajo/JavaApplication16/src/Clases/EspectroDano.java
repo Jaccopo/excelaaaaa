@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.Vector;
+
 /**
  *
  * @author aldoj
@@ -23,6 +25,18 @@ public class EspectroDano {
         this.TANDEMFat = Float.parseFloat(datos[5]);
         this.TRIDEMEDef = Float.parseFloat(datos[6]);
         this.TRIDEMFat = Float.parseFloat(datos[7]);
+    }
+    public Vector getVector(){
+        var fila = new Vector();
+        fila.add(this.simpleDef);
+        fila.add(this.simpleFat);
+        fila.add(this.dualDef);
+        fila.add(this.dualFat);
+        fila.add(this.TANDEMDef);
+        fila.add(this.TANDEMFat);
+        fila.add(this.TRIDEMEDef);
+        fila.add(this.TRIDEMFat);
+        return fila;
     }
 
     public float sumaDeformacion(){

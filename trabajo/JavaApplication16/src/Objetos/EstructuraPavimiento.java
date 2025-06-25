@@ -67,7 +67,7 @@ public class EstructuraPavimiento {
     }
 
     public void setModulo(double modulo) {
-        this.modulo = modulo*1000;
+        this.modulo = modulo;
     }
 
 }

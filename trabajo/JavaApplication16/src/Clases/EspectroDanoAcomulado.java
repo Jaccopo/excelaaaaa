@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.Vector;
+
 /**
  *
  * @author aldoj
@@ -25,6 +27,21 @@ public class EspectroDanoAcomulado {
         this.fatTrideem = Float.parseFloat(datos[8]);
         this.fatTODOS = Float.parseFloat(datos[9]);
         
+        
+    }
+     public Vector getVector(){
+        var fila = new Vector();
+        fila.add(this.defSimple);
+        fila.add(this.defDual);
+        fila.add(this.defTANDEM);
+        fila.add(this.defTRIDEM);
+        fila.add(this.defTodos);
+        fila.add(this.fatSimple);
+        fila.add(this.fatDual);
+        fila.add(this.fatTANDEM);
+        fila.add(this.fatTrideem);
+        fila.add(this.fatTODOS);
+        return fila;
     }
     public void sumaFatiga(){
         this.fatTODOS= this.fatSimple+this.fatDual+this.fatTANDEM+this.fatTrideem;
