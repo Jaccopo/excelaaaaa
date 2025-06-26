@@ -1,6 +1,7 @@
 package Objetos;
 
-public class Llanta {
+public class Llanta
+{
 
     private double anguloHorizontal;
     private double distanciaHorizontal;
@@ -40,13 +41,13 @@ public class Llanta {
     }
 
 
-    public Llanta(double ra, double factorEVertical,double factorERadial,
-                    double factorETangencial,double res1,double res2,
-                    double anguloHorizontal, double distanciaHorizontal, 
-                    double distanciaRadialCarpeta, 
-                    double distanciaRadialSubrasante,
-                    double orNeumatico1,double orNeumatico2,double otNeumatico1,
-                    double otNeumatico2,double valorCapa) {
+    public Llanta(double ra, double factorEVertical, double factorERadial,
+                  double factorETangencial, double res1, double res2,
+                  double anguloHorizontal, double distanciaHorizontal,
+                  double distanciaRadialCarpeta,
+                  double distanciaRadialSubrasante,
+                  double orNeumatico1, double orNeumatico2, double otNeumatico1,
+                  double otNeumatico2, double valorCapa) {
         
         this.anguloHorizontal = anguloHorizontal;
         this.distanciaHorizontal = distanciaHorizontal;

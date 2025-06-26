@@ -29,31 +29,38 @@ public class Funciones extends Datos {
             JOptionPane.showMessageDialog(null, "Solo se puede calcular tres capas", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             switch (tipoCarga) {
-                case "Legal" -> {
+                case ("Legal"):
                     tdc = new TablaDistribucionDeCarga(1);
-                }
-                case "Ligera Sobre Carga" -> {
+                    break;
+
+                case ("Ligera Sobre Carga"):
 
                     tdc = new TablaDistribucionDeCarga(2);
-                }
-                case "Alta Sobrecarga" -> {
+                    break;
+
+                case ("Alta Sobrecarga"):
 
                     tdc = new TablaDistribucionDeCarga(3);
-                }
-                case "Muy Alta Sobrecarga" -> {
+                    break;
+
+                case ("Muy Alta Sobrecarga"):
 
                     tdc = new TablaDistribucionDeCarga(4);
-                }
-                case "Avanzado" -> {
+                    break;
+
+                case ("Avanzado"):
                     tdc = new TablaDistribucionDeCarga(5);
-                }
+                break;
             }
+
             espectros();
-            for (int j = 2; j < 4; j++) {
+            for (int j = 0; j < 4; j++) {
+                this.cal = new Calculos(); // revisar que esto sea el detonante del problema
+
                 this.setTipoEje(j == 0 ? "Sencillo" : j == 1 ? "Sencillo Dual" : j == 2 ? "Tandem" : "Tridem");
+
                 for (int i = 0; i < 100; i++) {
                     this.pesoEje = this.cc.data[i].getCargaPromedio();
-                    System.out.println(this.getTipoEje());
                     calculoDiferencial(i, j);
                     switch (j) {
                         case 0:
@@ -137,19 +144,23 @@ public class Funciones extends Datos {
                 cc.data[i - 1].setCargaPromedio((float) valor);
 
                 switch (j + 1) {
-                    case 1 -> {
+                    case 1 :
                         cc.data[i - 1].setSimple((float) altura * 100);
-                    }
-                    case 2 -> {
+                        break;
+
+                        case 2  :
                         cc.data[i - 1].setDual((float) altura * 100);
-                    }
-                    case 3 -> {
+                        break;
+
+                        case 3  :
                         cc.data[i - 1].setTandem((float) altura * 100 );
-                    }
-                    case 4 -> {
+                        break;
+
+                        case 4 :
                         cc.data[i - 1].setTridem((float) altura * 100 );
+                        break;
+
                     }
-                }
             }
 
         }
@@ -551,21 +562,26 @@ public class Funciones extends Datos {
         dz = new double[numCapas];
 
         switch (tipoEje) {
-            case ("Sencillo") -> {
+            case ("Sencillo") :
                 numLlantas = 1;
-            }
-            case ("Sencillo Dual") -> {
+                break;
+
+            case ("Sencillo Dual") :
                 numLlantas = 2;
-            }
-            case ("Tandem") -> {
+                break;
+
+            case ("Tandem"):
                 numLlantas = 4;
-            }
-            case ("Tridem") -> {
+                break;
+
+            case ("Tridem"):
                 numLlantas = 6;
-            }
-            case ("Medio Tridem") -> {
+                break;
+
+            case ("Medio Tridem") :
                 numLlantas = 3;
-            }
+                break;
+
         }
 
         pesoNeum = pesoEje / (2 * numLlantas);

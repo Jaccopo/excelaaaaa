@@ -573,7 +573,7 @@ public class VentanaFinal extends javax.swing.JFrame {
                     vl.addFila(this.cc.data[i].getVector());
                 }
                 break;
-            case 1, 2, 3, 4:
+            case 1: case 2:  case 3: case 4:
                 vl.setDatos(this.cc.columnasRespuestasEje);
                 for (int i = 0; i < 100; i++) {
                     

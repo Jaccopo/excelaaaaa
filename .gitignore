@@ -8,3 +8,5 @@ trabajo/codigo/.vs/codigo/FileContentIndex/992b7d00-220d-41ff-8cf1-95af5f1865c8.
 *.vsidx
 trabajo/codigo/.vs/codigo/FileContentIndex/413db897-84fd-43ed-98cf-50df8f25d671.vsidx
 trabajo/codigo/.vs/codigo/FileContentIndex/cdd06c14-1811-4df3-b801-e90ceba4959e.vsidx
+*.xml
+*.iml

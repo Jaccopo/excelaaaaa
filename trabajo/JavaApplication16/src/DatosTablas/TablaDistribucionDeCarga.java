@@ -75,21 +75,21 @@ public final class TablaDistribucionDeCarga {
         String filas[] = null;
 
         switch (tipo) {
-            case 1 -> {
+            case 1 :
                 filas = dataBaja.split(" ");
-            }
-            case 2 -> {
+                break;
+        case 2:
                 filas = dataLegal.split(" ");
-            }
-            case 3 -> {
+        break;
+            case 3 :
                 filas = dataSobreCarga.split(" ");
-            }
-            case 4 -> {
+           break;
+            case 4 :
                 filas = dataAltaSobreCarga.split(" ");
-            }
-            case 5 -> {
+         break;
+            case 5 :
                 filas = dataPersolanizado.split(" ");
-            }
+           break;
         };
 
         for (int i = 0; i < 4; i++) {
