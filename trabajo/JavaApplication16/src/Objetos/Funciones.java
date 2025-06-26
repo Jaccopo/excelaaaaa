@@ -3,6 +3,7 @@ package Objetos;
 import Clases.TransitoEstatico;
 import Objetos.Datos;
 import DatosTablas.TablaDistribucionDeCarga;
+import controladores.CTransito;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
 import vista.Dialogos.Cargando;
@@ -11,15 +12,19 @@ public class Funciones extends Datos {
 
     private TablaDistribucionDeCarga tdc;
     private Cargando car;
+    private CTransito ct;
 
     public Funciones() {
         super();
     }
+    
+    public void setCTransito(CTransito ct){
+        this.ct = ct;
+    }
 
-    public void IniciarAnalisisEspectral(String tipoCarga, boolean activos[]) {
+    public void IniciarAnalisisEspectral(String tipoCarga) {
 
         this.tipoCarga = tipoCarga;
-        this.activos = activos;
         if (numCapas > 3) {
             JOptionPane.showMessageDialog(null, "Solo se puede calcular tres capas", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -44,7 +49,7 @@ public class Funciones extends Datos {
                 }
             }
             espectros();
-            for (int j = 0; j < 4; j++) {
+            for (int j = 2; j < 4; j++) {
                 this.setTipoEje(j == 0 ? "Sencillo" : j == 1 ? "Sencillo Dual" : j == 2 ? "Tandem" : "Tridem");
                 for (int i = 0; i < 100; i++) {
                     this.pesoEje = this.cc.data[i].getCargaPromedio();
@@ -133,16 +138,16 @@ public class Funciones extends Datos {
 
                 switch (j + 1) {
                     case 1 -> {
-                        cc.data[i - 1].setSimple((float) altura * 100 < 0.005 ? 0 : (float) altura * 100);
+                        cc.data[i - 1].setSimple((float) altura * 100);
                     }
                     case 2 -> {
-                        cc.data[i - 1].setDual((float) altura * 100 < 0.005 ? 0 : (float) altura * 100);
+                        cc.data[i - 1].setDual((float) altura * 100);
                     }
                     case 3 -> {
-                        cc.data[i - 1].setTandem((float) altura * 100 < 0.005 ? 0 : (float) altura * 100);
+                        cc.data[i - 1].setTandem((float) altura * 100 );
                     }
                     case 4 -> {
-                        cc.data[i - 1].setTridem((float) altura * 100 < 0.005 ? 0 : (float) altura * 100);
+                        cc.data[i - 1].setTridem((float) altura * 100 );
                     }
                 }
             }
@@ -151,7 +156,7 @@ public class Funciones extends Datos {
 
     }
 
-    /*Lista Ver funciones que faltan*/
+    /*Lista comprobada*/
     private void calculoDiferencial(int index, int tipo) {
 
         double radioContacto, pesoNeum;
@@ -195,9 +200,6 @@ public class Funciones extends Datos {
             }
         }
 
-        if (numCapas == 2) {
-            this.cal.getCapaCalculo(1).setEspesorParcialEquivalente(this.cal.getCapaCalculo(0).getEspesorParcialEquivalente());
-        }
 
         this.cal.getCapaCalculo(0).setModuloElastico(modElsatico[1]);
         this.cal.getCapaCalculo(1).setModuloElastico(this.ep[numCapas - 1].getModulo());
@@ -358,7 +360,7 @@ public class Funciones extends Datos {
 
     }
 
-    /*Lista revisar cuando es desbordamiento*/
+    /*Lista funcionando*/
     public void factores_Ahlvin() {
         int buscax = 0, buscay = 0, posx1 = 0, posx2 = 0, posy1 = 0, posy2 = 0;
         double r_sobre_a, z_sobre_a, X1, Y1;
@@ -385,7 +387,7 @@ public class Funciones extends Datos {
         x_inter[13] = 7;
         x_inter[14] = 8;
         x_inter[15] = 10;
-        x_inter[16] = 1;
+        x_inter[16] = 12;
         x_inter[17] = 14;
 
         y_inter[0] = 0;
@@ -431,21 +433,25 @@ public class Funciones extends Datos {
             X1 = r_sobre_a;
             Y1 = z_sobre_a;
 
-            for (buscax = 0; buscax < 17; buscax++) {
+            buscax=0;
+            do {
                 if (X1 >= x_inter[buscax] && X1 < x_inter[buscax + 1]) {
                     posx1 = buscax;
                     posx2 = buscax + 1;
                     break;
                 }
-            }
-
-            for (buscay = 0; buscay < 21; buscay++) {
+                buscax=buscax+1;
+            } while (buscax < 18);
+            
+            buscay = 0;
+            do {
                 if (Y1 >= y_inter[buscay] && Y1 < y_inter[buscay + 1]) {
                     posy1 = buscay;
                     posy2 = buscay + 1;
                     break;
                 }
-            }
+                buscay=buscay+1;
+            } while (buscay < 23);
 
             //'interpolación para la primera tabla
             valorA = y_inter[buscay];
@@ -520,12 +526,12 @@ public class Funciones extends Datos {
 
     }
 
-    /* Lista*/
+    /* Lista funcionando*/
     private double interpola(double a, double b, double c, double i, double k) {
         return (((k - i) * (b - a)) / (c - a)) + i;
     }
 
-    /*Lista comprobada*/
+    /*Lista funcionando*/
     private void deflexionCircular() {
         double pesoNeum, radioContacto, A, PsiAMpa, deflexionTotal;
         int numLlantas = 1, i;
@@ -624,10 +630,10 @@ public class Funciones extends Datos {
             }
             deflexionTotal = deflexionTotal + dz[i];
         }
-        this.cal.getCapaCalculo(0).setDeflexionTotal(deflexionTotal);   //Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
+        this.cal.getCapaCalculo(0).setDeflexionTotal(deflexionTotal*10);   //Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
     }
 
-    /*Lista 1 comprobada*/
+    /*Lista comprobada*/
     private void esfuerzosEjeSencillo() {
         double EvZ, Er1, Et1;
         double he[] = new double[numCapas];
@@ -638,24 +644,25 @@ public class Funciones extends Datos {
             he[i] = this.cal.getCapaCalculo(i).getEspesorParcialEquivalente();
             esfuerzos_Damy(i);
             EvZ = 6.894757 * (presion * (1 - ((Math.pow(he[i], 3)) / Math.pow((Math.pow(radioContacto, 2) + Math.pow(he[i], 2)), 1.5))));
-            
-            var r2 = Math.pow(Math.pow(radioContacto, 2) + Math.pow(he[i], 2),0.5);
-            var r3 = Math.pow(Math.pow(radioContacto, 2) + Math.pow(he[i], 2),1.5);
-            var r1 = Math.pow(he[i],3);
-            
+
+            var r2 = Math.pow(Math.pow(radioContacto, 2) + Math.pow(he[i], 2), 0.5);
+            var r3 = Math.pow(Math.pow(radioContacto, 2) + Math.pow(he[i], 2), 1.5);
+            var r1 = Math.pow(he[i], 3);
+
             Er1 = 6.894757 * (presion / 2) * (1 + (2 * poisson) - ((2 * he[i] * (1 + poisson)) / r2) + (r1 / r3));
-   
-             Et1 = Er1;
+
+            Et1 = Er1;
             this.cal.getCapaCalculo(i).setEsfuerzoVerticalO(EvZ);//Sheets("calculos").Cells(2 + i, 10) = EvZ
             this.cal.getCapaCalculo(i).setEsfuerzoTangencialO(Er1);//Sheets("calculos").Cells(2 + i, 11) = Er1
             this.cal.getCapaCalculo(i).setEsfuerzoRadialO(Et1);//Sheets("calculos").Cells(2 + i, 12) = Et1
+
             if (i == 0) {
-                this.llantas.getLlanta(i).setOrNeumatico1(Er1);
-                this.llantas.getLlanta(i).setOtNeumatico1(Er1);
+                this.llantas.getLlanta(0).setOrNeumatico1(Er1);
+                this.llantas.getLlanta(0).setOtNeumatico1(Et1);
             }
             if (i == 1) {
-                this.llantas.getLlanta(i).setOrNeumatico2(Er1);
-                this.llantas.getLlanta(i).setOtNeumatico2(Er1);
+                this.llantas.getLlanta(0).setOrNeumatico2(Er1);
+                this.llantas.getLlanta(0).setOtNeumatico2(Et1);
             }
         }
 
@@ -756,9 +763,9 @@ public class Funciones extends Datos {
                 W[0][i] = (1 * A[i] * C[0][i]) / (Math.pow((1 + (Math.pow(A[i], 2) + Math.pow(C[0][i], 2))), (1.0 / 2.0)));
                 W[1][i] = (2 * A[i] * C[1][i]) / (Math.pow((1 + (Math.pow(A[i], 2) + Math.pow(C[1][i], 2))), (1.0 / 2.0)));
 
-                j[0][i] = C[0][i] / (Math.pow(1+Math.pow( A[i], 2), (1.0 / 2.0)));
+                j[0][i] = C[0][i] / (Math.pow(1 + Math.pow(A[i], 2), (1.0 / 2.0)));
 
-                j[1][i] = C[1][i] / (Math.pow(1+Math.pow(A[i], 2), (1.0 / 2.0)));
+                j[1][i] = C[1][i] / (Math.pow(1 + Math.pow(A[i], 2), (1.0 / 2.0)));
 
                 n[0][i] = (Math.pow(A[i], 2) * C[0][i]) / (1 + Math.pow(A[i], 2) + Math.pow(C[0][i], 2));
 
@@ -777,23 +784,22 @@ public class Funciones extends Datos {
         this.cal.getCapaCalculo(numCapa).setAux1(sumaporllanta);//Sheets("calculos").Cells(5 + NumCapa, 10) = sumaporllanta     
     }
 
-    /*Lista*/
+    /*Lista comprobada*/
     private void repeticionesAdmisibles() {
 
         int i, eje, NumMarcasClase;
         double f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0;
-        double Nd = 0, Nf = 0;
+        float Nd = 0, Nf = 0;
         double DefZ[] = new double[4];
         double DefT[] = new double[4];
         String TipoModeloFatiga;
         String TipoModeloDeformacion;
         double Elastico;
 
-        // Funcion de limpiar -> //Worksheets("Larguillo").Range("AB4:AI103").ClearContents
         TipoModeloFatiga = "IMT";
         TipoModeloDeformacion = "IMT";
 
-        Elastico = this.ep[0].getModulo();
+        Elastico = this.ep[0].getModuloEntreMil();
 
         switch (TipoModeloFatiga) {
             case "IMT":
@@ -806,17 +812,14 @@ public class Funciones extends Datos {
         espectros();
 
         NumMarcasClase = 100; // ya sabemos que es 100 el numero por larguillo y como lo manejan en el codigo anterior
-        /*While Len(Sheets("Larguillo").Cells(i, 1)) > 0
-            NumMarcasClase = NumMarcasClase + 1
-            i = i + 1
-        Wend*/
 
         //se hara por cada uno de los eje
         eje = 0;
         for (i = 0; i < NumMarcasClase; i++) {
             DefZ[eje] = this.cc.simpleRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
             DefT[eje] = this.cc.simpleRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-            Nd = f4 * (Math.pow(DefZ[eje], (-f5)));
+            Nf =(float) (f1 * Math.pow(Math.abs(DefT[eje]),-f2));
+            Nd =(float) (f4 * Math.pow(DefZ[eje],-f5));
 
             this.cc.nre[i].setSimDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
             this.cc.nre[i].setSimFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
@@ -827,61 +830,69 @@ public class Funciones extends Datos {
         for (i = 0; i < NumMarcasClase; i++) {
             DefZ[eje] = this.cc.dualRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
             DefT[eje] = this.cc.dualRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-            Nd = f4 * (Math.pow(DefZ[eje], (-f5)));
+            Nf =(float) (f1 * Math.pow(Math.abs(DefT[eje]),-f2));
+            Nd =(float) (f4 * Math.pow(DefZ[eje],-f5));
 
             this.cc.nre[i].setDualDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
             this.cc.nre[i].setDualFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
+        }
+        
+        eje++; //tandem
+        for (i = 0; i < NumMarcasClase; i++) {
+            DefZ[eje] = this.cc.tandemRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
+            DefT[eje] = this.cc.tandemRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
+           Nf =(float) (f1 * Math.pow(Math.abs(DefT[eje]),-f2));
+            Nd =(float) (f4 * Math.pow(DefZ[eje],-f5));
+
+            this.cc.nre[i].setTANDEMDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
+            this.cc.nre[i].setTANDEMFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
         }
         eje++; //tridem
         for (i = 0; i < NumMarcasClase; i++) {
             DefZ[eje] = this.cc.tridemRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
             DefT[eje] = this.cc.tridemRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-            Nd = f4 * (Math.pow(DefZ[eje], (-f5)));
+            Nf =(float) (f1 * Math.pow(Math.abs(DefT[eje]),-f2));
+            Nd =(float) (f4 * Math.pow(DefZ[eje],-f5));
 
             this.cc.nre[i].setTRIDEMDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
             this.cc.nre[i].setTRIDEMFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
         }
-        eje++; //tandem
-        for (i = 0; i < NumMarcasClase; i++) {
-            DefZ[eje] = this.cc.tandemRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
-            DefT[eje] = this.cc.tandemRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-            Nd = f4 * (Math.pow(DefZ[eje], (-f5)));
-
-            this.cc.nre[i].setTANDEMDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
-            this.cc.nre[i].setTANDEMFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
-        }
 
     }
 
-    /*Lista*/
+    /*Listacomporbada*/
     private void repeticionesEsperadas() {
 
         int i, eje = 0;
         double NumEjes[] = new double[4];
         double RepEsperadas[] = new double[4];
 
-        NumEjes[eje] = TransitoEstatico.sencilloPorcentajeRepresentivo; //Sheets("Tránsito").Cells(19 + eje, 7)
+        NumEjes[eje] =ct.getNumEjes_Sencillos_año();
+        System.out.println(NumEjes[eje]);
         for (i = 0; i < 100; i++) {
-            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 2 + eje)
-            this.cc.ere[i].setSimple((float) RepEsperadas[eje]);//Sheets("Larguillo").Cells(3 + i, 36 + eje) = RepEsperadas(eje)
+            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();
+            this.cc.ere[i].setSimple((float) RepEsperadas[eje]);
         }
         eje++;
-        NumEjes[eje] = TransitoEstatico.dualPorcentajeRepresentivo; //Sheets("Tránsito").Cells(19 + eje, 7)
+        NumEjes[eje] = ct.getNumEjes_dual_año();
+        System.out.println(NumEjes[eje]);
         for (i = 0; i < 100; i++) {
-            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 2 + eje)
-            this.cc.ere[i].setDual((float) RepEsperadas[eje]);//Sheets("Larguillo").Cells(3 + i, 36 + eje) = RepEsperadas(eje)
+            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getDual();
+            this.cc.ere[i].setDual((float) RepEsperadas[eje]);
         }
         eje++;
-        NumEjes[eje] = TransitoEstatico.tandemPorcentajeRepresentivo; //Sheets("Tránsito").Cells(19 + eje, 7)
+        NumEjes[eje] = ct.getNumEjes_tandem_año();
+        System.out.println(NumEjes[eje]);
         for (i = 0; i < 100; i++) {
-            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 2 + eje)
-            this.cc.ere[i].setTandem((float) RepEsperadas[eje]);//Sheets("Larguillo").Cells(3 + i, 36 + eje) = RepEsperadas(eje)
+            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getTandem();
+            this.cc.ere[i].setTandem((float) RepEsperadas[eje]);
         }
         eje++;
-        NumEjes[eje] = TransitoEstatico.tridemPorcentajeRepresentivo; //Sheets("Tránsito").Cells(19 + eje, 7)
+        NumEjes[eje] = ct.getNumEjes_tridem_año();
+        System.out.println(NumEjes[eje]);
         for (i = 0; i < 100; i++) {
-            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 2 + eje)
-            this.cc.ere[i].setTridem((float) RepEsperadas[eje]);//Sheets("Larguillo").Cells(3 + i, 36 + eje) = RepEsperadas(eje)
+            RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getTridem();
+            this.cc.ere[i].setTridem((float) RepEsperadas[eje]);
         }
 
     }
@@ -892,51 +903,51 @@ public class Funciones extends Datos {
         double Nd, Nf, DañoDef, DañoFat;// As Double
         double RepEsperadas[] = new double[4];//(1 To 4) As Double
 
+        
         //sencillo
         for (i = 0; i < 100; i++) {
-            RepEsperadas[eje] = this.cc.ere[i].getSimple();//Sheets("Larguillo").Cells(3 + i, 36 + eje)
-            Nd = this.cc.nre[i].getSimDeformacion();//Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje)
-            Nf = this.cc.nre[i].getSimFatiga();//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje)
+            RepEsperadas[eje] = this.cc.ere[i].getSimple();
+            Nd = this.cc.nre[i].getSimDeformacion();
+            Nf = this.cc.nre[i].getSimFatiga();
             DañoDef = RepEsperadas[eje] / Nd;
             DañoFat = RepEsperadas[eje] / Nf;
-            this.cc.ed[i].setSimpleDef((float) DañoDef); //  Sheets("Larguillo").Cells(3 + i, 40 + 2 * eje) = DañoDef
-            this.cc.ed[i].setSimpleFat((float) DañoFat);//Sheets("Larguillo").Cells(3 + i, 41 + 2 * eje) = DañoFat
+            this.cc.ed[i].setSimpleDef((float) DañoDef);
+            this.cc.ed[i].setSimpleFat((float) DañoFat);
         }
         eje++;
 
         //dual
         for (i = 0; i < 100; i++) {
-            RepEsperadas[eje] = this.cc.ere[i].getDual();//Sheets("Larguillo").Cells(3 + i, 36 + eje)
-            Nd = this.cc.nre[i].getDualDeformacion();//Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje)
-            Nf = this.cc.nre[i].getDualFatiga();//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje)
+            RepEsperadas[eje] = this.cc.ere[i].getDual();
+            Nd = this.cc.nre[i].getDualDeformacion();
+            Nf = this.cc.nre[i].getDualFatiga();
             DañoDef = RepEsperadas[eje] / Nd;
             DañoFat = RepEsperadas[eje] / Nf;
-            this.cc.ed[i].setDualDef((float) DañoDef); //  Sheets("Larguillo").Cells(3 + i, 40 + 2 * eje) = DañoDef
-            this.cc.ed[i].setDualFat((float) DañoFat);//Sheets("Larguillo").Cells(3 + i, 41 + 2 * eje) = DañoFat
+            this.cc.ed[i].setDualDef((float) DañoDef);
+            this.cc.ed[i].setDualFat((float) DañoFat);
         }
         eje++;
 
         //tandem
         for (i = 0; i < 100; i++) {
-            RepEsperadas[eje] = this.cc.ere[i].getTandem();//Sheets("Larguillo").Cells(3 + i, 36 + eje)
-            Nd = this.cc.nre[i].getTANDEMDeformacion();//Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje)
-            Nf = this.cc.nre[i].getTANDEMFatiga();//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje)
+            RepEsperadas[eje] = this.cc.ere[i].getTandem();
+            Nd = this.cc.nre[i].getTANDEMDeformacion();
+            Nf = this.cc.nre[i].getTANDEMFatiga();
             DañoDef = RepEsperadas[eje] / Nd;
             DañoFat = RepEsperadas[eje] / Nf;
-            this.cc.ed[i].setTANDEMDef((float) DañoDef); //  Sheets("Larguillo").Cells(3 + i, 40 + 2 * eje) = DañoDef
-            this.cc.ed[i].setTANDEMFat((float) DañoFat);//Sheets("Larguillo").Cells(3 + i, 41 + 2 * eje) = DañoFat
+            this.cc.ed[i].setTANDEMDef((float) DañoDef);
+            this.cc.ed[i].setTANDEMFat((float) DañoFat);
         }
         eje++;
         //tridem
         for (i = 0; i < 100; i++) {
-            RepEsperadas[eje] = this.cc.ere[i].getTridem();//Sheets("Larguillo").Cells(3 + i, 36 + eje)
-            Nd = this.cc.nre[i].getTRIDEMDeformacion();//Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje)
-            Nf = this.cc.nre[i].getTRIDEMFatiga();//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje)
+            RepEsperadas[eje] = this.cc.ere[i].getTridem();
+            Nd = this.cc.nre[i].getTRIDEMDeformacion();
+            Nf = this.cc.nre[i].getTRIDEMFatiga();
             DañoDef = RepEsperadas[eje] / Nd;
             DañoFat = RepEsperadas[eje] / Nf;
             this.cc.ed[i].setTRIDEMEDef((float) DañoDef);
-            //  Sheets("Larguillo").Cells(3 + i, 40 + 2 * eje) = DañoDef
-            this.cc.ed[i].setTRIDEMFat((float) DañoFat);//Sheets("Larguillo").Cells(3 + i, 41 + 2 * eje) = DañoFat
+            this.cc.ed[i].setTRIDEMFat((float) DañoFat);
         }
 
     }
@@ -1007,9 +1018,6 @@ public class Funciones extends Datos {
         //se vera que afecta
     }
 
-    //ya existe
-    /*private void volumenTransito() {
-    }*/
  /*Lista */
     private void deformacionesUnitarias() {
         double Ez, Er, Et, Epsilon_z, Epsilon_r, Epsilon_t, Ez_damy, Epsilon_z_damy;
@@ -1035,7 +1043,7 @@ public class Funciones extends Datos {
         }
     }
 
-    /*Lista */
+    /*Lista funcionando*/
     private void deformacionesTension() {
         double AX, BX, CX, DX, EX, FX, GX, HX, IX, JX, KX, LX;
         double AY, BY, CY, DY, EY, FY, GY, HY, IY, JY, KY, LY;
@@ -1177,13 +1185,14 @@ public class Funciones extends Datos {
             EvZ_damy = this.cal.getCapaCalculo(i).getAux1();//Sheets("calculos").Cells(i + 5, 10)
             DEFx_damy = (1 / ModElastico[i]) * (Enormal_x - (poisson * (Enormal_y + EvZ_damy)));
             DEFy_damy = (1 / ModElastico[i]) * (Enormal_y - (poisson * (Enormal_x + EvZ_damy)));
-            DefTension_damy = ((DEFx_damy + DEFy_damy) / 2) - Math.pow(Math.pow(Math.pow(((DEFx_damy - DEFy_damy) / 2), 2) + GAMAxy, 2), 0.5);
+
+            DefTension_damy = ((DEFx_damy + DEFy_damy) / 2) - Math.pow(Math.pow(((DEFx_damy - DEFy_damy) / 2)+ GAMAxy, 2), 0.5);
             this.cal.getCapaCalculo(i).setAuxDamy(DefTension_damy);//Sheets("calculos").Cells(5 + i, 30) = DefTension_damy
 
         }
     }
 
-    /*Lista */
+    /*Lista funcionando*/
     private void deformacionesVerticales() {
         // Dim i As Integer
         //Dim NumCapas As Integer
@@ -1196,9 +1205,8 @@ public class Funciones extends Datos {
         //Poisson = Sheets("calculos").Cells(3, 5)
         //ReDim ModElastico(NumCapas)
         for (int i = 0; i < numCapas - 1; i++) {// = 1 To 2 'NumCapas - 1
-            ModElastico[i]
-                              = //Sheets("calculos").Cells(i + 2, 3)
-                              EvZ = this.cal.getCapaCalculo(i).getEsfuerzoVerticalO();// Sheets("calculos").Cells(i + 2, 10)
+            ModElastico[i] = this.cal.getCapaCalculo(i).getModuloElastico();//Sheets("calculos").Cells(i + 2, 3)
+            EvZ = this.cal.getCapaCalculo(i).getEsfuerzoVerticalO();// Sheets("calculos").Cells(i + 2, 10)
             Enormal_x = this.cal.getCapaCalculo(i).getEsfuerzoNormalX();//Sheets("calculos").Cells(i + 2, 23)
             Enormal_y = this.cal.getCapaCalculo(i).getEsfuerzoNormalY();//Sheets("calculos").Cells(i + 2, 24)
 
@@ -1213,7 +1221,7 @@ public class Funciones extends Datos {
         }//Next i
     }
 
-    /*Lista */
+    /*Lista funcionando */
     private void esfuerzoVerticalPuntual() {
 
         int NumCapa;//As Integer
@@ -1237,12 +1245,12 @@ public class Funciones extends Datos {
 
             z = this.cal.getCapaCalculo(i).getEspesorParcialEquivalente();//Sheets("calculos").Cells(2 + i, 7);
 
-            R1 = i == 0 ? this.llantas.getLlanta(0).getAnguloHorizontal() : this.llantas.getLlanta(0).getDistanciaHorizontal();//Sheets("calculos").Cells(18, 4 + i)
-            R2 = i == 0 ? this.llantas.getLlanta(1).getAnguloHorizontal() : this.llantas.getLlanta(1).getDistanciaHorizontal();//Sheets("calculos").Cells(19, 4 + i)
-            R3 = i == 0 ? this.llantas.getLlanta(2).getAnguloHorizontal() : this.llantas.getLlanta(2).getDistanciaHorizontal();//Sheets("calculos").Cells(20, 4 + i)
-            R4 = i == 0 ? this.llantas.getLlanta(3).getAnguloHorizontal() : this.llantas.getLlanta(3).getDistanciaHorizontal();//Sheets("calculos").Cells(21, 4 + i)
-            R5 = i == 0 ? this.llantas.getLlanta(4).getAnguloHorizontal() : this.llantas.getLlanta(4).getDistanciaHorizontal();//Sheets("calculos").Cells(22, 4 + i)
-            R6 = i == 0 ? this.llantas.getLlanta(5).getAnguloHorizontal() : this.llantas.getLlanta(5).getDistanciaHorizontal();//Sheets("calculos").Cells(23, 4 + i)
+            R1 = i == 0 ? this.llantas.getLlanta(0).getDistanciaRadialCarpeta(): this.llantas.getLlanta(0).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(18, 4 + i)
+            R2 = i == 0 ? this.llantas.getLlanta(1).getDistanciaRadialCarpeta() : this.llantas.getLlanta(1).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(19, 4 + i)
+            R3 = i == 0 ? this.llantas.getLlanta(2).getDistanciaRadialCarpeta() : this.llantas.getLlanta(2).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(20, 4 + i)
+            R4 = i == 0 ? this.llantas.getLlanta(3).getDistanciaRadialCarpeta() : this.llantas.getLlanta(3).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(21, 4 + i)
+            R5 = i == 0 ? this.llantas.getLlanta(4).getDistanciaRadialCarpeta() : this.llantas.getLlanta(4).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(22, 4 + i)
+            R6 = i == 0 ? this.llantas.getLlanta(5).getDistanciaRadialCarpeta() : this.llantas.getLlanta(5).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(23, 4 + i)
 
             Ez1 = KgAKpa * (3 * P * Math.pow(z, 3)) / (2 * PI * Math.pow(R1, 5));
             Ez2 = KgAKpa * (3 * P * Math.pow(z, 3)) / (2 * PI * Math.pow(R2, 5));
@@ -1280,7 +1288,7 @@ public class Funciones extends Datos {
         }//Next NumCapa
     }
 
-    /*Lista*/
+    /*Lista funcionando*/
     private void esfuerzoRadialPuntual() {
 
         double ra1, ra2, ra3, ra4, ra5, ra6;// As Double
@@ -1299,11 +1307,11 @@ public class Funciones extends Datos {
         P = 1000 * PesoNeum;
 
         ra1 = this.llantas.getLlanta(0).getDistanciaHorizontal();//Sheets("calculos").Cells(18, 4)
-        ra2 = this.llantas.getLlanta(0).getDistanciaHorizontal();
-        ra3 = this.llantas.getLlanta(0).getDistanciaHorizontal();
-        ra4 = this.llantas.getLlanta(0).getDistanciaHorizontal();
-        ra5 = this.llantas.getLlanta(0).getDistanciaHorizontal();
-        ra6 = this.llantas.getLlanta(0).getDistanciaHorizontal();
+        ra2 = this.llantas.getLlanta(1).getDistanciaHorizontal();
+        ra3 = this.llantas.getLlanta(2).getDistanciaHorizontal();
+        ra4 = this.llantas.getLlanta(3).getDistanciaHorizontal();
+        ra5 = this.llantas.getLlanta(4).getDistanciaHorizontal();
+        ra6 = this.llantas.getLlanta(5).getDistanciaHorizontal();
 
         for (int i = 0; i < numCapas - 1; i++) {
 
@@ -1317,23 +1325,28 @@ public class Funciones extends Datos {
             R6 = (i == 0) ? this.llantas.getLlanta(5).getDistanciaRadialCarpeta() : this.llantas.getLlanta(5).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(23, 4 + i)
 
             Er1 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra1, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R1 * (R1 + z)))));
-            Er2 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra2, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R2 * (R2 + z)))));
-            Er3 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra3, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R3 * (R3 + z)))));
-            Er4 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra4, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R4 * (R4 + z)))));
-            Er5 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra5, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R5 * (R5 + z)))));
-            Er6 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra6, 2)) / Math.pow(R1, 5)) - ((1 - 2 * poisson) / (R6 * (R6 + z)))));
+            Er2 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra2, 2)) / Math.pow(R2, 5)) - ((1 - 2 * poisson) / (R2 * (R2 + z)))));
+            Er3 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra3, 2)) / Math.pow(R3, 5)) - ((1 - 2 * poisson) / (R3 * (R3 + z)))));
+            Er4 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra4, 2)) / Math.pow(R4, 5)) - ((1 - 2 * poisson) / (R4 * (R4 + z)))));
+            Er5 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra5, 2)) / Math.pow(R5, 5)) - ((1 - 2 * poisson) / (R5 * (R5 + z)))));
+            Er6 = KgAKpa * ((P / (2 * PI)) * (((3 * z * Math.pow(ra6, 2)) / Math.pow(R6, 5)) - ((1 - 2 * poisson) / (R6 * (R6 + z)))));
 
             switch (tipoeje) {
                 case "Sencillo":
                     ErP = Er1;
+                    break;
                 case "Sencillo Dual":
                     ErP = Er1 + Er2;
+                    break;
                 case "Tandem":
                     ErP = Er1 + Er2 + Er3 + Er4;
+                    break;
                 case "Tridem":
                     ErP = Er1 + Er2 + Er3 + Er4 + Er5 + Er6;
+                    break;
                 case "Medio Tridem":
                     ErP = Er1 + Er3 + Er5;
+                    break;
                 default:
                     ErP = 0;
             }
@@ -1359,7 +1372,7 @@ public class Funciones extends Datos {
         }
     }
 
-    /*Lista */
+    /*Lista funcionando*/
     private void esfuerzoTangencialPuntual() {
         //Dim i As Integer
         //Dim NumCapas As Integer
@@ -1381,19 +1394,19 @@ public class Funciones extends Datos {
 
             z = this.cal.getCapaCalculo(i).getEspesorParcialEquivalente(); //Sheets("calculos").Cells(2 + i, 7)
 
-            R1 = i == 0 ? this.llantas.getLlanta(0).getAnguloHorizontal() : this.llantas.getLlanta(0).getDistanciaHorizontal(); //Sheets("calculos").Cells(18, 4 + i)
-            R2 = i == 0 ? this.llantas.getLlanta(1).getAnguloHorizontal() : this.llantas.getLlanta(1).getDistanciaHorizontal(); //Sheets("calculos").Cells(19, 4 + i)
-            R3 = i == 0 ? this.llantas.getLlanta(2).getAnguloHorizontal() : this.llantas.getLlanta(2).getDistanciaHorizontal(); //Sheets("calculos").Cells(20, 4 + i)
-            R4 = i == 0 ? this.llantas.getLlanta(3).getAnguloHorizontal() : this.llantas.getLlanta(3).getDistanciaHorizontal(); // Sheets("calculos").Cells(21, 4 + i)
-            R5 = i == 0 ? this.llantas.getLlanta(4).getAnguloHorizontal() : this.llantas.getLlanta(4).getDistanciaHorizontal(); //Sheets("calculos").Cells(22, 4 + i)
-            R6 = i == 0 ? this.llantas.getLlanta(5).getAnguloHorizontal() : this.llantas.getLlanta(5).getDistanciaHorizontal(); // Sheets("calculos").Cells(23, 4 + i)
+            R1 = (i == 0) ? this.llantas.getLlanta(0).getDistanciaRadialCarpeta() : this.llantas.getLlanta(0).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(18, 4 + i)
+            R2 = (i == 0) ? this.llantas.getLlanta(1).getDistanciaRadialCarpeta() : this.llantas.getLlanta(1).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(19, 4 + i)
+            R3 = (i == 0) ? this.llantas.getLlanta(2).getDistanciaRadialCarpeta() : this.llantas.getLlanta(2).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(20, 4 + i)
+            R4 = (i == 0) ? this.llantas.getLlanta(3).getDistanciaRadialCarpeta() : this.llantas.getLlanta(3).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(21, 4 + i)
+            R5 = (i == 0) ? this.llantas.getLlanta(4).getDistanciaRadialCarpeta() : this.llantas.getLlanta(4).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(22, 4 + i)
+            R6 = (i == 0) ? this.llantas.getLlanta(5).getDistanciaRadialCarpeta() : this.llantas.getLlanta(5).getDistanciaRadialSubrasante();  //Sheets("calculos").Cells(23, 4 + i)
 
             Et1 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R1 * (R1 + z))) - (z / Math.pow(R1, 3))));
-            Et2 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R2 * (R2 + z))) - (z / Math.pow(R1, 3))));
-            Et3 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R3 * (R3 + z))) - (z / Math.pow(R1, 3))));
-            Et4 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R4 * (R4 + z))) - (z / Math.pow(R1, 3))));
-            Et5 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R5 * (R5 + z))) - (z / Math.pow(R1, 3))));
-            Et6 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R6 * (R6 + z))) - (z / Math.pow(R1, 3))));
+            Et2 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R2 * (R2 + z))) - (z / Math.pow(R2, 3))));
+            Et3 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R3 * (R3 + z))) - (z / Math.pow(R3, 3))));
+            Et4 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R4 * (R4 + z))) - (z / Math.pow(R4, 3))));
+            Et5 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R5 * (R5 + z))) - (z / Math.pow(R5, 3))));
+            Et6 = KgAKpa * (((1 - 2 * poisson) * (P / (2 * PI))) * ((1 / (R6 * (R6 + z))) - (z / Math.pow(R6, 3))));
 
             switch (tipoeje) {
                 case "Sencillo":
@@ -1437,7 +1450,7 @@ public class Funciones extends Datos {
         }
     }
 
-    /*Lista */
+    /*Lista funcionando*/
     private void esfuerzosEjeSencilloDual() {
         double PsiAKpa;// As Double
         double Er1, Er2;// As Double
@@ -1497,7 +1510,7 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(1).setOtNeumatico1(Et2);//Sheets("calculos").Cells(42, 5) = Et2
     }
 
-    /*Lista */
+    /*Lista funcionando*/
     private void esfuerzosEjeTridem() {
         double PsiAKpa;// As Double
         double Er1, Er2, Er3, Er4, Er5, Er6;// As Double
@@ -1605,9 +1618,7 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(5).setOtNeumatico1(Et6);
     }
 
-
-
-    /*Lista */
+    /*Lista funcionando*/
     private void esfuerzosEjeMedioTridem() {
 
         double PsiAKpa;// As Double
@@ -1716,7 +1727,7 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(5).setOtNeumatico1(Et6);
     }
 
-    /*Lista */
+    /*Lista funcionando*/
     private void esfuerzosEjeTandem() {
 
         double PsiAKpa;// As Double
@@ -1788,7 +1799,7 @@ public class Funciones extends Datos {
 
     }
 
-    /*Lista*/
+    /*Lista funcionando*/
     private void E_VERTICAL_PTODOS_MA() {
         int RENGLON;// As Integer
         int NCAPAS;// As Integer
@@ -1818,13 +1829,13 @@ public class Funciones extends Datos {
         R5 = this.llantas.getLlanta(4).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(22, 6)
         R6 = this.llantas.getLlanta(5).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(23, 6)
 
-        double aux1 = Math.pow(R1, 3);
+        double aux1 = Math.pow(z, 3);
         Ez1 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
-        Ez2 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
-        Ez3 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
-        Ez4 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
-        Ez5 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
-        Ez6 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R1, 5));
+        Ez2 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R2, 5));
+        Ez3 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R3, 5));
+        Ez4 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R4, 5));
+        Ez5 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R5, 5));
+        Ez6 = KgAKpa * (3 * P * aux1) / (2 * PI * Math.pow(R6, 5));
 
         switch (tipoeje) {
             case "Sencillo":
@@ -1849,7 +1860,7 @@ public class Funciones extends Datos {
         this.cal.getCapaCalculo(1).setEsfuerzoVerticalO(EvZ);//Sheets("calculos").Cells(4, 10) = EvZ
     }
 
-    /*Lista*/
+    /*Lista funcionando*/
     private void E_RADIAL_PTODOS_MA() {
 
         double A;//As Double
@@ -1919,7 +1930,7 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(5).setOrNeumatico2(Er6);//Sheets("calculos").Cells(46, 4) = Er6
     }
 
-    /*Lista*/
+    /*Lista funcionando*/
     private void E_TANGENCIAL_PTODOS_MA() {
 
         double A;// As Double
@@ -2043,11 +2054,8 @@ public class Funciones extends Datos {
 //Sheets("Análisis Espectral").Cells(16, 6) = Sheets("larguillo").Cells(3 + analisis, 85)
 //Sheets("Análisis Espectral").Cells(17, 6) = Sheets("larguillo").Cells(3 + analisis, 86)
 //Sheets("Análisis Espectral").Cells(18, 6) = Sheets("larguillo").Cells(3 + analisis, 87)
-            boolean soloParaAvanzar[] = new boolean[3];
-            for (int i = 0; i < 3; i++) {
-                soloParaAvanzar[i] = true;
-            }
-            this.IniciarAnalisisEspectral(this.tipoEje, soloParaAvanzar);
+
+            this.IniciarAnalisisEspectral(this.tipoCarga);
 
             double vidaf = this.cc.vi[0].getDefTodos();//Sheets("larguillo").Cells(4, 74)  'fatiga
             double vidad = this.cc.vi[0].getDefTodos();// Sheets("larguillo").Cells(4, 69)  'deformacion

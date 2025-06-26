@@ -7,10 +7,15 @@ import javax.swing.table.DefaultTableModel;
 public class CAnalisis {
 
     private Funciones funciones;
+    private CTransito ct;
     
     public CAnalisis(CargarClases cc){
         funciones = new Funciones();
         funciones.setCc(cc);
+    }
+    
+    public void setCTransito(CTransito ct){
+        funciones.setCTransito(ct);
     }
     
     public void CargarTabla(DefaultTableModel dtm,double vidaFatiga,double vidaDeformacion){
@@ -46,8 +51,8 @@ public class CAnalisis {
         return funciones.getPresion();
     }
 
-    public void IniciarAnalisisEspectral(String tipoEje, boolean[] activos) {
-        funciones.IniciarAnalisisEspectral(tipoEje,activos);
+    public void IniciarAnalisisEspectral(String tipoEje) {
+        funciones.IniciarAnalisisEspectral(tipoEje);
     }
     
    

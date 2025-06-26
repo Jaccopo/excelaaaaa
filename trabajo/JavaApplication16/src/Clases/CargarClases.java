@@ -45,7 +45,7 @@ public class CargarClases {
     
     
     
-    public String[] colDanoAcomulado ="Simple,Dual,Tandem,Tridem,Dimple,Dual,Tandem,Tridem".split(",");
+    public String[] colDanoAcomulado ="Simple,Dual,Tandem,Tridem,Simple,Dual,Tandem,Tridem".split(",");
     public EspectroDanoAcomulado eda[] = new EspectroDanoAcomulado[100];
     
     

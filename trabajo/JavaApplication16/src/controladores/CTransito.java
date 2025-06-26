@@ -5,7 +5,7 @@
 package controladores;
 
 import Clases.TransitoEstatico;
-import vista.Transito;
+
 
 /**
  *

@@ -23,6 +23,7 @@ public class VerLarguillo extends javax.swing.JDialog {
     }
 
     public void setDatos(String[] columnas) {
+        dtm.addColumn("Numero");
         for (String columna : columnas) {
             dtm.addColumn(columna);
         }
@@ -30,7 +31,13 @@ public class VerLarguillo extends javax.swing.JDialog {
     }
 
     public void addFila(Vector fila) {
-        dtm.addRow(fila);
+        Vector fin = new Vector();
+        fin.add(0, 1+dtm.getRowCount());
+        for(var r : fila.toArray()){
+        fin.add(r);
+        }
+        
+        dtm.addRow(fin);
     }
 
     public void setNoEditable() {
