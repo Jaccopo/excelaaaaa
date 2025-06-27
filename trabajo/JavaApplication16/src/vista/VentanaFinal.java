@@ -34,20 +34,24 @@ public class VentanaFinal extends javax.swing.JFrame {
     private CAnalisis ca;
     private VerLarguillo vl;
     private CTransito ct;
-    
+    private ButtonGroup grupo1;
+
     public VentanaFinal(CargarClases cc) {
         super();
         initComponents();
         this.setLocationRelativeTo(null);
-    
+
         this.cc = cc;
         ca = new CAnalisis(this.cc);
         dtm = new DefaultTableModel();
 
         dtm = (DefaultTableModel) tabla.getModel();
         tabla.setModel(dtm);
-        
-/*
+
+        grupo1 = new ButtonGroup();
+        grupo1.add(probabilistico);
+        grupo1.add(espectral);
+        /*
         agregarCapa.addActionListener((var e) -> {
             AgregarCapa ac = new AgregarCapa(null, true);
             ac.setVisible(true);
@@ -87,14 +91,14 @@ public class VentanaFinal extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        espectral = new javax.swing.JRadioButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         vidaFatiga = new javax.swing.JTextField();
         vidaDeformacion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        confianza = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
@@ -103,7 +107,7 @@ public class VentanaFinal extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         mensaje = new javax.swing.JLabel();
         tipoCarga = new javax.swing.JComboBox<>();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        probabilistico = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -260,9 +264,9 @@ public class VentanaFinal extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Analisis Espectral");
-        jRadioButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 1, new java.awt.Color(255, 255, 255)));
+        espectral.setSelected(true);
+        espectral.setText("Analisis Espectral");
+        espectral.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 1, new java.awt.Color(255, 255, 255)));
 
         jLabel13.setBackground(new java.awt.Color(204, 255, 255));
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -300,8 +304,8 @@ public class VentanaFinal extends javax.swing.JFrame {
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel4.setOpaque(true);
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%" }));
+        confianza.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        confianza.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "60%", "65%", "70%", "75%", "80%", "85%", "90%", "95%" }));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -349,9 +353,9 @@ public class VentanaFinal extends javax.swing.JFrame {
 
         tipoCarga.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Legal", "Ligera Sobre Carga", "Alta Sobre Carga", "Muy Alta Sobre Carga" }));
 
-        jRadioButton2.setSelected(true);
-        jRadioButton2.setText("Analisis Probabilistico");
-        jRadioButton2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 1, new java.awt.Color(255, 255, 255)));
+        probabilistico.setSelected(true);
+        probabilistico.setText("Analisis Probabilistico");
+        probabilistico.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 1, new java.awt.Color(255, 255, 255)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -381,9 +385,9 @@ public class VentanaFinal extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jRadioButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(confianza, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(probabilistico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(espectral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -413,13 +417,13 @@ public class VentanaFinal extends javax.swing.JFrame {
                             .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(vidaDeformacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton1)
+                        .addComponent(espectral)
                         .addGap(2, 2, 2)
-                        .addComponent(jRadioButton2)
+                        .addComponent(probabilistico)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(confianza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tipoCarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -472,14 +476,20 @@ public class VentanaFinal extends javax.swing.JFrame {
         if (dtm.getRowCount() < 1 || TransitoEstatico.activado == 0) {
             JOptionPane.showMessageDialog(null, "La tabla debe tener una \ncapa por lo menos");
         } else {
-                ca.CargarTabla(dtm);
-                ca.setCTransito(ct);
-                System.out.println(tipoCarga.getModel().getSelectedItem()+ "");
+            ca.CargarTabla(dtm);
+            ca.setCTransito(ct);
+            if (probabilistico.isSelected()) {
                 ca.IniciarAnalisisEspectral(tipoCarga.getModel().getSelectedItem() + "");
-                cc = ca.getClases();
-                this.vidaDeformacion.setText(ca.getFidef());
-                this.vidaFatiga.setText(ca.getVifat());
-           
+            }
+            if (espectral.isSelected()) {
+                ca.IniciarAnalisisProbabilistico(tipoEje, confiabilidad);
+            }
+
+            
+            cc = ca.getClases();
+            this.vidaDeformacion.setText(ca.getFidef());
+            this.vidaFatiga.setText(ca.getVifat());
+
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -518,7 +528,7 @@ public class VentanaFinal extends javax.swing.JFrame {
     }//GEN-LAST:event_respuestaTridemActionPerformed
 
     private void deformacionFatiga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deformacionFatiga1ActionPerformed
-       abrirLarguillo(5);
+        abrirLarguillo(5);
     }//GEN-LAST:event_deformacionFatiga1ActionPerformed
 
     private void espectrosRepeticionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_espectrosRepeticionesActionPerformed
@@ -530,15 +540,15 @@ public class VentanaFinal extends javax.swing.JFrame {
     }//GEN-LAST:event_deformacionFatiga2ActionPerformed
 
     private void deformacionFatigaTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deformacionFatigaTodosActionPerformed
-       abrirLarguillo(8);
+        abrirLarguillo(8);
     }//GEN-LAST:event_deformacionFatigaTodosActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       abrirLarguillo(9);
+        abrirLarguillo(9);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Grafica gr = new Grafica(this,false);
+        Grafica gr = new Grafica(this, false);
         gr.setLargilloNormal(this.cc.data);
         gr.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -553,10 +563,13 @@ public class VentanaFinal extends javax.swing.JFrame {
                     vl.addFila(this.cc.data[i].getVector());
                 }
                 break;
-            case 1: case 2:  case 3: case 4:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
                 vl.setDatos(this.cc.columnasRespuestasEje);
                 for (int i = 0; i < 100; i++) {
-                    
+
                     if (opcion == 1) {
                         vl.addFila(this.cc.simpleRespuesta[i].getVector());
                     }
@@ -573,12 +586,12 @@ public class VentanaFinal extends javax.swing.JFrame {
                 break;
 
             case 5://deformacion y fatiga 1
-                
+
                 vl.setDatos(this.cc.columnasRespuestasEje());
                 for (int i = 0; i < 100; i++) {
                     vl.addFila(this.cc.nre[i].getVector());
                 }
-                
+
                 break;
             case 6://espectros de repeticiones esperadas
                 vl.setDatos(this.cc.colEspectroRepeticionesEsperadas);
@@ -604,7 +617,6 @@ public class VentanaFinal extends javax.swing.JFrame {
                     vl.addFila(this.cc.eda[i].getVector());
                 }
                 break;
- 
 
         }
         vl.setNoEditable();
@@ -613,11 +625,6 @@ public class VentanaFinal extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -625,18 +632,9 @@ public class VentanaFinal extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaFinal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaFinal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaFinal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(VentanaFinal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VentanaFinal(new CargarClases()).setVisible(true);
@@ -647,15 +645,16 @@ public class VentanaFinal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonPoisson;
     private javax.swing.JButton botonPresion;
+    private javax.swing.JComboBox<String> confianza;
     private javax.swing.JButton deformacionFatiga1;
     private javax.swing.JButton deformacionFatiga2;
     private javax.swing.JButton deformacionFatigaTodos;
+    private javax.swing.JRadioButton espectral;
     private javax.swing.JButton espectrosRepeticiones;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
@@ -664,10 +663,9 @@ public class VentanaFinal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel mensaje;
+    private javax.swing.JRadioButton probabilistico;
     private javax.swing.JButton respuestaDual;
     private javax.swing.JButton respuestaSimple;
     private javax.swing.JButton respuestaTandem;

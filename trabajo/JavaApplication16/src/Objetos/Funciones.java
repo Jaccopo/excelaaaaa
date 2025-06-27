@@ -15,6 +15,7 @@ public class Funciones extends Datos {
     private CTransito ct;
     public String vifatiga;
     public String videformacion;
+    public ObjetoProbabilistico objetoProbabilistico;
 
     public String getVidafatiga() {
         return vifatiga;
@@ -26,6 +27,7 @@ public class Funciones extends Datos {
 
     public Funciones() {
         super();
+        objetoProbabilistico = new ObjetoProbabilistico();
     }
 
     public void setCTransito(CTransito ct) {
@@ -977,86 +979,7 @@ public class Funciones extends Datos {
 
     }
 
-    /*Lista*/
-    private void sumas() {
-        int i, eje, NumMarcasClase;// As Integer
-        double Nd, Nf, DañoDef, DañoFat;// As Double
-        double RepEsperadas[] = new double[4];// As Double
-        double suma1, suma2, suma3, suma4, suma5, suma6, suma7, suma8;// As Double
-
-        NumMarcasClase = 100;
-        i = 0;
-        suma1 = suma2 = suma3 = suma4 = suma5 = suma6 = suma7 = suma8 = 0;
-
-        for (i = 0; i < 100; i++) {
-
-            this.cc.et[i].setDefTotal(this.cc.ed[i].sumaDeformacion());  //Sheets("Larguillo").Cells(3 + i, 51) = //Sheets("Larguillo").Cells(3 + i, 42) + _
-            //Sheets("Larguillo").Cells(3 + i, 44) + _
-            //Sheets("Larguillo").Cells(3 + i, 46) + _
-            //Sheets("Larguillo").Cells(3 + i, 48)
-
-            this.cc.et[i].setFatTodos(this.cc.ed[i].sumaFatiga());
-            //Sheets("Larguillo").Cells(3 + i, 52) = Sheets("Larguillo").Cells(3 + i, 43) + _
-            //Sheets("Larguillo").Cells(3 + i, 45) + _
-            //Sheets("Larguillo").Cells(3 + i, 47) + _
-            //Sheets("Larguillo").Cells(3 + i, 49)
-
-            suma1 = this.cc.ed[i].getSimpleDef() + suma1;//Sheets("Larguillo").Cells(3 + i, 42) + suma1
-            this.cc.eda[i].setDefSimple((float) suma1);//Sheets("Larguillo").Cells(3 + i, 54) = suma1
-
-            suma2 = this.cc.ed[i].getDualDef() + suma2;//Sheets("Larguillo").Cells(3 + i, 44) + suma2
-            this.cc.eda[i].setDefDual((float) suma2);//Sheets("Larguillo").Cells(3 + i, 55) = suma2
-
-            suma3 = this.cc.ed[i].getTANDEMDef() + suma3;//Sheets("Larguillo").Cells(3 + i, 46) + suma3
-            this.cc.eda[i].setDefTANDEM((float) suma3);//Sheets("Larguillo").Cells(3 + i, 56) = suma3
-
-            suma4 = this.cc.ed[i].getTRIDEMEDef() + suma4;//Sheets("Larguillo").Cells(3 + i, 48) + suma4
-            this.cc.eda[i].setDefTRIDEM((float) suma4);//Sheets("Larguillo").Cells(3 + i, 57) = suma4
-
-            this.cc.eda[i].sumaDeformaciones();
-
-            //Sheets("Larguillo").Cells(3 + i, 58) = Sheets("Larguillo").Cells(3 + i, 54) + _
-            //                                     Sheets("Larguillo").Cells(3 + i, 55) + _
-            //                                   Sheets("Larguillo").Cells(3 + i, 56) + _
-            //                                 Sheets("Larguillo").Cells(3 + i, 57)
-            suma5 = this.cc.ed[i].getSimpleFat() + suma5;//Sheets("Larguillo").Cells(3 + i, 42) + suma1
-            this.cc.eda[i].setFatSimple((float) suma5);//Sheets("Larguillo").Cells(3 + i, 54) = suma1
-
-            suma6 = this.cc.ed[i].getDualFat() + suma6;//Sheets("Larguillo").Cells(3 + i, 44) + suma2
-            this.cc.eda[i].setFatDual((float) suma6);//Sheets("Larguillo").Cells(3 + i, 55) = suma2
-
-            suma7 = this.cc.ed[i].getTANDEMFat() + suma7;//Sheets("Larguillo").Cells(3 + i, 46) + suma3
-            this.cc.eda[i].setFatTANDEM((float) suma7);//Sheets("Larguillo").Cells(3 + i, 56) = suma3
-
-            suma8 = this.cc.ed[i].getTANDEMFat() + suma8;//Sheets("Larguillo").Cells(3 + i, 48) + suma4
-            this.cc.eda[i].setFatTrideem((float) suma8);//Sheets("Larguillo").Cells(3 + i, 57) = suma4
-
-            this.cc.eda[i].sumaFatiga();
-            //Sheets("Larguillo").Cells(3 + i, 63) = Sheets("Larguillo").Cells(3 + i, 59) + _
-            //                                     Sheets("Larguillo").Cells(3 + i, 60) + _
-            //                                   Sheets("Larguillo").Cells(3 + i, 61) + _
-            //                                 Sheets("Larguillo").Cells(3 + i, 62)
-        }
-    }
-
-    private void vidaRemanente() {
-        double r = 1 / this.cc.eda[99].getDefTodos();
-        double r2 = 1 / this.cc.eda[99].getFatTODOS();
-
-        if (r > ct.getAños()) {
-            this.videformacion = ">" + ct.getAños();
-        } else {
-            this.videformacion = String.format("%.2f", r);
-        }
-        if (r2 > ct.getAños()) {
-            this.vifatiga = ">" + ct.getAños();
-        } else {
-            this.vifatiga = String.format("%.2f", r2);;
-        }
-
-    }
-
-    /*Lista */
+      /*Lista */
     private void deformacionesUnitarias() {
         double Ez, Er, Et, Epsilon_z, Epsilon_r, Epsilon_t, Ez_damy, Epsilon_z_damy;
         double ModElastico[] = new double[numCapas];// As Double
@@ -2034,19 +1957,17 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(5).setOtNeumatico2(Et6);//Sheets("calculos").Cells(46, 6) = Et6
     }
 
-    public void distribuyemelos() {
+    public void distribuyeModulos() {
 
         double modulocapa[] = new double[numCapas];
         double coefcapa[] = new double[numCapas];
         int combinaciones;
         int contador = 0, a;
 
-        //Sheets("Análisis Probabilista").Cells(3, 12) = "Ejecutando análisis..."
-        //num_capas = Sheets("Análisis Espectral").Cells(7, 6)
-        //n = num_capas
+
         combinaciones = (int) Math.pow(2, numCapas);
 
-        for (int capa = 0; capa < numCapas; capa++) {//capa = num_capas To 1 Step - 1
+        for (int capa = numCapas-1; capa > -1; capa--) {//capa = num_capas To 1 Step - 1
             modulocapa[capa] = this.ep[capa].getModulo();
             coefcapa[capa] = this.ep[capa].getCoeficienteVariacion();
             contador = 1;
@@ -2067,17 +1988,109 @@ public class Funciones extends Datos {
 
         }
     }
+    
+    /*Lista*/
+    private void sumas() {
+        int i, eje, NumMarcasClase;// As Integer
+        double Nd, Nf, DañoDef, DañoFat;// As Double
+        double RepEsperadas[] = new double[4];// As Double
+        double suma1, suma2, suma3, suma4, suma5, suma6, suma7, suma8;// As Double
 
-    public void ejecutaAnalisisprobabilista() {
+        NumMarcasClase = 100;
+        i = 0;
+        suma1 = suma2 = suma3 = suma4 = suma5 = suma6 = suma7 = suma8 = 0;
 
-        limpiaProbabilista();
-        guardaResultados();
-        distribuyeModulos();
-        ejecutaVorridas();
-        regresaTesultados();
+        for (i = 0; i < 100; i++) {
+
+            this.cc.et[i].setDefTotal(this.cc.ed[i].sumaDeformacion());  //Sheets("Larguillo").Cells(3 + i, 51) = //Sheets("Larguillo").Cells(3 + i, 42) + _
+            //Sheets("Larguillo").Cells(3 + i, 44) + _
+            //Sheets("Larguillo").Cells(3 + i, 46) + _
+            //Sheets("Larguillo").Cells(3 + i, 48)
+
+            this.cc.et[i].setFatTodos(this.cc.ed[i].sumaFatiga());
+            //Sheets("Larguillo").Cells(3 + i, 52) = Sheets("Larguillo").Cells(3 + i, 43) + _
+            //Sheets("Larguillo").Cells(3 + i, 45) + _
+            //Sheets("Larguillo").Cells(3 + i, 47) + _
+            //Sheets("Larguillo").Cells(3 + i, 49)
+
+            suma1 = this.cc.ed[i].getSimpleDef() + suma1;//Sheets("Larguillo").Cells(3 + i, 42) + suma1
+            this.cc.eda[i].setDefSimple((float) suma1);//Sheets("Larguillo").Cells(3 + i, 54) = suma1
+
+            suma2 = this.cc.ed[i].getDualDef() + suma2;//Sheets("Larguillo").Cells(3 + i, 44) + suma2
+            this.cc.eda[i].setDefDual((float) suma2);//Sheets("Larguillo").Cells(3 + i, 55) = suma2
+
+            suma3 = this.cc.ed[i].getTANDEMDef() + suma3;//Sheets("Larguillo").Cells(3 + i, 46) + suma3
+            this.cc.eda[i].setDefTANDEM((float) suma3);//Sheets("Larguillo").Cells(3 + i, 56) = suma3
+
+            suma4 = this.cc.ed[i].getTRIDEMEDef() + suma4;//Sheets("Larguillo").Cells(3 + i, 48) + suma4
+            this.cc.eda[i].setDefTRIDEM((float) suma4);//Sheets("Larguillo").Cells(3 + i, 57) = suma4
+
+            this.cc.eda[i].sumaDeformaciones();
+
+            //Sheets("Larguillo").Cells(3 + i, 58) = Sheets("Larguillo").Cells(3 + i, 54) + _
+            //                                     Sheets("Larguillo").Cells(3 + i, 55) + _
+            //                                   Sheets("Larguillo").Cells(3 + i, 56) + _
+            //                                 Sheets("Larguillo").Cells(3 + i, 57)
+            suma5 = this.cc.ed[i].getSimpleFat() + suma5;//Sheets("Larguillo").Cells(3 + i, 42) + suma1
+            this.cc.eda[i].setFatSimple((float) suma5);//Sheets("Larguillo").Cells(3 + i, 54) = suma1
+
+            suma6 = this.cc.ed[i].getDualFat() + suma6;//Sheets("Larguillo").Cells(3 + i, 44) + suma2
+            this.cc.eda[i].setFatDual((float) suma6);//Sheets("Larguillo").Cells(3 + i, 55) = suma2
+
+            suma7 = this.cc.ed[i].getTANDEMFat() + suma7;//Sheets("Larguillo").Cells(3 + i, 46) + suma3
+            this.cc.eda[i].setFatTANDEM((float) suma7);//Sheets("Larguillo").Cells(3 + i, 56) = suma3
+
+            suma8 = this.cc.ed[i].getTANDEMFat() + suma8;//Sheets("Larguillo").Cells(3 + i, 48) + suma4
+            this.cc.eda[i].setFatTrideem((float) suma8);//Sheets("Larguillo").Cells(3 + i, 57) = suma4
+
+            this.cc.eda[i].sumaFatiga();
+            //Sheets("Larguillo").Cells(3 + i, 63) = Sheets("Larguillo").Cells(3 + i, 59) + _
+            //                                     Sheets("Larguillo").Cells(3 + i, 60) + _
+            //                                   Sheets("Larguillo").Cells(3 + i, 61) + _
+            //                                 Sheets("Larguillo").Cells(3 + i, 62)
+        }
     }
 
-    public void ejecutaCorridas() {
+    private void vidaRemanente() {
+        double r = 1 / this.cc.eda[99].getDefTodos();
+        double r2 = 1 / this.cc.eda[99].getFatTODOS();
+
+        if (r > ct.getAños()) {
+            this.videformacion = ">" + ct.getAños();
+        } else {
+            this.videformacion = String.format("%.2f", r);
+        }
+        if (r2 > ct.getAños()) {
+            this.vifatiga = ">" + ct.getAños();
+        } else {
+            this.vifatiga = String.format("%.2f", r2);;
+        }
+        
+        
+
+    }
+
+  
+
+    public void iniciaAnalisisprobabilista(String confiabilidad,String tipoEje) {
+
+        this.cc.limpiaProbablista();
+        guardaResultados();
+        double vide = 1 / this.cc.eda[99].getDefTodos();
+        double vifa = 1 / this.cc.eda[99].getFatTODOS();
+        
+        distribuyeModulos();
+        ejecutaCorridas(vifa,vide,confiabilidad,tipoEje);
+        //regresaResultados();
+    }
+
+    private void guardaResultados(){
+        this.objetoProbabilistico.setModulo1(this.ep[0].getModuloEntreMil());
+        this.objetoProbabilistico.setModulo2(this.ep[1].getModuloEntreMil());
+        this.objetoProbabilistico.setModulo3(this.ep[2].getModuloEntreMil());
+        
+    }
+    public void ejecutaCorridas(double vifati,double videfo,String confiabilidad,String tipoEje) {
 
         int combinaciones = (int) Math.pow(2, numCapas);
 
@@ -2093,10 +2106,10 @@ public class Funciones extends Datos {
                 this.cc.tablaRepeticiones[i].setE(i, this.ep[i].getModuloEntreMil());
             }
 
-            this.IniciarAnalisisEspectral(this.tipoCarga);
+            this.IniciarAnalisisEspectral(tipoEje);
 
-            double vidaf = this.cc.vi[0].getDefTodos();//Sheets("larguillo").Cells(4, 74)  'fatiga
-            double vidad = this.cc.vi[0].getDefTodos();// Sheets("larguillo").Cells(4, 69)  'deformacion
+            double vidaf = 1/this.cc.vi[0].getDefTodos();//Sheets("larguillo").Cells(4, 74)  'fatiga
+            double vidad = 1/this.cc.vi[0].getDefTodos();// Sheets("larguillo").Cells(4, 69)  'deformacion
 
             this.cc.tablaRepeticiones[analisis].setVf(vidaf);// = vidaf
             this.cc.tablaRepeticiones[analisis].setVf2(Math.pow(vidaf, 2));//Sheets("larguillo").Cells(3 + analisis, 89) = vidaf ^ 2
@@ -2119,9 +2132,8 @@ public class Funciones extends Datos {
         double Vvd = Ev2d - Math.pow(Evd, 2);
 
         double PConfiabilidad = 0;
-        var ValorConfiabilidad = this.getPorcentajeConfiabilidad();//Worksheets("Análisis Probabilista").ComboBoxConfiabilidad.Text
-
-        switch (ValorConfiabilidad) {
+ 
+        switch (confiabilidad) {
 
             case "55%":
                 PConfiabilidad = 55;
@@ -2168,7 +2180,7 @@ public class Funciones extends Datos {
         //'z = Application.WorksheetFunction.NormSInv(X)
         double Rf = Evf + z * Math.pow(Vvf, 0.5);
         double Rd = Evd + z * Math.pow(Vvd, 0.5);
-        /*
+        
         if (Rf > TransitoEstatico.añosProyecto) {
             this.vidaFatiga = 0; // caso 0 ("Análisis Probabilista").Cells(15, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
         } else if (Rf < 1) {
@@ -2184,8 +2196,78 @@ public class Funciones extends Datos {
             //("Análisis Probabilista").Cells(16, 12) = " < 1"
         } else {
             this.vidaDeformacion = Rd;
-        }*/
+        }
 
     }
+
+}
+
+class ObjetoProbabilistico{
+    
+     double vidadefinversa;
+     double vidafatinversa;
+     double vidaDeformacion;
+     double vidaFatiga;
+     double modulo1;
+     double modulo2;
+     double modulo3;
+
+    public double getVidadefinversa() {
+        return vidadefinversa;
+    }
+
+    public void setVidadefinversa(double vidadefinversa) {
+        this.vidadefinversa = vidadefinversa;
+    }
+
+    public double getVidafatinversa() {
+        return vidafatinversa;
+    }
+
+    public void setVidafatinversa(double vidafatinversa) {
+        this.vidafatinversa = vidafatinversa;
+    }
+
+    public double getVidaDeformacion() {
+        return vidaDeformacion;
+    }
+
+    public void setVidaDeformacion(double vidaDeformacion) {
+        this.vidaDeformacion = vidaDeformacion;
+    }
+
+    public double getVidaFatiga() {
+        return vidaFatiga;
+    }
+
+    public void setVidaFatiga(double vidaFatiga) {
+        this.vidaFatiga = vidaFatiga;
+    }
+
+    public double getModulo1() {
+        return modulo1;
+    }
+
+    public void setModulo1(double modulo1) {
+        this.modulo1 = modulo1;
+    }
+
+    public double getModulo2() {
+        return modulo2;
+    }
+
+    public void setModulo2(double modulo2) {
+        this.modulo2 = modulo2;
+    }
+
+    public double getModulo3() {
+        return modulo3;
+    }
+
+    public void setModulo3(double modulo3) {
+        this.modulo3 = modulo3;
+    }
+     
+     
 
 }

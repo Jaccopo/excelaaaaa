@@ -64,6 +64,11 @@ public class CAnalisis {
         vifat = funciones.vifatiga;
         videf = funciones.videformacion;
     }
+    public void IniciarAnalisisProbabilistico(String tipoEje,String confiabilidad) {
+        funciones.iniciaAnalisisprobabilista(confiabilidad, tipoEje);
+        vifat = funciones.vifatiga;
+        videf = funciones.videformacion;
+    }
     
    
 }
