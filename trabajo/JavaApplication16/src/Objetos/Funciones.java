@@ -13,12 +13,22 @@ public class Funciones extends Datos {
     private TablaDistribucionDeCarga tdc;
     private Cargando car;
     private CTransito ct;
+    public String vifatiga;
+    public String videformacion;
+
+    public String getVidafatiga() {
+        return vifatiga;
+    }
+
+    public String getVidadeformacion() {
+        return videformacion;
+    }
 
     public Funciones() {
         super();
     }
-    
-    public void setCTransito(CTransito ct){
+
+    public void setCTransito(CTransito ct) {
         this.ct = ct;
     }
 
@@ -50,7 +60,7 @@ public class Funciones extends Datos {
 
                 case ("Avanzado"):
                     tdc = new TablaDistribucionDeCarga(5);
-                break;
+                    break;
             }
 
             espectros();
@@ -145,23 +155,23 @@ public class Funciones extends Datos {
                 cc.data[i - 1].setCargaPromedio((float) valor);
 
                 switch (j + 1) {
-                    case 1 :
+                    case 1:
                         cc.data[i - 1].setSimple((float) altura * 100);
                         break;
 
-                        case 2  :
+                    case 2:
                         cc.data[i - 1].setDual((float) altura * 100);
                         break;
 
-                        case 3  :
-                        cc.data[i - 1].setTandem((float) altura * 100 );
+                    case 3:
+                        cc.data[i - 1].setTandem((float) altura * 100);
                         break;
 
-                        case 4 :
-                        cc.data[i - 1].setTridem((float) altura * 100 );
+                    case 4:
+                        cc.data[i - 1].setTridem((float) altura * 100);
                         break;
 
-                    }
+                }
             }
 
         }
@@ -211,7 +221,6 @@ public class Funciones extends Datos {
                 u++;
             }
         }
-
 
         this.cal.getCapaCalculo(0).setModuloElastico(modElsatico[1]);
         this.cal.getCapaCalculo(1).setModuloElastico(this.ep[numCapas - 1].getModulo());
@@ -445,16 +454,16 @@ public class Funciones extends Datos {
             X1 = r_sobre_a;
             Y1 = z_sobre_a;
 
-            buscax=0;
+            buscax = 0;
             do {
                 if (X1 >= x_inter[buscax] && X1 < x_inter[buscax + 1]) {
                     posx1 = buscax;
                     posx2 = buscax + 1;
                     break;
                 }
-                buscax=buscax+1;
+                buscax = buscax + 1;
             } while (buscax < 18);
-            
+
             buscay = 0;
             do {
                 if (Y1 >= y_inter[buscay] && Y1 < y_inter[buscay + 1]) {
@@ -462,7 +471,7 @@ public class Funciones extends Datos {
                     posy2 = buscay + 1;
                     break;
                 }
-                buscay=buscay+1;
+                buscay = buscay + 1;
             } while (buscay < 23);
 
             //'interpolación para la primera tabla
@@ -563,11 +572,11 @@ public class Funciones extends Datos {
         dz = new double[numCapas];
 
         switch (tipoEje) {
-            case ("Sencillo") :
+            case ("Sencillo"):
                 numLlantas = 1;
                 break;
 
-            case ("Sencillo Dual") :
+            case ("Sencillo Dual"):
                 numLlantas = 2;
                 break;
 
@@ -579,7 +588,7 @@ public class Funciones extends Datos {
                 numLlantas = 6;
                 break;
 
-            case ("Medio Tridem") :
+            case ("Medio Tridem"):
                 numLlantas = 3;
                 break;
 
@@ -647,7 +656,7 @@ public class Funciones extends Datos {
             }
             deflexionTotal = deflexionTotal + dz[i];
         }
-        this.cal.getCapaCalculo(0).setDeflexionTotal(deflexionTotal*10);   //Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
+        this.cal.getCapaCalculo(0).setDeflexionTotal(deflexionTotal * 10);   //Sheets("calculos").Cells(3, 22) = DeflexionTotal * 10 ' para que de en milimetros, ya que las entradas van en cms
     }
 
     /*Lista comprobada*/
@@ -835,8 +844,8 @@ public class Funciones extends Datos {
         for (i = 0; i < NumMarcasClase; i++) {
             DefZ[eje] = this.cc.simpleRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
             DefT[eje] = this.cc.simpleRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-            Nf =(float) (f1 * Math.pow(Math.abs(DefT[eje]),-f2));
-            Nd =(float) (f4 * Math.pow(DefZ[eje],-f5));
+            Nf = (float) (f1 * Math.pow(Math.abs(DefT[eje]), -f2));
+            Nd = (float) (f4 * Math.pow(DefZ[eje], -f5));
 
             this.cc.nre[i].setSimDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
             this.cc.nre[i].setSimFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
@@ -847,19 +856,19 @@ public class Funciones extends Datos {
         for (i = 0; i < NumMarcasClase; i++) {
             DefZ[eje] = this.cc.dualRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
             DefT[eje] = this.cc.dualRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-            Nf =(float) (f1 * Math.pow(Math.abs(DefT[eje]),-f2));
-            Nd =(float) (f4 * Math.pow(DefZ[eje],-f5));
+            Nf = (float) (f1 * Math.pow(Math.abs(DefT[eje]), -f2));
+            Nd = (float) (f4 * Math.pow(DefZ[eje], -f5));
 
             this.cc.nre[i].setDualDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
             this.cc.nre[i].setDualFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
         }
-        
+
         eje++; //tandem
         for (i = 0; i < NumMarcasClase; i++) {
             DefZ[eje] = this.cc.tandemRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
             DefT[eje] = this.cc.tandemRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-           Nf =(float) (f1 * Math.pow(Math.abs(DefT[eje]),-f2));
-            Nd =(float) (f4 * Math.pow(DefZ[eje],-f5));
+            Nf = (float) (f1 * Math.pow(Math.abs(DefT[eje]), -f2));
+            Nd = (float) (f4 * Math.pow(DefZ[eje], -f5));
 
             this.cc.nre[i].setTANDEMDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
             this.cc.nre[i].setTANDEMFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
@@ -868,8 +877,8 @@ public class Funciones extends Datos {
         for (i = 0; i < NumMarcasClase; i++) {
             DefZ[eje] = this.cc.tridemRespuesta[i].getEsterraceria();//Sheets("Larguillo").Cells(3 + i, 4 + 5 * eje)
             DefT[eje] = this.cc.tridemRespuesta[i].getEscapa1(); //Abs(Sheets("Larguillo").Cells(3 + i, 5 + 5 * eje))
-            Nf =(float) (f1 * Math.pow(Math.abs(DefT[eje]),-f2));
-            Nd =(float) (f4 * Math.pow(DefZ[eje],-f5));
+            Nf = (float) (f1 * Math.pow(Math.abs(DefT[eje]), -f2));
+            Nd = (float) (f4 * Math.pow(DefZ[eje], -f5));
 
             this.cc.nre[i].setTRIDEMDeformacion((float) Nd);  //Sheets("Larguillo").Cells(3 + i, 26 + 2 * eje) = Nd
             this.cc.nre[i].setTRIDEMFatiga((float) Nf);//Sheets("Larguillo").Cells(3 + i, 27 + 2 * eje) = Nf
@@ -884,7 +893,7 @@ public class Funciones extends Datos {
         double NumEjes[] = new double[4];
         double RepEsperadas[] = new double[4];
 
-        NumEjes[eje] =ct.getNumEjes_Sencillos_año();
+        NumEjes[eje] = ct.getNumEjes_Sencillos_año();
         System.out.println(NumEjes[eje]);
         for (i = 0; i < 100; i++) {
             RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();
@@ -920,7 +929,6 @@ public class Funciones extends Datos {
         double Nd, Nf, DañoDef, DañoFat;// As Double
         double RepEsperadas[] = new double[4];//(1 To 4) As Double
 
-        
         //sencillo
         for (i = 0; i < 100; i++) {
             RepEsperadas[eje] = this.cc.ere[i].getSimple();
@@ -1032,10 +1040,23 @@ public class Funciones extends Datos {
     }
 
     private void vidaRemanente() {
-        //se vera que afecta
+        double r = 1 / this.cc.eda[99].getDefTodos();
+        double r2 = 1 / this.cc.eda[99].getFatTODOS();
+
+        if (r > ct.getAños()) {
+            this.videformacion = ">" + ct.getAños();
+        } else {
+            this.videformacion = String.format("%.2f", r);
+        }
+        if (r2 > ct.getAños()) {
+            this.vifatiga = ">" + ct.getAños();
+        } else {
+            this.vifatiga = String.format("%.2f", r2);;
+        }
+
     }
 
- /*Lista */
+    /*Lista */
     private void deformacionesUnitarias() {
         double Ez, Er, Et, Epsilon_z, Epsilon_r, Epsilon_t, Ez_damy, Epsilon_z_damy;
         double ModElastico[] = new double[numCapas];// As Double
@@ -1203,7 +1224,7 @@ public class Funciones extends Datos {
             DEFx_damy = (1 / ModElastico[i]) * (Enormal_x - (poisson * (Enormal_y + EvZ_damy)));
             DEFy_damy = (1 / ModElastico[i]) * (Enormal_y - (poisson * (Enormal_x + EvZ_damy)));
 
-            DefTension_damy = ((DEFx_damy + DEFy_damy) / 2) - Math.pow(Math.pow(((DEFx_damy - DEFy_damy) / 2)+ GAMAxy, 2), 0.5);
+            DefTension_damy = ((DEFx_damy + DEFy_damy) / 2) - Math.pow(Math.pow(((DEFx_damy - DEFy_damy) / 2) + GAMAxy, 2), 0.5);
             this.cal.getCapaCalculo(i).setAuxDamy(DefTension_damy);//Sheets("calculos").Cells(5 + i, 30) = DefTension_damy
 
         }
@@ -1262,7 +1283,7 @@ public class Funciones extends Datos {
 
             z = this.cal.getCapaCalculo(i).getEspesorParcialEquivalente();//Sheets("calculos").Cells(2 + i, 7);
 
-            R1 = i == 0 ? this.llantas.getLlanta(0).getDistanciaRadialCarpeta(): this.llantas.getLlanta(0).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(18, 4 + i)
+            R1 = i == 0 ? this.llantas.getLlanta(0).getDistanciaRadialCarpeta() : this.llantas.getLlanta(0).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(18, 4 + i)
             R2 = i == 0 ? this.llantas.getLlanta(1).getDistanciaRadialCarpeta() : this.llantas.getLlanta(1).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(19, 4 + i)
             R3 = i == 0 ? this.llantas.getLlanta(2).getDistanciaRadialCarpeta() : this.llantas.getLlanta(2).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(20, 4 + i)
             R4 = i == 0 ? this.llantas.getLlanta(3).getDistanciaRadialCarpeta() : this.llantas.getLlanta(3).getDistanciaRadialSubrasante();//Sheets("calculos").Cells(21, 4 + i)
@@ -2047,9 +2068,17 @@ public class Funciones extends Datos {
         }
     }
 
+    public void ejecutaAnalisisprobabilista() {
+
+        limpiaProbabilista();
+        guardaResultados();
+        distribuyeModulos();
+        ejecutaVorridas();
+        regresaTesultados();
+    }
+
     public void ejecutaCorridas() {
 
-//num_capas = Sheets("Análisis Espectral").Cells(7, 6)
         int combinaciones = (int) Math.pow(2, numCapas);
 
         double sumavf = 0;
@@ -2057,20 +2086,12 @@ public class Funciones extends Datos {
         double sumavf2 = 0;
         double sumavd2 = 0;
         double z = 0;
-//'''''Call pintacontornobarraazul                                                                'para que funcione con la hoja protegida quité esta linea
 
         for (int analisis = 0; analisis < combinaciones; analisis++) {
 
             for (int i = 0; i < numCapas; i++) {
                 this.cc.tablaRepeticiones[i].setE(i, this.ep[i].getModuloEntreMil());
             }
-
-//Sheets("Análisis Espectral").Cells(13, 6) = Sheets("larguillo").Cells(3 + analisis, 82)
-//Sheets("Análisis Espectral").Cells(14, 6) = Sheets("larguillo").Cells(3 + analisis, 83)
-//Sheets("Análisis Espectral").Cells(15, 6) = Sheets("larguillo").Cells(3 + analisis, 84)
-//Sheets("Análisis Espectral").Cells(16, 6) = Sheets("larguillo").Cells(3 + analisis, 85)
-//Sheets("Análisis Espectral").Cells(17, 6) = Sheets("larguillo").Cells(3 + analisis, 86)
-//Sheets("Análisis Espectral").Cells(18, 6) = Sheets("larguillo").Cells(3 + analisis, 87)
 
             this.IniciarAnalisisEspectral(this.tipoCarga);
 
@@ -2087,24 +2108,6 @@ public class Funciones extends Datos {
             sumavd = sumavd + vidad;
             sumavd2 = sumavd2 + Math.pow(vidad, 2);
 
-//int avan = 64 / combinaciones;
-//'pone la fuente de la celda de avance color blanco
-//'''''With Sheets("Análisis Probabilista").Cells(3, 13).Font                     'IDem
-//'''''    .ThemeColor = xlThemeColorDark1                                        'idem
-//'''''    .TintAndShade = 0                                                      'idem
-//'''''End With                                                                   'idem
-            //  Sheets("Análisis Probabilista").Cells(3, 13) = analisis / (combinaciones + 1)
-            //  Sheets("Análisis Probabilista").Cells(3, 12) = "Ejecutando análisis..."
-//'pinta de azul el avance
-//'''''For Y = 14 + ((analisis - 1) * avan) To 14 + (analisis * avan)
-//'''''With Sheets("Análisis probabilista").Cells(3, Y).Interior
-//'''''        .Pattern = xlSolid
-//'''''        .PatternColorIndex = xlAutomatic
-//'''''        .Color = 16360849
-//'''''        .TintAndShade = 0
-//'''''        .PatternTintAndShade = 0
-//'''''End With
-//'''''Next Y
         }
 
         double Evf = sumavf / combinaciones;
@@ -2165,7 +2168,7 @@ public class Funciones extends Datos {
         //'z = Application.WorksheetFunction.NormSInv(X)
         double Rf = Evf + z * Math.pow(Vvf, 0.5);
         double Rd = Evd + z * Math.pow(Vvd, 0.5);
-
+        /*
         if (Rf > TransitoEstatico.añosProyecto) {
             this.vidaFatiga = 0; // caso 0 ("Análisis Probabilista").Cells(15, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
         } else if (Rf < 1) {
@@ -2181,7 +2184,7 @@ public class Funciones extends Datos {
             //("Análisis Probabilista").Cells(16, 12) = " < 1"
         } else {
             this.vidaDeformacion = Rd;
-        }
+        }*/
 
     }
 

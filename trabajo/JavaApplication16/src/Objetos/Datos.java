@@ -35,23 +35,7 @@ public class Datos {
     
     public String tipoCarga;
     
-    public double vidaFatiga,vidaDeformacion;
 
-    public double getVidaFatiga() {
-        return vidaFatiga;
-    }
-
-    public void setVidaFatiga(double vidaFatiga) {
-        this.vidaFatiga = vidaFatiga;
-    }
-
-    public double getVidaDeformacion() {
-        return vidaDeformacion;
-    }
-
-    public void setVidaDeformacion(double vidaDeformacion) {
-        this.vidaDeformacion = vidaDeformacion;
-    }
     
     public void setPorcentajeConfiabilidad(String porcentajeConfiabilidad){
         this.porcentajeConfiabilidad = porcentajeConfiabilidad;
