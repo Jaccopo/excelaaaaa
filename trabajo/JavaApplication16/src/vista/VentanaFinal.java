@@ -46,7 +46,7 @@ public class VentanaFinal extends javax.swing.JFrame {
         dtm = (DefaultTableModel) tabla.getModel();
         tabla.setModel(dtm);
         
-        
+/*
         agregarCapa.addActionListener((var e) -> {
             AgregarCapa ac = new AgregarCapa(null, true);
             ac.setVisible(true);
@@ -59,7 +59,7 @@ public class VentanaFinal extends javax.swing.JFrame {
                 valor.add(ac.getCoeficiente());
                 dtm.addRow(valor);
             }
-        });
+        });*/
     }
 
     /**
@@ -317,9 +317,9 @@ public class VentanaFinal extends javax.swing.JFrame {
         tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
         jScrollPane2.setViewportView(tabla);
 
-        agregarCapa.setText("Agregar Capa");
+        agregarCapa.setText("No hago nada");
 
-        jButton1.setText("Eliminar Capa");
+        jButton1.setText("Mostrar Grafica de respuesta");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -484,16 +484,12 @@ public class VentanaFinal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonPoissonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Opciones Para Ver La grafica
 
-        if (!(dtm.getRowCount() < 1)) {
-            var continuar = new Continuar(null, true);
-            continuar.setVisible(true);
-            if (continuar.getEstado()) {
-                dtm.removeRow(dtm.getRowCount() - 1);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "La tabla debe tener una \ncapa por lo menos");
-        }
+
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

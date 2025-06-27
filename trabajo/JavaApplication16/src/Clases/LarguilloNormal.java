@@ -11,7 +11,23 @@ public class LarguilloNormal {
     private float tandem;
     private float tridem;
 
-    
+    public LarguilloNormal(){
+        dato = 0;
+        cargaPromedio = 0;
+        simple = 0;
+        dual = 0;
+        tandem = 0;
+        tridem = 0;
+    }
+
+    public void setMuchos(int dato,float cargaPromedio,float simple,float dual,float tandem,float tridem){
+        this.dato = dato;
+        this.cargaPromedio = cargaPromedio;
+        this.simple = simple;
+        this.dual = dual;
+        this.tandem = tandem;
+        this.tridem = tridem;
+    }
     
     public LarguilloNormal(String[] archivo) {
         this.dato = Integer.parseInt(archivo[0]);
