@@ -118,6 +118,7 @@ public class Funciones extends Datos {
         var ayuda2 = 0.0;
         var ayuda3 = 0.0;
         for (int j = 0; j < 4; j++) {
+            System.out.println(j);
             var w1 = tdc.getW1()[j];
             var w2 = tdc.getW2()[j];
             var w3 = tdc.getW3()[j];
