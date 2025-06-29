@@ -76,9 +76,6 @@ public class CargarClases {
     }
 
     public void limpiaProbablista() {
-        for (int i = 0; i < 3; i++) {
-            vi[i] = new VidaUtil();
-        }
         for (int i = 0; i < 10; i++) {
             tablaRepeticiones[i] = new TablaRepeticiones();
         }

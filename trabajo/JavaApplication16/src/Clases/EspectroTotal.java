@@ -11,7 +11,7 @@ import java.util.Vector;
  * @author aldoj
  */
 public class EspectroTotal {
-    private float defTotal,fatTodos;
+    private double defTotal,fatTodos;
 
     public EspectroTotal(String[] datos) {
         this.defTotal = Float.parseFloat(datos[0]);
@@ -24,19 +24,19 @@ public class EspectroTotal {
         return fila;
     }
 
-    public float getDefTotal() {
+    public double getDefTotal() {
         return defTotal;
     }
 
-    public void setDefTotal(float defTotal) {
+    public void setDefTotal(double defTotal) {
         this.defTotal = defTotal;
     }
 
-    public float getFatTodos() {
+    public double getFatTodos() {
         return fatTodos;
     }
 
-    public void setFatTodos(float fatTodos) {
+    public void setFatTodos(double fatTodos) {
         this.fatTodos = fatTodos;
     }
 }

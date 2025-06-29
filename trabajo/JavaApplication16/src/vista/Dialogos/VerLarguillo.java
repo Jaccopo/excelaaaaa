@@ -40,14 +40,6 @@ public class VerLarguillo extends javax.swing.JDialog {
         dtm.addRow(fin);
     }
 
-    public void setNoEditable() {
-        for (int i = 0; i < dtm.getColumnCount(); i++) {
-            for (int j = 0; j < dtm.getRowCount(); j++) {
-                dtm.isCellEditable(j, i);
-            }
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -2,6 +2,7 @@ package controladores;
 
 import Objetos.Funciones;
 import Clases.CargarClases;
+import DatosTablas.TablaDistribucionDeCarga;
 import javax.swing.table.DefaultTableModel;
 
 public class CAnalisis {
@@ -25,6 +26,9 @@ public class CAnalisis {
     
     public void setCTransito(CTransito ct){
         funciones.setCTransito(ct);
+    }
+    public void setTablaDistribucionDeCarga(TablaDistribucionDeCarga tddc){
+        funciones.setTablaDistribucionDeCarga(tddc);
     }
     
     public void CargarTabla(DefaultTableModel dtm){

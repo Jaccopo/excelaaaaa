@@ -47,6 +47,8 @@ public class AgregarCapa extends javax.swing.JDialog {
         jTextField3.setText("0");
         jTextField4.setText("0");
         
+        this.setLocationRelativeTo(parent);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -69,7 +71,7 @@ public class AgregarCapa extends javax.swing.JDialog {
 
         jTextField1.setText("jTextField1");
 
-        jLabel2.setText("Espesor cm:");
+        jLabel2.setText("Espesor capa anterior cm:");
 
         jTextField2.setText("jTextField2");
 

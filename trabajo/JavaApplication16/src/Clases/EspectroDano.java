@@ -11,10 +11,10 @@ import java.util.Vector;
  * @author aldoj
  */
 public class EspectroDano {
-    private float simpleDef,simpleFat;
-    private float dualDef,dualFat;
-    private float TANDEMDef,TANDEMFat;
-    private float TRIDEMEDef,TRIDEMFat;
+    private double simpleDef,simpleFat;
+    private double dualDef,dualFat;
+    private double TANDEMDef,TANDEMFat;
+    private double TRIDEMEDef,TRIDEMFat;
 
     public EspectroDano(String[] datos) {
         this.simpleDef = Float.parseFloat(datos[0]);
@@ -39,74 +39,74 @@ public class EspectroDano {
         return fila;
     }
 
-    public float sumaDeformacion(){
+    public double sumaDeformacion(){
         return this.simpleDef+this.dualDef+this.TRIDEMEDef+this.TANDEMDef;
     }
-     public float sumaFatiga(){
+     public double sumaFatiga(){
         return this.simpleFat+this.dualFat+this.TANDEMFat+this.TRIDEMFat;
     }
     
-    public float getSimpleDef() {
+    public double getSimpleDef() {
         return simpleDef;
     }
 
-    public void setSimpleDef(float simpleDef) {
+    public void setSimpleDef(double simpleDef) {
         this.simpleDef = simpleDef;
     }
 
-    public float getSimpleFat() {
+    public double getSimpleFat() {
         return simpleFat;
     }
 
-    public void setSimpleFat(float simpleFat) {
+    public void setSimpleFat(double simpleFat) {
         this.simpleFat = simpleFat;
     }
 
-    public float getDualDef() {
+    public double getDualDef() {
         return dualDef;
     }
 
-    public void setDualDef(float dualDef) {
+    public void setDualDef(double dualDef) {
         this.dualDef = dualDef;
     }
 
-    public float getDualFat() {
+    public double getDualFat() {
         return dualFat;
     }
 
-    public void setDualFat(float dualFat) {
+    public void setDualFat(double dualFat) {
         this.dualFat = dualFat;
     }
 
-    public float getTANDEMDef() {
+    public double getTANDEMDef() {
         return TANDEMDef;
     }
 
-    public void setTANDEMDef(float TANDEMDef) {
+    public void setTANDEMDef(double TANDEMDef) {
         this.TANDEMDef = TANDEMDef;
     }
 
-    public float getTANDEMFat() {
+    public double getTANDEMFat() {
         return TANDEMFat;
     }
 
-    public void setTANDEMFat(float TANDEMFat) {
+    public void setTANDEMFat(double TANDEMFat) {
         this.TANDEMFat = TANDEMFat;
     }
 
-    public float getTRIDEMEDef() {
+    public double getTRIDEMEDef() {
         return TRIDEMEDef;
     }
 
-    public void setTRIDEMEDef(float TRIDEMEDef) {
+    public void setTRIDEMEDef(double TRIDEMEDef) {
         this.TRIDEMEDef = TRIDEMEDef;
     }
 
-    public float getTRIDEMFat() {
+    public double getTRIDEMFat() {
         return TRIDEMFat;
     }
 
-    public void setTRIDEMFat(float TRIDEMFat) {
+    public void setTRIDEMFat(double TRIDEMFat) {
         this.TRIDEMFat = TRIDEMFat;
     }
     

@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 
 public class TransitoDialogo extends javax.swing.JDialog implements FocusListener {
 private CTransito ct; 
+private boolean transitoCargado = false;
     public TransitoDialogo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -30,10 +31,29 @@ private CTransito ct;
         T3S2R4.addFocusListener(this);
         Otros.addFocusListener(this);
         TransitoEstatico.activado = 0;
+        this.setLocationRelativeTo(parent);
     }
 
+    public boolean isCargado(){
+        return transitoCargado;
+    }
     public CTransito getCTransito(){
         return ct;
+    }
+    public void setCTransito(CTransito ct){
+        TDPA.setText(ct.getTDPA()+"");
+        FDS.setText(ct.getFDS()+"");
+        años.setText(ct.getAños()+"");
+        tasa.setText(ct.getTasa()+"");
+        A.setText(ct.getA()+"");
+        B2.setText(ct.getB2()+"");
+        B3.setText(ct.getB3()+"");
+        C2.setText(ct.getC2()+"");
+        C3.setText(ct.getC3()+"");
+        T3S2.setText(ct.getT3S2()+"");
+        T3S3.setText(ct.getT3S3()+"");
+        T3S2R4.setText(ct.getT3S2R4()+"");
+        Otros.setText(ct.getOtros()+"");
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -670,8 +690,9 @@ private CTransito ct;
             dualrep.setText(String.format("%.0f",ct.getNumEjes_dual_año()));
             tandemrep.setText(String.format("%.0f",ct.getNumEjes_tandem_año()));
             tridemrep.setText(String.format("%.0f",ct.getNumEjes_tridem_año()));
-            
+                 this.transitoCargado = true;
             suma.setText(ct.sumaPorcentaje()+"%");
+           
         }catch(NumberFormatException ex){
             suma.setText("0");
         }

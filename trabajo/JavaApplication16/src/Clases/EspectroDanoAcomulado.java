@@ -11,8 +11,8 @@ import java.util.Vector;
  * @author aldoj
  */
 public class EspectroDanoAcomulado {
-    private float defSimple,defDual,defTANDEM,defTRIDEM,defTodos;
-    private float fatSimple,fatDual,fatTANDEM,fatTrideem,fatTODOS;
+    private double defSimple,defDual,defTANDEM,defTRIDEM,defTodos;
+    private double fatSimple,fatDual,fatTANDEM,fatTrideem,fatTODOS;
 
     public EspectroDanoAcomulado(String datos[]) {
        
@@ -26,8 +26,7 @@ public class EspectroDanoAcomulado {
         this.fatTANDEM = Float.parseFloat(datos[7]);
         this.fatTrideem = Float.parseFloat(datos[8]);
         this.fatTODOS = Float.parseFloat(datos[9]);
-        
-        
+
     }
      public Vector getVector(){
         var fila = new Vector();
@@ -50,83 +49,83 @@ public class EspectroDanoAcomulado {
         this.defTodos = this.defSimple+this.defDual+this.defTANDEM+this.defTRIDEM;
     }
     
-    public float getDefSimple() {
+    public double getDefSimple() {
         return defSimple;
     }
 
-    public void setDefSimple(float defSimple) {
+    public void setDefSimple(double defSimple) {
         this.defSimple = defSimple;
     }
 
-    public float getDefDual() {
+    public double getDefDual() {
         return defDual;
     }
 
-    public void setDefDual(float defDual) {
+    public void setDefDual(double defDual) {
         this.defDual = defDual;
     }
 
-    public float getDefTANDEM() {
+    public double getDefTANDEM() {
         return defTANDEM;
     }
 
-    public void setDefTANDEM(float defTANDEM) {
+    public void setDefTANDEM(double defTANDEM) {
         this.defTANDEM = defTANDEM;
     }
 
-    public float getDefTRIDEM() {
+    public double getDefTRIDEM() {
         return defTRIDEM;
     }
 
-    public void setDefTRIDEM(float defTRIDEM) {
+    public void setDefTRIDEM(double defTRIDEM) {
         this.defTRIDEM = defTRIDEM;
     }
 
-    public float getDefTodos() {
+    public double getDefTodos() {
         return defTodos;
     }
 
-    public void setDefTodos(float defTodos) {
+    public void setDefTodos(double defTodos) {
         this.defTodos = defTodos;
     }
 
-    public float getFatSimple() {
+    public double getFatSimple() {
         return fatSimple;
     }
 
-    public void setFatSimple(float fatSimple) {
+    public void setFatSimple(double fatSimple) {
         this.fatSimple = fatSimple;
     }
 
-    public float getFatDual() {
+    public double getFatDual() {
         return fatDual;
     }
 
-    public void setFatDual(float fatDual) {
+    public void setFatDual(double fatDual) {
         this.fatDual = fatDual;
     }
 
-    public float getFatTANDEM() {
+    public double getFatTANDEM() {
         return fatTANDEM;
     }
 
-    public void setFatTANDEM(float fatTANDEM) {
+    public void setFatTANDEM(double fatTANDEM) {
         this.fatTANDEM = fatTANDEM;
     }
 
-    public float getFatTrideem() {
+    public double getFatTrideem() {
         return fatTrideem;
     }
 
-    public void setFatTrideem(float fatTrideem) {
+    public void setFatTrideem(double fatTrideem) {
         this.fatTrideem = fatTrideem;
     }
 
-    public float getFatTODOS() {
+    public double getFatTODOS() {
         return fatTODOS;
     }
 
-    public void setFatTODOS(float fatTODOS) {
+    public void setFatTODOS(double fatTODOS) {
         this.fatTODOS = fatTODOS;
     }
     

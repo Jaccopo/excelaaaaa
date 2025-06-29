@@ -34,35 +34,41 @@ public class Funciones extends Datos {
         this.ct = ct;
     }
 
+    public void setTablaDistribucionDeCarga(TablaDistribucionDeCarga tdc) {
+        this.tdc = tdc;
+    }
+
     public void IniciarAnalisisEspectral(String tipoCarga) {
 
         this.tipoCarga = tipoCarga;
-        if (numCapas > 3) {
-            JOptionPane.showMessageDialog(null, "Solo se puede calcular tres capas", "Error", JOptionPane.ERROR_MESSAGE);
+        if (numCapas > 6) {
+            JOptionPane.showMessageDialog(null, " ", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            switch (tipoCarga) {
-                case ("Legal"):
-                    tdc = new TablaDistribucionDeCarga(1);
-                    break;
+            if (this.tdc == null) {
+                switch (tipoCarga) {
+                    case ("Legal"):
+                        tdc = new TablaDistribucionDeCarga(1);
+                        break;
 
-                case ("Ligera Sobre Carga"):
+                    case ("Ligera Sobre Carga"):
 
-                    tdc = new TablaDistribucionDeCarga(2);
-                    break;
+                        tdc = new TablaDistribucionDeCarga(2);
+                        break;
 
-                case ("Alta Sobrecarga"):
+                    case ("Alta Sobrecarga"):
 
-                    tdc = new TablaDistribucionDeCarga(3);
-                    break;
+                        tdc = new TablaDistribucionDeCarga(3);
+                        break;
 
-                case ("Muy Alta Sobrecarga"):
+                    case ("Muy Alta Sobrecarga"):
 
-                    tdc = new TablaDistribucionDeCarga(4);
-                    break;
+                        tdc = new TablaDistribucionDeCarga(4);
+                        break;
 
-                case ("Avanzado"):
-                    tdc = new TablaDistribucionDeCarga(5);
-                    break;
+                    case ("Avanzado"):
+                        tdc = new TablaDistribucionDeCarga(5);
+                        break;
+                }
             }
 
             espectros();
@@ -979,7 +985,7 @@ public class Funciones extends Datos {
 
     }
 
-      /*Lista */
+    /*Lista */
     private void deformacionesUnitarias() {
         double Ez, Er, Et, Epsilon_z, Epsilon_r, Epsilon_t, Ez_damy, Epsilon_z_damy;
         double ModElastico[] = new double[numCapas];// As Double
@@ -1138,8 +1144,7 @@ public class Funciones extends Datos {
             DEFx = (1 / ModElastico[i]) * (Enormal_x - (poisson * (Enormal_y + EvZ)));
             DEFy = (1 / ModElastico[i]) * (Enormal_y - (poisson * (Enormal_x + EvZ)));
             GAMAxy = (2 * (1 + poisson) * Ecortante_xy) / ModElastico[i];
-
-            DefTension = ((DEFx + DEFy) / 2) - Math.pow(Math.pow((Math.pow(((DEFx - DEFy) / 2), 2)) + GAMAxy, 2), 0.5);
+            DefTension = ((DEFx + DEFy) / 2) - Math.pow(Math.pow(((DEFx - DEFy) / 2), 2) + Math.pow(GAMAxy, 2), .5);
             this.cal.getCapaCalculo(i).setDeformacionPorTension(DefTension);//Sheets("calculos").Cells(2 + i, 30) = DefTension
 
             //'calculados con damy
@@ -1957,38 +1962,6 @@ public class Funciones extends Datos {
         this.llantas.getLlanta(5).setOtNeumatico2(Et6);//Sheets("calculos").Cells(46, 6) = Et6
     }
 
-    public void distribuyeModulos() {
-
-        double modulocapa[] = new double[numCapas];
-        double coefcapa[] = new double[numCapas];
-        int combinaciones;
-        int contador = 0, a;
-
-
-        combinaciones = (int) Math.pow(2, numCapas);
-
-        for (int capa = numCapas-1; capa > -1; capa--) {//capa = num_capas To 1 Step - 1
-            modulocapa[capa] = this.ep[capa].getModulo();
-            coefcapa[capa] = this.ep[capa].getCoeficienteVariacion();
-            contador = 1;
-            a = (int) Math.pow(2, (numCapas - capa));
-            for (int i = 0; i < combinaciones; i++) {
-
-                if (contador <= a) {// Then
-                    this.cc.tablaRepeticiones[capa].setE(i, modulocapa[i] * (1 + coefcapa[capa] / 100));//Sheets("larguillo").Cells(3 + i, 81 + capa) = modulocapa[i] * (1 + coefcapa(capa) / 100)
-                } else {
-                    this.cc.tablaRepeticiones[capa].setE(i, modulocapa[i] * (1 - coefcapa[capa] / 100));//("larguillo").Cells(3 + i, 81 + capa) = modulocapa(capa) * (1 - coefcapa(capa) / 100)
-                }
-                contador++;
-                if (contador > 2 * a) {
-                    contador = 1;
-                }
-
-            }
-
-        }
-    }
-    
     /*Lista*/
     private void sumas() {
         int i, eje, NumMarcasClase;// As Integer
@@ -2002,16 +1975,9 @@ public class Funciones extends Datos {
 
         for (i = 0; i < 100; i++) {
 
-            this.cc.et[i].setDefTotal(this.cc.ed[i].sumaDeformacion());  //Sheets("Larguillo").Cells(3 + i, 51) = //Sheets("Larguillo").Cells(3 + i, 42) + _
-            //Sheets("Larguillo").Cells(3 + i, 44) + _
-            //Sheets("Larguillo").Cells(3 + i, 46) + _
-            //Sheets("Larguillo").Cells(3 + i, 48)
+            this.cc.et[i].setDefTotal(this.cc.ed[i].sumaDeformacion());
 
             this.cc.et[i].setFatTodos(this.cc.ed[i].sumaFatiga());
-            //Sheets("Larguillo").Cells(3 + i, 52) = Sheets("Larguillo").Cells(3 + i, 43) + _
-            //Sheets("Larguillo").Cells(3 + i, 45) + _
-            //Sheets("Larguillo").Cells(3 + i, 47) + _
-            //Sheets("Larguillo").Cells(3 + i, 49)
 
             suma1 = this.cc.ed[i].getSimpleDef() + suma1;//Sheets("Larguillo").Cells(3 + i, 42) + suma1
             this.cc.eda[i].setDefSimple((float) suma1);//Sheets("Larguillo").Cells(3 + i, 54) = suma1
@@ -2027,33 +1993,64 @@ public class Funciones extends Datos {
 
             this.cc.eda[i].sumaDeformaciones();
 
-            //Sheets("Larguillo").Cells(3 + i, 58) = Sheets("Larguillo").Cells(3 + i, 54) + _
-            //                                     Sheets("Larguillo").Cells(3 + i, 55) + _
-            //                                   Sheets("Larguillo").Cells(3 + i, 56) + _
-            //                                 Sheets("Larguillo").Cells(3 + i, 57)
-            suma5 = this.cc.ed[i].getSimpleFat() + suma5;//Sheets("Larguillo").Cells(3 + i, 42) + suma1
-            this.cc.eda[i].setFatSimple((float) suma5);//Sheets("Larguillo").Cells(3 + i, 54) = suma1
+            suma5 = this.cc.ed[i].getSimpleFat() + suma5;
+            this.cc.eda[i].setFatSimple((float) suma5);
 
-            suma6 = this.cc.ed[i].getDualFat() + suma6;//Sheets("Larguillo").Cells(3 + i, 44) + suma2
-            this.cc.eda[i].setFatDual((float) suma6);//Sheets("Larguillo").Cells(3 + i, 55) = suma2
+            suma6 = this.cc.ed[i].getDualFat() + suma6;
+            this.cc.eda[i].setFatDual((float) suma6);
 
-            suma7 = this.cc.ed[i].getTANDEMFat() + suma7;//Sheets("Larguillo").Cells(3 + i, 46) + suma3
-            this.cc.eda[i].setFatTANDEM((float) suma7);//Sheets("Larguillo").Cells(3 + i, 56) = suma3
+            suma7 = this.cc.ed[i].getTANDEMFat() + suma7;
+            this.cc.eda[i].setFatTANDEM((float) suma7);
 
-            suma8 = this.cc.ed[i].getTANDEMFat() + suma8;//Sheets("Larguillo").Cells(3 + i, 48) + suma4
-            this.cc.eda[i].setFatTrideem((float) suma8);//Sheets("Larguillo").Cells(3 + i, 57) = suma4
+            suma8 = this.cc.ed[i].getTRIDEMFat() + suma8;
+            this.cc.eda[i].setFatTrideem((float) suma8);
 
             this.cc.eda[i].sumaFatiga();
-            //Sheets("Larguillo").Cells(3 + i, 63) = Sheets("Larguillo").Cells(3 + i, 59) + _
-            //                                     Sheets("Larguillo").Cells(3 + i, 60) + _
-            //                                   Sheets("Larguillo").Cells(3 + i, 61) + _
-            //                                 Sheets("Larguillo").Cells(3 + i, 62)
         }
     }
 
     private void vidaRemanente() {
+        this.cc.vi[0].setDefSim((float) (1 / this.cc.eda[99].getDefSimple()));
+        this.cc.vi[0].setDefDual((float) (1 / this.cc.eda[99].getDefDual()));
+        this.cc.vi[0].setDefTANDM((float) (1 / this.cc.eda[99].getDefTANDEM()));
+        this.cc.vi[0].setDefTRIDEM((float) (1 / this.cc.eda[99].getDefTRIDEM()));
+        this.cc.vi[0].setFafSim((float) (1 / this.cc.eda[99].getFatSimple()));
+        this.cc.vi[0].setFafDual((float) (1 / this.cc.eda[99].getFatDual()));
+        this.cc.vi[0].setFafTANDM((float) (1 / this.cc.eda[99].getDefTANDEM()));
+        this.cc.vi[0].setFafTRIDEM((float) (1 / this.cc.eda[99].getFatTrideem()));
+
         double r = 1 / this.cc.eda[99].getDefTodos();
         double r2 = 1 / this.cc.eda[99].getFatTODOS();
+
+        this.cc.vi[0].setDefTodos((float) r);
+        this.cc.vi[0].setFafTodos((float) r2);
+
+        this.cc.vi[1].setDefSim(this.ct.getAños());
+        this.cc.vi[1].setDefDual(this.ct.getAños());
+        this.cc.vi[1].setDefTANDM(this.ct.getAños());
+        this.cc.vi[1].setDefTRIDEM(this.ct.getAños());
+        
+        this.cc.vi[1].setFafSim(this.ct.getAños());
+        this.cc.vi[1].setFafDual(this.ct.getAños());
+        this.cc.vi[1].setFafTANDM(this.ct.getAños());
+        this.cc.vi[1].setFafTRIDEM(this.ct.getAños());
+        
+        this.cc.vi[1].setDefTodos(this.ct.getAños());
+        this.cc.vi[1].setFafTodos(this.ct.getAños());
+        
+        
+        this.cc.vi[2].setDefSim((this.cc.vi[1].getDefSim()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getDefSim());
+        this.cc.vi[2].setDefDual((this.cc.vi[1].getDefDual()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getDefDual());
+        this.cc.vi[2].setDefTANDM((this.cc.vi[1].getDefTANDM()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getDefTANDM());
+        this.cc.vi[2].setDefTRIDEM((this.cc.vi[1].getDefTRIDEM()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getDefTRIDEM());
+
+        this.cc.vi[2].setFafSim((this.cc.vi[1].getFafSim()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getFafSim());
+        this.cc.vi[2].setFafDual((this.cc.vi[1].getFafDual()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getFafDual());
+        this.cc.vi[2].setFafTANDM((this.cc.vi[1].getFafTANDM()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getFafTANDM());
+        this.cc.vi[2].setFafTRIDEM((this.cc.vi[1].getDefTRIDEM()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getDefTRIDEM());
+        this.cc.vi[2].setDefTodos((this.cc.vi[1].getDefTodos()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getDefTodos());
+        this.cc.vi[2].setFafTodos((this.cc.vi[1].getFafTodos()>this.ct.getAños())?this.ct.getAños():this.cc.vi[1].getFafTodos());
+        
 
         if (r > ct.getAños()) {
             this.videformacion = ">" + ct.getAños();
@@ -2063,34 +2060,35 @@ public class Funciones extends Datos {
         if (r2 > ct.getAños()) {
             this.vifatiga = ">" + ct.getAños();
         } else {
-            this.vifatiga = String.format("%.2f", r2);;
+            this.vifatiga = String.format("%.2f", r2);
         }
-        
-        
 
     }
 
-  
-
-    public void iniciaAnalisisprobabilista(String confiabilidad,String tipoEje) {
-
+    public void iniciaAnalisisprobabilista(String confiabilidad, String tipoEje) {
+        ObjetoProbabilistico obProbabilistico = new ObjetoProbabilistico();//limpia
         this.cc.limpiaProbablista();
-        guardaResultados();
-        double vide = 1 / this.cc.eda[99].getDefTodos();
-        double vifa = 1 / this.cc.eda[99].getFatTODOS();
-        
-        distribuyeModulos();
-        ejecutaCorridas(vifa,vide,confiabilidad,tipoEje);
+
+        obProbabilistico = guardaResultados(obProbabilistico);
+
+
+       // distribuyeModulos();
+       // ejecutaCorridas(confiabilidad, tipoEje, obProbabilistico);
         //regresaResultados();
     }
 
-    private void guardaResultados(){
-        this.objetoProbabilistico.setModulo1(this.ep[0].getModuloEntreMil());
-        this.objetoProbabilistico.setModulo2(this.ep[1].getModuloEntreMil());
-        this.objetoProbabilistico.setModulo3(this.ep[2].getModuloEntreMil());
+    private ObjetoProbabilistico guardaResultados(ObjetoProbabilistico obProbabilistico) {
+        obProbabilistico.setVidaDeformacion( this.cc.vi[0].getDefTodos());
+        obProbabilistico.setVidaFatiga(this.cc.vi[0].getFafTodos());
         
+        return obProbabilistico;
+
     }
-    public void ejecutaCorridas(double vifati,double videfo,String confiabilidad,String tipoEje) {
+
+    public void ejecutaCorridas(
+                      String confiabilidad,
+                      String tipoEje,
+                      ObjetoProbabilistico obProbabilistico) {
 
         int combinaciones = (int) Math.pow(2, numCapas);
 
@@ -2108,13 +2106,13 @@ public class Funciones extends Datos {
 
             this.IniciarAnalisisEspectral(tipoEje);
 
-            double vidaf = 1/this.cc.vi[0].getDefTodos();//Sheets("larguillo").Cells(4, 74)  'fatiga
-            double vidad = 1/this.cc.vi[0].getDefTodos();// Sheets("larguillo").Cells(4, 69)  'deformacion
+            double vidaf = 1 / this.cc.vi[0].getDefTodos();
+            double vidad = 1 / this.cc.vi[0].getDefTodos();
 
-            this.cc.tablaRepeticiones[analisis].setVf(vidaf);// = vidaf
-            this.cc.tablaRepeticiones[analisis].setVf2(Math.pow(vidaf, 2));//Sheets("larguillo").Cells(3 + analisis, 89) = vidaf ^ 2
-            this.cc.tablaRepeticiones[analisis].setVd(vidad);//Sheets("larguillo").Cells(3 + analisis, 90) = vidad
-            this.cc.tablaRepeticiones[analisis].setVd(Math.pow(vidad, 2));//Sheets("larguillo").Cells(3 + analisis, 91) = vidad ^ 2
+            this.cc.tablaRepeticiones[analisis].setVf(vidaf);
+            this.cc.tablaRepeticiones[analisis].setVf2(Math.pow(vidaf, 2));
+            this.cc.tablaRepeticiones[analisis].setVd(vidad);
+            this.cc.tablaRepeticiones[analisis].setVd(Math.pow(vidad, 2));
 
             sumavf = sumavf + vidaf;
             sumavf2 = sumavf2 + Math.pow(vidaf, 2);
@@ -2132,7 +2130,7 @@ public class Funciones extends Datos {
         double Vvd = Ev2d - Math.pow(Evd, 2);
 
         double PConfiabilidad = 0;
- 
+
         switch (confiabilidad) {
 
             case "55%":
@@ -2172,60 +2170,86 @@ public class Funciones extends Datos {
                 z = -1.644854;
                 break;
         }
-
         double Confiabilidad = PConfiabilidad / 100;
-
         double X = 1 - Confiabilidad;
 
-        //'z = Application.WorksheetFunction.NormSInv(X)
         double Rf = Evf + z * Math.pow(Vvf, 0.5);
         double Rd = Evd + z * Math.pow(Vvd, 0.5);
-        
+
         if (Rf > TransitoEstatico.añosProyecto) {
-            this.vidaFatiga = 0; // caso 0 ("Análisis Probabilista").Cells(15, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
+            this.vifatiga = ">" + ct.getAños();
         } else if (Rf < 1) {
-            this.vidaFatiga = 0.001;//caso 0.001("Análisis Probabilista").Cells(15, 12) = " < 1"
+            this.vifatiga = "<1";
         } else {
-            this.vidaFatiga = Rf;
+            this.vifatiga = "" + Rf;
         }
 
         if (Rd > TransitoEstatico.añosProyecto) {
-            this.vidaDeformacion = 0; //caso 0("Análisis Probabilista").Cells(16, 12) = " > " & CDbl(Sheets("Tránsito").años1.Text)
+            this.videformacion = ">" + ct.getAños();
         } else if (Rf < 1) {
-            this.vidaDeformacion = 0.001;
-            //("Análisis Probabilista").Cells(16, 12) = " < 1"
-        } else {
-            this.vidaDeformacion = Rd;
-        }
+            this.videformacion = "<1";
 
+        } else {
+            this.videformacion = "" + Rd;
+        }
     }
 
+    public void distribuyeModulos() {
+
+        double modulocapa[] = new double[numCapas];
+        double coefcapa[] = new double[numCapas];
+        int combinaciones;
+        int contador = 0, a;
+
+        combinaciones = (int) Math.pow(2, numCapas);
+
+        for (int capa = numCapas - 1; capa > -1; capa--) {//capa = num_capas To 1 Step 
+            modulocapa[capa] = this.ep[capa].getModulo();
+            coefcapa[capa] = this.ep[capa].getCoeficienteVariacion();
+            contador = 1;
+            a = (int) Math.pow(2, (numCapas - capa));
+            for (int i = 0; i < combinaciones - 1; i++) {
+
+                if (contador <= a) {// Then
+                    this.cc.tablaRepeticiones[].setE(i, modulocapa[capa] * (1 + coefcapa[capa] / 100));//Sheets("larguillo").Cells(3 + i, 81 + capa) = modulocapa[i] * (1 + coefcapa(capa) / 100)
+                } else {
+                    this.cc.tablaRepeticiones[i].setE(i, modulocapa[capa] * (1 - coefcapa[capa] / 100));//("larguillo").Cells(3 + i, 81 + capa) = modulocapa(capa) * (1 - coefcapa(capa) / 100)
+                }
+                contador++;
+                if (contador > 2 * a) {
+                    contador = 1;
+                }
+
+            }
+
+        }
+    }
 }
 
-class ObjetoProbabilistico{
-    
-     double vidadefinversa;
-     double vidafatinversa;
-     double vidaDeformacion;
-     double vidaFatiga;
-     double modulo1;
-     double modulo2;
-     double modulo3;
+class ObjetoProbabilistico {
+
+    double vidaDeformacionInversa;
+    double vidaFatigaInversa;
+    double vidaDeformacion;
+    double vidaFatiga;
+    double modulo1;
+    double modulo2;
+    double modulo3;
 
     public double getVidadefinversa() {
-        return vidadefinversa;
+        return vidaDeformacionInversa;
     }
 
     public void setVidadefinversa(double vidadefinversa) {
-        this.vidadefinversa = vidadefinversa;
+        this.vidaDeformacionInversa = vidadefinversa;
     }
 
     public double getVidafatinversa() {
-        return vidafatinversa;
+        return vidaFatigaInversa;
     }
 
     public void setVidafatinversa(double vidafatinversa) {
-        this.vidafatinversa = vidafatinversa;
+        this.vidaFatigaInversa = vidafatinversa;
     }
 
     public double getVidaDeformacion() {
@@ -2267,7 +2291,5 @@ class ObjetoProbabilistico{
     public void setModulo3(double modulo3) {
         this.modulo3 = modulo3;
     }
-     
-     
 
 }
