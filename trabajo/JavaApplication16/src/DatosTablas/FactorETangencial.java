@@ -48,7 +48,7 @@ public class FactorETangencial {
         for (int i = 0; i < rows.length; i++) {
             String datosFila[] = rows[i].split("\t");
             for (int j = 0; j < datosFila.length; j++) {
-                System.out.println("i:"+i+" j:"+j+" datos:"+datosFila[j]);
+               
                 values[i][j] = Float.parseFloat(datosFila[j]);
             }
         }

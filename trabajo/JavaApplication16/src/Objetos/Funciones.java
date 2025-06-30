@@ -13,8 +13,7 @@ public class Funciones extends Datos {
     private TablaDistribucionDeCarga tdc;
     private Cargando car;
     private CTransito ct;
-    public String vifatiga;
-    public String videformacion;
+    public String vifatiga,videformacion,vifatigapro,videformacionpro;
     public ObjetoProbabilistico objetoProbabilistico;
 
     public String getVidafatiga() {
@@ -27,6 +26,7 @@ public class Funciones extends Datos {
 
     public Funciones() {
         super();
+       
         objetoProbabilistico = new ObjetoProbabilistico();
     }
 
@@ -73,7 +73,7 @@ public class Funciones extends Datos {
 
             espectros();
             for (int j = 0; j < 4; j++) {
-                this.cal = new Calculos(); // revisar que esto sea el detonante del problema
+                this.cal = new Calculos(); 
 
                 this.setTipoEje(j == 0 ? "Sencillo" : j == 1 ? "Sencillo Dual" : j == 2 ? "Tandem" : "Tridem");
 
@@ -136,7 +136,6 @@ public class Funciones extends Datos {
         var ayuda2 = 0.0;
         var ayuda3 = 0.0;
         for (int j = 0; j < 4; j++) {
-            System.out.println(j);
             var w1 = tdc.getW1()[j];
             var w2 = tdc.getW2()[j];
             var w3 = tdc.getW3()[j];
@@ -483,17 +482,17 @@ public class Funciones extends Datos {
             } while (buscay < 23);
 
             //'interpolación para la primera tabla
-            valorA = y_inter[buscay];
-            valorC = y_inter[buscay + 1];
-            valorI = DatosTablas.FactorEVertical.getValor(posy1, posx1);//Sheets("factor_e_vert").Cells(posy1 + 2, posx1 + 2)
-            valorK = DatosTablas.FactorEVertical.getValor(posy2, posx1);//Sheets("factor_e_vert").Cells(posy2 + 2, posx1 + 2)
+            valorA = buscay>22?0:y_inter[buscay];
+            valorC = buscay+1>22?0:y_inter[buscay + 1];
+            valorI = DatosTablas.FactorEVertical.getValor(posy1, posx1);
+            valorK = DatosTablas.FactorEVertical.getValor(posy2, posx1);
 
             valref = Y1;
 
             res_interpolacion1 = interpola(valorA, valref, valorC, valorI, valorK);
 
-            valorI = DatosTablas.FactorEVertical.getValor(posy1, posx2);//Sheets("factor_e_vert").Cells(posy1 + 2, posx2 + 2;
-            valorK = DatosTablas.FactorEVertical.getValor(posy2, posx2);//Sheets("factor_e_vert").Cells(posy2 + 2, posx2 + 2)
+            valorI = DatosTablas.FactorEVertical.getValor(posy1, posx2);
+            valorK = DatosTablas.FactorEVertical.getValor(posy2, posx2);
 
             res_interpolacion2 = interpola(valorA, valref, valorC, valorI, valorK);
 
@@ -506,8 +505,8 @@ public class Funciones extends Datos {
             llantas.getLlanta(i).setFactorEVertical(res_interpolacion3);//Sheets("calculos").Cells(25 + llantas, 4) = res_interpolacion3
 
             //'intepolación para la segunda tabla
-            valorA = y_inter[buscay];
-            valorC = y_inter[buscay + 1];
+            valorA =  buscay>22?0:y_inter[buscay];
+            valorC =  buscay+1>22?0:y_inter[buscay + 1];
             valorI = DatosTablas.FactorERadial.getValor(posy1, posx1);//Sheets("factor_e_rad").Cells(posy1 + 2, posx1 + 2)
             valorK = DatosTablas.FactorERadial.getValor(posy2, posx1);//Sheets("factor_e_rad").Cells(posy2 + 2, posx1 + 2)
 
@@ -529,8 +528,8 @@ public class Funciones extends Datos {
             llantas.getLlanta(i).setFactorERadial(res_interpolacion3);// Sheets("calculos").Cells(25 + llantas, 5) = res_interpolacion3
 
             //interpolación para la tercera tabla
-            valorA = y_inter[buscay];
-            valorC = y_inter[buscay + 1];
+            valorA =  buscay>22?0:y_inter[buscay];
+            valorC =  buscay+1>22?0:y_inter[buscay + 1];
             valorI = DatosTablas.FactorETangencial.getValor(posy1, posx1);//Sheets("factor_e_tan").Cells(posy1 + 2, posx1 + 2)
             valorK = DatosTablas.FactorETangencial.getValor(posy2, posx1);//Sheets("factor_e_tan").Cells(posy2 + 2, posx1 + 2)
 
@@ -902,28 +901,28 @@ public class Funciones extends Datos {
         double RepEsperadas[] = new double[4];
 
         NumEjes[eje] = ct.getNumEjes_Sencillos_año();
-        System.out.println(NumEjes[eje]);
+        
         for (i = 0; i < 100; i++) {
             RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getSimple();
             this.cc.ere[i].setSimple((float) RepEsperadas[eje]);
         }
         eje++;
         NumEjes[eje] = ct.getNumEjes_dual_año();
-        System.out.println(NumEjes[eje]);
+       
         for (i = 0; i < 100; i++) {
             RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getDual();
             this.cc.ere[i].setDual((float) RepEsperadas[eje]);
         }
         eje++;
         NumEjes[eje] = ct.getNumEjes_tandem_año();
-        System.out.println(NumEjes[eje]);
+       
         for (i = 0; i < 100; i++) {
             RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getTandem();
             this.cc.ere[i].setTandem((float) RepEsperadas[eje]);
         }
         eje++;
         NumEjes[eje] = ct.getNumEjes_tridem_año();
-        System.out.println(NumEjes[eje]);
+        
         for (i = 0; i < 100; i++) {
             RepEsperadas[eje] = NumEjes[eje] * 0.01 * 0.5 * this.cc.data[i].getTridem();
             this.cc.ere[i].setTridem((float) RepEsperadas[eje]);
@@ -2070,25 +2069,34 @@ public class Funciones extends Datos {
         this.cc.limpiaProbablista();
 
         obProbabilistico = guardaResultados(obProbabilistico);
-
-
-       // distribuyeModulos();
-       // ejecutaCorridas(confiabilidad, tipoEje, obProbabilistico);
-        //regresaResultados();
+        distribuyeModulos();
+        ejecutaCorridas(confiabilidad, tipoEje);
+        regresaResultados(obProbabilistico);
     }
 
     private ObjetoProbabilistico guardaResultados(ObjetoProbabilistico obProbabilistico) {
         obProbabilistico.setVidaDeformacion( this.cc.vi[0].getDefTodos());
         obProbabilistico.setVidaFatiga(this.cc.vi[0].getFafTodos());
-        
+        double moodulos[] = new double[numCapas];
+        for (int i = numCapas-1; i> -1; i--) {
+            moodulos[i] = this.ep[i].getModulo();
+        }
+        obProbabilistico.modulos=moodulos;
         return obProbabilistico;
-
+        
+    }
+    
+    private void regresaResultados(ObjetoProbabilistico obProbabilistico){
+        for (int i = numCapas-1; i >-1; i--) {
+            this.ep[i].setModulo(obProbabilistico.modulos[i]);
+        }
+     this.IniciarAnalisisEspectral(tipoEje);
     }
 
     public void ejecutaCorridas(
                       String confiabilidad,
-                      String tipoEje,
-                      ObjetoProbabilistico obProbabilistico) {
+                      String tipoEje
+                      ) {
 
         int combinaciones = (int) Math.pow(2, numCapas);
 
@@ -2100,14 +2108,16 @@ public class Funciones extends Datos {
 
         for (int analisis = 0; analisis < combinaciones; analisis++) {
 
-            for (int i = 0; i < numCapas; i++) {
-                this.cc.tablaRepeticiones[i].setE(i, this.ep[i].getModuloEntreMil());
-            }
+                for (int j = 0; j < numCapas; j++) {
+                    this.ep[j].setModulo(this.cc.tablaRepeticiones[analisis].getE(j)*1000);
+                }
+                
+            
 
             this.IniciarAnalisisEspectral(tipoEje);
 
-            double vidaf = 1 / this.cc.vi[0].getDefTodos();
-            double vidad = 1 / this.cc.vi[0].getDefTodos();
+            double vidaf =  this.cc.vi[0].getFafTodos();
+            double vidad =  this.cc.vi[0].getDefTodos();
 
             this.cc.tablaRepeticiones[analisis].setVf(vidaf);
             this.cc.tablaRepeticiones[analisis].setVf2(Math.pow(vidaf, 2));
@@ -2176,21 +2186,21 @@ public class Funciones extends Datos {
         double Rf = Evf + z * Math.pow(Vvf, 0.5);
         double Rd = Evd + z * Math.pow(Vvd, 0.5);
 
-        if (Rf > TransitoEstatico.añosProyecto) {
-            this.vifatiga = ">" + ct.getAños();
+        if (Rf > this.ct.getAños()) {
+            this.vifatigapro = ">" + ct.getAños();
         } else if (Rf < 1) {
-            this.vifatiga = "<1";
+            this.vifatigapro = "<1";
         } else {
-            this.vifatiga = "" + Rf;
+            this.vifatigapro = String.format("%.2f", Rf);
         }
 
-        if (Rd > TransitoEstatico.añosProyecto) {
-            this.videformacion = ">" + ct.getAños();
+        if (Rd > this.ct.getAños()) {
+            this.videformacionpro = ">" + ct.getAños();
         } else if (Rf < 1) {
-            this.videformacion = "<1";
+            this.videformacionpro = "<1";
 
         } else {
-            this.videformacion = "" + Rd;
+            this.videformacionpro = String.format("%.2f", Rd);
         }
     }
 
@@ -2204,25 +2214,24 @@ public class Funciones extends Datos {
         combinaciones = (int) Math.pow(2, numCapas);
 
         for (int capa = numCapas - 1; capa > -1; capa--) {//capa = num_capas To 1 Step 
-            modulocapa[capa] = this.ep[capa].getModulo();
+            modulocapa[capa] = this.ep[capa].getModuloEntreMil();
             coefcapa[capa] = this.ep[capa].getCoeficienteVariacion();
             contador = 1;
-            a = (int) Math.pow(2, (numCapas - capa));
-            for (int i = 0; i < combinaciones - 1; i++) {
-
+            a = (int) Math.pow(2, (numCapas-1 - capa));
+            for (int i = 0; i < combinaciones ; i++) {
+                
                 if (contador <= a) {// Then
-                    this.cc.tablaRepeticiones[].setE(i, modulocapa[capa] * (1 + coefcapa[capa] / 100));//Sheets("larguillo").Cells(3 + i, 81 + capa) = modulocapa[i] * (1 + coefcapa(capa) / 100)
+                    this.cc.tablaRepeticiones[i].setE(capa, modulocapa[capa] * (1 + coefcapa[capa] / 100));//Sheets("larguillo").Cells(3 + i, 81 + capa) = modulocapa[i] * (1 + coefcapa(capa) / 100)
                 } else {
-                    this.cc.tablaRepeticiones[i].setE(i, modulocapa[capa] * (1 - coefcapa[capa] / 100));//("larguillo").Cells(3 + i, 81 + capa) = modulocapa(capa) * (1 - coefcapa(capa) / 100)
+                    this.cc.tablaRepeticiones[i].setE(capa, modulocapa[capa] * (1 - coefcapa[capa] / 100));//("larguillo").Cells(3 + i, 81 + capa) = modulocapa(capa) * (1 - coefcapa(capa) / 100)
                 }
                 contador++;
                 if (contador > 2 * a) {
                     contador = 1;
                 }
-
             }
-
         }
+
     }
 }
 
@@ -2232,9 +2241,7 @@ class ObjetoProbabilistico {
     double vidaFatigaInversa;
     double vidaDeformacion;
     double vidaFatiga;
-    double modulo1;
-    double modulo2;
-    double modulo3;
+    double modulos[];
 
     public double getVidadefinversa() {
         return vidaDeformacionInversa;
@@ -2268,28 +2275,14 @@ class ObjetoProbabilistico {
         this.vidaFatiga = vidaFatiga;
     }
 
-    public double getModulo1() {
-        return modulo1;
+    public double getModulo1(int x) {
+        return modulos[x];
     }
 
-    public void setModulo1(double modulo1) {
-        this.modulo1 = modulo1;
+    public void setModulo1(double modulo,int index) {
+        this.modulos[index] = modulo;
     }
 
-    public double getModulo2() {
-        return modulo2;
-    }
 
-    public void setModulo2(double modulo2) {
-        this.modulo2 = modulo2;
-    }
-
-    public double getModulo3() {
-        return modulo3;
-    }
-
-    public void setModulo3(double modulo3) {
-        this.modulo3 = modulo3;
-    }
 
 }

@@ -30,11 +30,6 @@ public class EstructuraPavimiento {
         this.coeficienteVariacion = coeficienteVariacion;
     }
 
-
-
-    
-    
-
     public int getNumeroCapa() {
         return numeroCapa;
     }

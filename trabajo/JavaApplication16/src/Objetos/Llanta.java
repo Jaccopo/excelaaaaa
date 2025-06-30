@@ -75,7 +75,6 @@ public class Llanta
         return this.valorCapa;
     }
 
-    //Getters and setters 
     public double getValorCapa1() {
         return valorCapa;
     }

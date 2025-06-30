@@ -45,13 +45,17 @@ public class Datos {
     }
 
     public Datos(){
-        ep = new EstructuraPavimiento[4];
-        for (int i = 0; i<4;i++) {
-           ep[i] = new EstructuraPavimiento();
-        }
         damy = false;
         cal = new Calculos();
         llantas = new Llantas();
+    }
+    
+    public void cargarEstructuraPavimento(){
+        ep = new EstructuraPavimiento[numCapas];
+        for (int i = 0; i<numCapas;i++) {
+           ep[i] = new EstructuraPavimiento();
+        }
+    
     }
     public CargarClases getCc() {
         return cc;

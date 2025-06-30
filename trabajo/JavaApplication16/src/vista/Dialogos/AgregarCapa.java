@@ -11,12 +11,13 @@ import pipes.FiltroNumeros;
  * @author aldoj
  */
 public class AgregarCapa extends javax.swing.JDialog {
-    
+
     private String nombreCapa;
     private int espesorCapa;
     private double modulo;
     private int coeficiente;
     private boolean estado;
+    private boolean ultima;
 
     public String getNombreCapa() {
         return nombreCapa;
@@ -33,22 +34,35 @@ public class AgregarCapa extends javax.swing.JDialog {
     public int getCoeficiente() {
         return coeficiente;
     }
-    
-    public boolean getEstado(){
+
+    public boolean getEstado() {
         return estado;
     }
-   
-    public AgregarCapa(java.awt.Frame parent, boolean modal) {
+
+    public AgregarCapa(java.awt.Frame parent, boolean modal, int tipo, String columna[],boolean islast) {
         super(parent, modal);
         initComponents();
+
         estado = false;
-        jTextField1.setText("0");
-        jTextField2.setText("0");
-        jTextField3.setText("0");
-        jTextField4.setText("0");
+        if (tipo == 0) {
+            
+            jTextField1.setText("0");
+            jTextField2.setText("0");
+            jTextField3.setText("0");
+            jTextField4.setText("0");
+
+        }else{
+            this.ultima =islast;
+            jTextField1.setText(columna[0]);
+            jTextField2.setText(columna[1]);
+            jTextField3.setText(columna[2]);
+            jTextField4.setText(columna[3]);
+            jButton1.setText("Editar Capa");
         
+        }
+
         this.setLocationRelativeTo(parent);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -141,21 +155,25 @@ public class AgregarCapa extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jTextField1.getText().length()>0
-                &&FiltroNumeros.esNumero(jTextField2.getText(),1)
-                &&FiltroNumeros.esNumero(jTextField3.getText(),2)
-                &&FiltroNumeros.esNumero(jTextField4.getText(), 1)) {
+        if (jTextField1.getText().length() > 0
+                          && (ultima||FiltroNumeros.esNumero(jTextField2.getText(), 1))
+                          && FiltroNumeros.esNumero(jTextField3.getText(), 2)
+                          && FiltroNumeros.esNumero(jTextField4.getText(), 1)) {
             this.nombreCapa = this.jTextField1.getText();
-            this.espesorCapa = Integer.parseInt(this.jTextField2.getText());
+            if (ultima) {
+                this.espesorCapa = 0;
+            }else{
+                this.espesorCapa = Integer.parseInt(this.jTextField2.getText());
+            }
+            
             this.modulo = Double.parseDouble(this.jTextField3.getText());
             this.coeficiente = Integer.parseInt(this.jTextField4.getText());
             estado = true;
             this.setVisible(false);
-            
-        }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

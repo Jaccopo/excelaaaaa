@@ -44,34 +44,38 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
     private TablaDistribucionDeCarga tddc;
 
     public VistaFormal(CargarClases cc) {
-   
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    try {
-                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(VistaFormal.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InstantiationException ex) {
-                        Logger.getLogger(VistaFormal.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IllegalAccessException ex) {
-                        Logger.getLogger(VistaFormal.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (UnsupportedLookAndFeelException ex) {
-                        Logger.getLogger(VistaFormal.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    break;
+
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                try {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(VistaFormal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(VistaFormal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(VistaFormal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(VistaFormal.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                break;
             }
-   
-        
+        }
+
         initComponents();
 
         this.cc = cc;
         this.ca = new CAnalisis(cc);
 
         tddc = new TablaDistribucionDeCarga();
-        dtm = new DefaultTableModel();
+        dtm = new DefaultTableModel(){
+        @Override
+            public boolean isCellEditable(int row, int column) {
+                // Todas las celdas no editables
+                return false;
+            }
         
-        
+        };
 
         dtm = (DefaultTableModel) tabla.getModel();
         tabla.setModel(dtm);
@@ -87,24 +91,54 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
         cargarTransito.setBackground(Color.red);
         configView();
 
+        editarCapa.addActionListener(e -> {
+            int fila = tabla.getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione una fila de la tabla primero");
+            } else {
+                String construye = "";
+                for (int i = 1; i < dtm.getColumnCount(); i++) {
+                    if (i + 1 != dtm.getColumnCount()) {
+                        construye += dtm.getValueAt(fila, i) + ",";
+                    } else {
+                        construye += dtm.getValueAt(fila, i);
+                    }
+                }
+                AgregarCapa ac = new AgregarCapa(this, true, 1, construye.split(","),fila+1==dtm.getRowCount());
+                ac.setVisible(true);
+                if (ac.getEstado()) {
+                    String objeto[] = ((dtm.getRowCount() + 1) + ","
+                                      + ac.getNombreCapa() + ","
+                                      + (ac.getEspesorCapa()==0? "0":ac.getEspesorCapa())+ ","
+                                      + ac.getModulo() + ","
+                                      + ac.getCoeficiente()).split(",");
+                    for (int i = 0; i < objeto.length; i++) {
+                        dtm.setValueAt(objeto[i], fila, i);
+                    }
+                }
+
+            }
+
+        });
+
         agregarCapa.addActionListener(e -> {
-            AgregarCapa ac = new AgregarCapa(this,true);
+            AgregarCapa ac = new AgregarCapa(this, true, 0, null,false);
             ac.setVisible(true);
-            if(ac.getEstado()){
-                String objeto []= ((dtm.getRowCount()+1)+","
-                                  +ac.getNombreCapa()+","
-                                  +" "+","
-                                  +ac.getModulo()+","
-                                  +ac.getCoeficiente()).split(",");
+            if (ac.getEstado()) {
+                String objeto[] = ((dtm.getRowCount() + 1) + ","
+                                  + ac.getNombreCapa() + ","
+                                  + " " + ","
+                                  + ac.getModulo() + ","
+                                  + ac.getCoeficiente()).split(",");
                 dtm.addRow(objeto);
-                dtm.setValueAt(ac.getEspesorCapa(), dtm.getRowCount()-2, 2);
+                dtm.setValueAt(ac.getEspesorCapa(), dtm.getRowCount() - 2, 2);
             }
         });
         eliminarCapa.addActionListener(e -> {
             int a = JOptionPane.showConfirmDialog(rootPane, "Desea eliminar la capa?", "Advertencia", JOptionPane.YES_NO_OPTION);
-            if (a==0) {
-                dtm.removeRow(dtm.getRowCount()-1);
-                dtm.setValueAt("", dtm.getRowCount()-1, 2);
+            if (a == 0) {
+                dtm.removeRow(dtm.getRowCount() - 1);
+                dtm.setValueAt("", dtm.getRowCount() - 1, 2);
             }
         });
 
@@ -187,6 +221,12 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
         jLabel6 = new javax.swing.JLabel();
         vidaDeformacion = new javax.swing.JLabel();
         vidaFatiga = new javax.swing.JLabel();
+        vidaDeformacionProbabilistico = new javax.swing.JLabel();
+        vidaFatigaProbabilistico = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         cargarTransito = new javax.swing.JButton();
         mensaje1 = new javax.swing.JLabel();
         mensaje3 = new javax.swing.JLabel();
@@ -199,6 +239,7 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
         mensaje5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        editarCapa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Calculadora de analisis de estructura de pavimento pw.");
@@ -331,30 +372,94 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
         vidaFatiga.setText(">20");
         vidaFatiga.setOpaque(true);
 
+        vidaDeformacionProbabilistico.setBackground(new java.awt.Color(255, 255, 204));
+        vidaDeformacionProbabilistico.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        vidaDeformacionProbabilistico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vidaDeformacionProbabilistico.setText(">20");
+        vidaDeformacionProbabilistico.setOpaque(true);
+
+        vidaFatigaProbabilistico.setBackground(new java.awt.Color(255, 255, 204));
+        vidaFatigaProbabilistico.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        vidaFatigaProbabilistico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vidaFatigaProbabilistico.setText(">20");
+        vidaFatigaProbabilistico.setOpaque(true);
+
+        jLabel7.setBackground(new java.awt.Color(204, 204, 255));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setText("Vida por deformacion:");
+        jLabel7.setOpaque(true);
+
+        jLabel8.setBackground(new java.awt.Color(204, 204, 255));
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setText("Vida por Fatiga:");
+        jLabel8.setOpaque(true);
+
+        jLabel11.setBackground(new java.awt.Color(255, 204, 204));
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Espectral");
+        jLabel11.setOpaque(true);
+
+        jLabel12.setBackground(new java.awt.Color(255, 204, 204));
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Probabilistico");
+        jLabel12.setOpaque(true);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
-                .addGap(0, 0, 0)
-                .addComponent(vidaFatiga, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(0, 0, 0)
-                .addComponent(vidaDeformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(vidaDeformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(vidaFatiga, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7))
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(vidaDeformacionProbabilistico, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(vidaFatigaProbabilistico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vidaDeformacion, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vidaFatiga, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(vidaFatiga))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(vidaDeformacion)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(vidaFatigaProbabilistico))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(vidaDeformacionProbabilistico))))
                 .addContainerGap())
         );
 
@@ -398,6 +503,9 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
         jTextArea1.setRows(5);
         jTextArea1.setText("Todos los elementos marcados con\nastericos deben estar llenados\ncorrectamente.\n\nPara El analisis Espectral no es necesario\nel nivel de confianza, pero para\nel analisis probabilistico si.");
         jScrollPane1.setViewportView(jTextArea1);
+
+        editarCapa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        editarCapa.setText("Editar Capa");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -446,7 +554,9 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(agregarCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(agregarCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editarCapa, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(eliminarCapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -460,16 +570,19 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eliminarCapa)
-                    .addComponent(agregarCapa))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(eliminarCapa)
+                        .addComponent(agregarCapa))
+                    .addComponent(editarCapa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(confianza)
-                            .addComponent(mensaje1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mensaje1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(confianza)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -513,21 +626,25 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
     }// </editor-fold>//GEN-END:initComponents
 
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarCapa;
     private javax.swing.JButton cargarTransito;
     private javax.swing.JComboBox<String> confianza;
+    private javax.swing.JButton editarCapa;
     private javax.swing.JButton eliminarCapa;
     private javax.swing.JLabel espectral;
     private javax.swing.JLabel graficos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -548,7 +665,9 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
     private javax.swing.JLabel tablas;
     private javax.swing.JComboBox<String> tipoCarga;
     private javax.swing.JLabel vidaDeformacion;
+    private javax.swing.JLabel vidaDeformacionProbabilistico;
     private javax.swing.JLabel vidaFatiga;
+    private javax.swing.JLabel vidaFatigaProbabilistico;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -622,10 +741,13 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
                         ca.setCTransito(ct);
                         ca.setTablaDistribucionDeCarga(tddc);
 
-                        ca.IniciarAnalisisProbabilistico(tipoCarga.getModel().getSelectedItem() + "",confianza.getSelectedItem()+"");
+                        ca.IniciarAnalisisProbabilistico(tipoCarga.getModel().getSelectedItem() + "", confianza.getSelectedItem() + "");
 
                         JOptionPane.showMessageDialog(this, "Calculos finalizados");
                         cc = ca.getClases();
+                        this.vidaDeformacionProbabilistico.setText(ca.getFidefpro());
+                        this.vidaFatigaProbabilistico.setText(ca.getVifatpro());
+
                         this.vidaDeformacion.setText(ca.getFidef());
                         this.vidaFatiga.setText(ca.getVifat());
 
@@ -647,8 +769,6 @@ public class VistaFormal extends javax.swing.JFrame implements MouseListener, Ru
         gr.setLargilloNormal(this.cc.data);
         gr.setVisible(true);
     }
-
- 
 
     private void mostrarTablas() {
         VerTablas vt = new VerTablas(this, false, this.cc);

@@ -180,12 +180,12 @@ public class CTransito {
     }
 
     public void operar() {
-        Tasa = Tasa / 100;
+        double exTasa = Tasa / 100;
         
         double a1 =años;
-        double v1= 1+(Tasa);
+        double v1= 1+(exTasa);
         
-        CoefAcumTrans = 365 * ((Math.pow(v1,a1) -1)/ Tasa);
+        CoefAcumTrans = 365 * ((Math.pow(v1,a1) -1)/ exTasa);
      
         TTotalAcum = TDPA * CoefAcumTrans * FDS * FDC;
         Trans_Prom_anual = TTotalAcum / años;
