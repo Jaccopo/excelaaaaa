@@ -71,17 +71,28 @@ DeflexionTotal = 0
 A = RadioContacto
 For i = 1 To NumCapas
 
+//ayudas
+part1 =((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001);
+
+suma1=espesor[i] + he[r]
+suma2 =1 - 2 * poisson;
+
+div1 = he[r] / A;
+div2 = suma1/A;
+
+pot1 = Math.pow(div1,2);
+pot2 = Mat.pow(1+pot1,0.5);
+
+pot3 = Math.pow((suma1 / A),2);
+pot4 = Math.pow((1 + pot3) , 0.5);
+
 If i <> NumCapas Then
 
-dz(i) = (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
-    (1 / (1 + (he(i - 1) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * ((1 + (he(i - 1) / A) ^ 2) ^ 0.5 - he(i - 1) / A)) - _
-    (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
-    (1 / (1 + ((Espesor(i) + he(i - 1)) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * _
-    ((1 + ((Espesor(i) + he(i - 1)) / A) ^ 2) ^ 0.5 - (Espesor(i) + he(i - 1)) / A)) ' ojo con el Mod elastico
+
+dz(i) = part1*(1/pot2 + suma2*(pot2 - div1)) - part1*(1/pot4 + suma2*(pot4 - div2));
 Else
 
-dz(i) = (((1 + Poisson) * PresionInflado * PsiAMpa * A) / (ModElastico(i) * 0.001)) * _
-    (1 / (1 + (he(i - 1) / A) ^ 2) ^ 0.5 + (1 - 2 * Poisson) * ((1 + (he(i - 1) / A) ^ 2) ^ 0.5 - he(i - 1) / A))
+dz(i) = part1 *(1/pot2 + suma2*(pot2 - div1))
 
 End If
         

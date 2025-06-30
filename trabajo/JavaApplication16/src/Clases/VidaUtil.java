@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.Vector;
+
 /**
  *
  * @author aldoj
@@ -24,6 +26,33 @@ public class VidaUtil {
         this.fafTRIDEM = Float.parseFloat(datos[8]);
         this.fafTodos = Float.parseFloat(datos[9]);
 
+    }
+     public VidaUtil() {
+        this.defSim = 0;
+        this.defDual = 0;
+        this.defTANDM = 0;
+        this.defTRIDEM = 0;
+        this.defTodos = 0;
+        this.fafSim = 0;
+        this.fafDual = 0;
+        this.fafTANDM = 0;
+        this.fafTRIDEM = 0;
+        this.fafTodos = 0;
+
+    }
+     public Vector getVector(){
+        var fila = new Vector();
+        fila.add(this.defSim);
+        fila.add(this.defDual);
+        fila.add(this.defTANDM);
+        fila.add(this.defTRIDEM);
+        fila.add(this.defTodos);
+        fila.add(this.fafSim);
+        fila.add(this.fafDual);
+        fila.add(this.fafTANDM);
+        fila.add(this.fafTRIDEM);
+        fila.add(this.fafTodos);
+        return fila;
     }
 
     public float getDefSim() {

@@ -1,5 +1,7 @@
 package Clases;
 
+import java.util.Vector;
+
 
 public class Respustaseje {
     private float tetacapa1,tetaterraceria,esterraceria,escapa1,deflexionVertical;
@@ -10,6 +12,16 @@ public class Respustaseje {
         esterraceria = Float.parseFloat(respuesta[2]);
         escapa1 = Float.parseFloat(respuesta[3]);
         deflexionVertical = Float.parseFloat(respuesta[4]);
+    }
+    
+    public Vector getVector(){
+        var fila = new Vector();
+        fila.add(this.tetacapa1);
+        fila.add(this.tetaterraceria);
+        fila.add(this.esterraceria);
+        fila.add(this.escapa1);
+        fila.add(this.deflexionVertical);
+        return fila;
     }
 
     @Override

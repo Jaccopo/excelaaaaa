@@ -4,6 +4,9 @@
  */
 package controladores;
 
+import Clases.TransitoEstatico;
+
+
 /**
  *
  * @author aldoj
@@ -11,7 +14,8 @@ package controladores;
 public class CTransito {
 
     double A, B2, B3, C2, C3, T3S2, T3S3, T3S2R4, otros;
-    double Tasa, TDPA, años, FDS, FDC;
+    double Tasa, TDPA, FDS, FDC;
+    int años;
     double CoefAcumTrans, TTotalAcum, Trans_Prom_anual;
     double Porcentaje_sencillo, Porcentaje_dual, Porcentaje_tandem, Porcentaje_tridem;
     double RepEjes_sencillo, RepEjes_dual, RepEjes_tandem, RepEjes_tridem;
@@ -146,11 +150,11 @@ public class CTransito {
         this.TDPA = TDPA;
     }
 
-    public double getAños() {
+    public int getAños() {
         return años;
     }
 
-    public void setAños(double años) {
+    public void setAños(int años) {
         this.años = años;
     }
 
@@ -176,12 +180,12 @@ public class CTransito {
     }
 
     public void operar() {
-        Tasa = Tasa / 100;
+        double exTasa = Tasa / 100;
         
         double a1 =años;
-        double v1= 1+(Tasa);
+        double v1= 1+(exTasa);
         
-        CoefAcumTrans = 365 * ((Math.pow(v1,a1) -1)/ Tasa);
+        CoefAcumTrans = 365 * ((Math.pow(v1,a1) -1)/ exTasa);
      
         TTotalAcum = TDPA * CoefAcumTrans * FDS * FDC;
         Trans_Prom_anual = TTotalAcum / años;
@@ -200,6 +204,23 @@ public class CTransito {
         NumEjes_dual_año = RepEjes_dual / años;
         NumEjes_tandem_año = RepEjes_tandem / años;
         NumEjes_tridem_año = RepEjes_tridem / años;
+        
+        
+        
+        //Utilizamos el ambiente estatico
+        TransitoEstatico.activado = 1; // mencionamos que esta listo
+        
+        TransitoEstatico.sencilloNumeroPorcentaje = RepEjes_sencillo;
+        TransitoEstatico.dualPorcentajeRepresentivo = RepEjes_dual;
+        TransitoEstatico.tridemPorcentajeRepresentivo = RepEjes_tridem;
+        TransitoEstatico.tandemPorcentajeRepresentivo = RepEjes_tandem;
+        
+        TransitoEstatico.sencilloNumeroPorcentaje=NumEjes_Sencillos_año;
+        TransitoEstatico.dualNumeroPorcentaje = NumEjes_dual_año;
+        TransitoEstatico.tridemNumeroPorcentaje = NumEjes_tridem_año;
+        TransitoEstatico.tandemNumeroPorcentaje = NumEjes_tandem_año;
+        
+        TransitoEstatico.añosProyecto = años;
 
         TransProm_anual_carga = RepEjes_sencillo / años;
         Total_ejes = NumEjes_Sencillos_año + NumEjes_dual_año + NumEjes_tandem_año + NumEjes_tridem_año;

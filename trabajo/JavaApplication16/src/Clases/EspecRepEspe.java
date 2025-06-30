@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.Vector;
+
 /**
  *
  * @author aldoj
@@ -16,6 +18,14 @@ public class EspecRepEspe {
         this.dual = Float.parseFloat(datos[1]);
         this.tandem = Float.parseFloat(datos[2]);
         this.tridem = Float.parseFloat(datos[3]);
+    }
+     public Vector getVector(){
+        Vector fila = new Vector();
+        fila.add(this.simple);
+        fila.add(this.dual);
+        fila.add(this.tandem);
+        fila.add(this.tridem);
+        return fila;
     }
 
     public float getSimple() {

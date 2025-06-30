@@ -1,5 +1,7 @@
 package Clases;
 
+import java.util.Vector;
+
 public class LarguilloNormal {
 
     private int dato;
@@ -9,6 +11,24 @@ public class LarguilloNormal {
     private float tandem;
     private float tridem;
 
+    public LarguilloNormal(){
+        dato = 0;
+        cargaPromedio = 0;
+        simple = 0;
+        dual = 0;
+        tandem = 0;
+        tridem = 0;
+    }
+
+    public void setMuchos(int dato,float cargaPromedio,float simple,float dual,float tandem,float tridem){
+        this.dato = dato;
+        this.cargaPromedio = cargaPromedio;
+        this.simple = simple;
+        this.dual = dual;
+        this.tandem = tandem;
+        this.tridem = tridem;
+    }
+    
     public LarguilloNormal(String[] archivo) {
         this.dato = Integer.parseInt(archivo[0]);
         this.cargaPromedio = Float.parseFloat(archivo[1]);
@@ -17,7 +37,18 @@ public class LarguilloNormal {
         this.tandem = Float.parseFloat(archivo[4]);
         this.tridem = Float.parseFloat(archivo[5]);
     }
-
+    
+    public Vector getVector(){
+        Vector fila = new Vector();
+        fila.add(this.dato);
+        fila.add(this.cargaPromedio);
+        fila.add(this.simple);
+        fila.add(this.dual);
+        fila.add(this.tandem);
+        fila.add(this.tridem);
+        return fila;
+    }
+    
     @Override
     public String toString() {
         return "LarguilloNormal{" + "dato=" + dato + ", cargaPromedio=" + cargaPromedio + ", simple=" + simple + ", dual=" + dual + ", tandem=" + tandem + ", tridem=" + tridem + '}';

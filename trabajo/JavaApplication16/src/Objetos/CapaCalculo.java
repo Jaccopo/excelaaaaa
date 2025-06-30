@@ -18,8 +18,45 @@ public class CapaCalculo {
     private double deformacionVerticalE2, deformacionPorTension;
     private double a, b, c, d, e, lesimaDeflexion;
     private double esfuerzoCortanteRZ, esfuerzoCortanteYZ, esfuerzoCortanteXZ;
+
+    private double aux1, aux2;
+
+    private double auxDamy, auxVerDamy;
+
+    private double complemento1, complemento2, complemento3, complemento4;
+
     
-    private double complemento1,complemento2,complemento3,complemento4;
+     public void setauxVerDamy(double auxVerDamy) {
+        this.auxVerDamy = auxVerDamy;
+    }
+
+    public double getAuxVerDamy() {
+        return this.auxVerDamy;
+    }
+    
+    public void setAuxDamy(double auxDamy) {
+        this.auxDamy = auxDamy;
+    }
+
+    public double getAuxDamy() {
+        return this.auxDamy;
+    }
+
+    public void setAux1(double aux1) {
+        this.aux1 = aux1;
+    }
+
+    public double getAux1() {
+        return this.aux1;
+    }
+
+    public void setAux2(double aux2) {
+        this.aux2 = aux2;
+    }
+
+    public double getAux2() {
+        return this.aux2;
+    }
 
     public double getComplemento1() {
         return complemento1;
@@ -53,7 +90,6 @@ public class CapaCalculo {
         this.complemento4 = complemento4;
     }
 
-    
     public int getNumCapas() {
         return numCapas;
     }
@@ -294,5 +330,4 @@ public class CapaCalculo {
         this.esfuerzoCortanteXZ = esfuerzoCortanteXZ;
     }
 
-   
 }

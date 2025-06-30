@@ -30,11 +30,6 @@ public class EstructuraPavimiento {
         this.coeficienteVariacion = coeficienteVariacion;
     }
 
-
-
-    
-    
-
     public int getNumeroCapa() {
         return numeroCapa;
     }
@@ -62,9 +57,12 @@ public class EstructuraPavimiento {
     public double getModulo() {
         return modulo;
     }
+    public double getModuloEntreMil() {
+        return modulo/1000;
+    }
 
     public void setModulo(double modulo) {
-        this.modulo = modulo*1000;
+        this.modulo = modulo;
     }
 
 }

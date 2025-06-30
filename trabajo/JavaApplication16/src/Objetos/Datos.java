@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Objetos;
 
 import Clases.CargarClases;
@@ -15,9 +11,10 @@ public class Datos {
     //Datos de nuevo formato pav
     public double pesoEje;
     public String tipoEje;
-    public double presion;
+    public double presion=90;
     public int numCapas;
-    public double poisson;
+    public double poisson = .35;
+    
     public EstructuraPavimiento ep[];
     public double X = 0;
     public double Y = 18;
@@ -27,20 +24,38 @@ public class Datos {
     public Calculos cal;
     public Llantas llantas;
     
+    public final double PI = 3.14159265358979;
     
     public CargarClases cc;
     public boolean activos[];
     
-    public boolean damy;
+    public boolean damy = false;
+    
+    public String porcentajeConfiabilidad;
+    
+    public String tipoCarga;
+    
+
+    
+    public void setPorcentajeConfiabilidad(String porcentajeConfiabilidad){
+        this.porcentajeConfiabilidad = porcentajeConfiabilidad;
+    }
+    public String getPorcentajeConfiabilidad(){
+        return this.porcentajeConfiabilidad;
+    }
 
     public Datos(){
-        ep = new EstructuraPavimiento[4];
-        for (int i = 0; i<4;i++) {
-           ep[i] = new EstructuraPavimiento();
-        }
         damy = false;
         cal = new Calculos();
         llantas = new Llantas();
+    }
+    
+    public void cargarEstructuraPavimento(){
+        ep = new EstructuraPavimiento[numCapas];
+        for (int i = 0; i<numCapas;i++) {
+           ep[i] = new EstructuraPavimiento();
+        }
+    
     }
     public CargarClases getCc() {
         return cc;

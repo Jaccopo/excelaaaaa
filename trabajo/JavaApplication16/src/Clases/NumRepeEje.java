@@ -4,6 +4,8 @@
  */
 package Clases;
 
+import java.util.Vector;
+
 /**
  *
  * @author aldoj
@@ -23,6 +25,18 @@ public class NumRepeEje {
         this.TANDEMFatiga = Float.parseFloat(datos[5]);
         this.TRIDEMDeformacion = Float.parseFloat(datos[6]);
         this.TRIDEMFatiga = Float.parseFloat(datos[7]);
+    }
+    public Vector getVector(){
+        var fila = new Vector();
+        fila.add(this.simDeformacion);
+        fila.add(this.simFatiga);
+        fila.add(this.dualDeformacion);
+        fila.add(this.dualFatiga);
+        fila.add(this.TANDEMDeformacion);
+        fila.add(this.TANDEMFatiga);
+        fila.add(this.TRIDEMDeformacion);
+        fila.add(this.TRIDEMFatiga);
+        return fila;
     }
 
    

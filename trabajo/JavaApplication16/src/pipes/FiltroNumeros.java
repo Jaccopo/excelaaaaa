@@ -12,15 +12,15 @@ public class FiltroNumeros {
         }
         try {
             switch (tipo) {
-                case (1) -> {
+                case (1):
                     Integer.parseInt(caracteres);
-                }
-                case (2) -> {
+               break;
+                case (2) :
                     Double.parseDouble(caracteres);
-                }
-                case (3) -> {
+                    break;
+                    case (3):
                     Float.parseFloat(caracteres);
-                }
+                    break;
             }
 
             return true;
